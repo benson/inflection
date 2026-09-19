@@ -18,7 +18,7 @@ export function writeStorage(key: string, value: unknown): boolean {
     return false;
   }
 }
-export function isExperiment(value: unknown): value is Experiment {
+export function isDraft(value: unknown): value is Experiment {
   try {
     const e = value as Experiment;
     return (
@@ -41,11 +41,18 @@ export function isExperiment(value: unknown): value is Experiment {
           typeof v.text === "string" &&
           ["paraphrase", "framing"].includes(v.kind),
       ) &&
-      !validateExperiment(e)
+      e.options.length >= 2 &&
+      e.options.length <= 8 &&
+      e.variants.length <= 7 &&
+      e.original.length <= 3000 &&
+      e.context.length <= 12000
     );
   } catch {
     return false;
   }
+}
+export function isExperiment(value: unknown): value is Experiment {
+  return isDraft(value) && !validateExperiment(value);
 }
 export function readSaved(): Experiment[] {
   const values = readStorage<unknown>("saved", []);

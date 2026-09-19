@@ -15,6 +15,16 @@ import {
 } from "../src/engine";
 import { seeds, categories } from "../src/seeds";
 import { sampleRun } from "../src/sample";
+import { isDraft, isExperiment } from "../src/storage";
+
+test("unfinished drafts survive reload without becoming runnable experiments", () => {
+  const draft = fromSeed(seeds[0]);
+  draft.original = "";
+  draft.options[0].label = "";
+  assert.equal(isDraft(draft), true);
+  assert.equal(isExperiment(draft), false);
+  assert.equal(isDraft({ original: "missing structure" }), false);
+});
 
 test("120 unique, valid questions across 12 topics, each with two different paraphrases", () => {
   assert.equal(seeds.length, 120);

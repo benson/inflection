@@ -36,6 +36,7 @@ import {
 import { categories, curatedDate, seeds, sources } from "./seeds";
 import { sampleRun } from "./sample";
 import {
+  isDraft,
   isExperiment,
   readHistory,
   readSaved,
@@ -436,11 +437,11 @@ export default function App() {
   const initial = useMemo(() => sampleRun(), []);
   const [experiment, setExperiment] = useState<Experiment>(() => {
     const saved = readStorage("draft", null);
-    return isExperiment(saved) ? saved : initial.experiment;
+    return isDraft(saved) ? saved : initial.experiment;
   });
   const [run, setRun] = useState<Run | null>(() => {
     const saved = readStorage("draft", null);
-    return isExperiment(saved) ? null : initial;
+    return isDraft(saved) ? null : initial;
   });
   const [saved, setSaved] = useState(readSaved);
   const [history, setHistory] = useState(readHistory);
