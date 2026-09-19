@@ -60,6 +60,10 @@ Curated September 19, 2026. News coverage informed selection of current topics; 
 
 ## Validation and publishing
 
+The interface uses the warm paper, plum accent, system sans-serif controls, and Palatino-style headings from Benson’s Vellum / Packcracker styling. `src/theme.css` supplies the shared theme for the app and social-card source. Lowercase styling applies to interface labels; question text and answer options retain their exact capitalization.
+
+Social metadata is static in `index.html`, including the canonical URL, [Open Graph properties](https://ogp.me/), and Twitter large-image card tags. `public/social-preview-v1.png` is a 1200 × 630 PNG. Its editable source is `scripts/social-card.html`: with Vite running, open `/scripts/social-card.html` at a 1200 × 630 viewport, wait for fonts, and save a viewport screenshot to the PNG. When changing a published card, version its filename and both image URLs to avoid reusing cached artwork.
+
 ```sh
 npm test
 npm run build

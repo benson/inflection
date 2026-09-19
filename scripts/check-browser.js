@@ -25,7 +25,7 @@ async (page) => {
     .fill("Should AI companies need permission to train on copyrighted work?");
   check(
     await page
-      .getByText("Find the tipping point.", { exact: true })
+      .getByText("No comparison yet", { exact: true })
       .isVisible(),
     "Editing clears old probabilities",
   );

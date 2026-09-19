@@ -44,16 +44,16 @@ import {
 } from "./storage";
 
 const colors = [
-  "#3e6655",
-  "#bc785b",
-  "#688aab",
-  "#b39b53",
-  "#8c75a7",
-  "#629a95",
-  "#aa6680",
-  "#777e8b",
-  "#99a39c",
-  "#707671",
+  "#653d78",
+  "#a3654a",
+  "#60798e",
+  "#a77b37",
+  "#70815c",
+  "#55827d",
+  "#9b597a",
+  "#736678",
+  "#8e8667",
+  "#51514b",
 ];
 const pct = (n: number) => `${(n * 100).toFixed(1)}%`;
 const points = (n: number) =>
@@ -147,7 +147,7 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
             y1="19"
             x2={x(p)}
             y2={h - 30}
-            stroke="#e5e6df"
+            stroke="var(--line)"
             strokeDasharray={p === 0.5 ? "3 4" : undefined}
           />
           <text x={x(p)} y={h - 10} textAnchor="middle" className="axis-label">
@@ -160,7 +160,7 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
         y1="20"
         x2={x(base)}
         y2={h - 30}
-        stroke="#708877"
+        stroke="var(--muted)"
         strokeDasharray="2 4"
       />
       {conditions.map((c, i) => {
@@ -183,7 +183,7 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
               y1={y}
               x2={x(p)}
               y2={y}
-              stroke="#b3bfb3"
+              stroke="var(--line-strong)"
               strokeWidth="2"
             />
             {vals.length > 1 && (
@@ -192,7 +192,7 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
                 y1={y}
                 x2={x(Math.max(...vals))}
                 y2={y}
-                stroke="#3e6655"
+                stroke="var(--accent)"
                 strokeWidth="5"
                 strokeLinecap="round"
               />
@@ -201,8 +201,8 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
               cx={x(p)}
               cy={y}
               r="5.5"
-              fill={i === 0 ? "#f7f6f2" : "#3e6655"}
-              stroke="#3e6655"
+              fill={i === 0 ? "var(--paper)" : "var(--accent)"}
+              stroke="var(--accent)"
               strokeWidth="2"
             />
             <text x="388" y={y + 4} textAnchor="end" className="plot-value">
@@ -241,7 +241,7 @@ function Results({ run, onExport }: { run: Run; onExport: () => void }) {
   return (
     <section className="results" aria-label="Comparison results">
       <div className="section-heading">
-        <span className="eyebrow">THE DIFFERENCE</span>
+        <span className="eyebrow">RESULTS</span>
         <button
           className="icon-button"
           onClick={onExport}
@@ -301,7 +301,7 @@ function Results({ run, onExport }: { run: Run; onExport: () => void }) {
           : "Dotted line marks the original. Changes are percentage points."}
       </p>
       <div className="answer-heading">
-        <h3>Every wording. Every answer.</h3>
+        <h3>Answers by wording</h3>
         <label className="check-label">
           <input
             type="checkbox"
@@ -420,11 +420,6 @@ function Results({ run, onExport }: { run: Run; onExport: () => void }) {
             {run.sample
               ? "This example is synthetic and has no measured confidence."
               : `Model: ${[...new Set(run.responses.map((r) => r.model))].join(", ")}. ${new Date(run.createdAt).toLocaleString()}.`}
-          </p>
-          <p>
-            Every question is evaluated against the same shared context. No
-            stance, safety, or persona instructions are added. The API receives
-            exactly the question text and answer labels you see.
           </p>
         </div>
       )}
@@ -704,9 +699,6 @@ export default function App() {
             </span>
             <span className="library-item-title">{s.title}</span>
             <span className="library-item-question">{s.question}</span>
-            <span className="library-item-bottom">
-              3 wordings <ArrowRight size={13} />
-            </span>
           </button>
         ))}
         {!filtered.length && (
@@ -748,18 +740,10 @@ export default function App() {
   return (
     <div className="app-shell">
       <header className="topbar">
-        <a
-          className="brand"
-          href="#"
-          onClick={(e) => e.preventDefault()}
-          aria-label="Inflection home"
-        >
-          <svg viewBox="0 0 32 32" aria-hidden="true">
-            <path d="M5 25C17 25 14 7 27 7M5 16C15 16 18 23 27 23" />
-          </svg>
-          inflection<span className="brand-dot">.</span>
-        </a>
-        <div className="brand-description">A WORDING EXPERIMENT</div>
+        <div className="brand-lockup">
+          <h1 className="brand">inflection</h1>
+          <p>explore how wording changes jev’s answer probabilities</p>
+        </div>
         <nav>
           <button
             className="quiet-button saved-nav"
@@ -785,11 +769,6 @@ export default function App() {
         <aside className="library-panel">{library}</aside>
         <main>
           <div className="intro">
-            <div>
-              <div className="eyebrow">SMALL EDITS. DIFFERENT ANSWERS.</div>
-              <h1>Every word has a weight.</h1>
-              <p>Change the question. See where Jev changes its mind.</p>
-            </div>
             <button
               className="secondary-button new-question"
               disabled={busy}
@@ -851,7 +830,6 @@ export default function App() {
               />
               <fieldset disabled={busy} className="editor-fieldset">
                 <div className="format-row">
-                  <span className="field-label">Answer format</span>
                   <div className="segmented" aria-label="Answer format">
                     <button
                       type="button"
@@ -871,7 +849,7 @@ export default function App() {
                 </div>
                 {experiment.mode === "multiple" && (
                   <div className="option-editor">
-                    <span className="field-label">Shared answer options</span>
+                    <span className="field-label">Answer options</span>
                     {experiment.options.map((o, i) => (
                       <div className="option-input" key={o.id}>
                         <span style={{ color: colors[i] }}>
@@ -934,7 +912,6 @@ export default function App() {
                       <span className="wording-number">01</span> Original
                       question
                     </label>
-                    <span className="baseline-pill">Baseline</span>
                   </div>
                   <textarea
                     ref={originalRef}
@@ -947,7 +924,7 @@ export default function App() {
                   />
                 </div>
                 <div className="variants-label">
-                  <h3>Try another way of asking.</h3>
+                  <h3>Other wordings</h3>
                   <span>{experiment.variants.length} / 7</span>
                 </div>
                 {experiment.variants.map((v, i) => (
@@ -1025,8 +1002,7 @@ export default function App() {
                   disabled={experiment.variants.length >= 7}
                   onClick={addVariant}
                 >
-                  <Plus size={16} /> Add a wording{" "}
-                  <span>Starts with the original</span>
+                  <Plus size={16} /> Add a wording
                 </button>
                 <button
                   className="advanced-toggle"
@@ -1140,39 +1116,35 @@ export default function App() {
                     <svg viewBox="0 0 240 120">
                       <path
                         d="M20 30H220M20 60H220M20 90H220"
-                        stroke="#e0e4dc"
+                        stroke="var(--line)"
                       />
                       <path
                         d="M93 20V105"
-                        stroke="#8ca591"
+                        stroke="var(--muted)"
                         strokeDasharray="3 5"
                       />
                       <path
                         d="M93 30H93M93 60H141M93 90H61"
-                        stroke="#9fb49f"
+                        stroke="var(--line-strong)"
                         strokeWidth="2"
                       />
                       <circle
                         cx="93"
                         cy="30"
                         r="6"
-                        fill="#f7f6f2"
-                        stroke="#476c59"
+                        fill="var(--paper)"
+                        stroke="var(--accent)"
                         strokeWidth="2"
                       />
-                      <circle cx="141" cy="60" r="6" fill="#476c59" />
-                      <circle cx="61" cy="90" r="6" fill="#476c59" />
+                      <circle cx="141" cy="60" r="6" fill="var(--accent)" />
+                      <circle cx="61" cy="90" r="6" fill="var(--accent)" />
                     </svg>
                   </div>
-                  <h2>
-                    {busy
-                      ? "A question of wording…"
-                      : "Find the tipping point."}
-                  </h2>
+                  <h2>{busy ? "Running comparison…" : "No comparison yet"}</h2>
                   <p>
                     {busy
                       ? `Evaluating ${count} decisions. Run ${Math.min(progress + 1, repeats)} of ${repeats}.`
-                      : "Compare your wordings to see probability shifts, answer flips, and the words that changed."}
+                      : "Run a comparison to see the probabilities."}
                   </p>
                   {!busy && (
                     <button
@@ -1187,23 +1159,15 @@ export default function App() {
                   )}
                 </section>
               )}
-              <div className="margin-note">
-                <span>∵</span>
-                <p>
-                  A decisive answer can still be uncertain.
-                  <br />
-                  Keep an eye on the whole distribution.
-                </p>
-              </div>
             </div>
           </div>
           <footer className="page-footer">
-            <span>Built for curiosity.</span>
+            <a href="https://bensonperry.com/">bensonperry.com</a>
             <button
               className="text-button"
               onClick={() => setDialog("sources")}
             >
-              About the questions & method <ArrowRight size={13} />
+              Questions & method <ArrowRight size={13} />
             </button>
           </footer>
         </main>
@@ -1241,44 +1205,29 @@ export default function App() {
         </Modal>
       )}
       {dialog === "sources" && (
-        <Modal
-          title="A lab for the question itself."
-          close={() => setDialog(null)}
-          wide
-        >
-          <p className="modal-intro">
-            120 starting points. No prescribed answers.
+        <Modal title="Questions & method" close={() => setDialog(null)} wide>
+          <p>
+            120 policy questions, mostly about the U.S., with a section on
+            global affairs. Curated {curatedDate}.
           </p>
           <p>
-            The questions are original policy prompts, spanning current debates
-            and longstanding controversies. They lean toward U.S. policy, with a
-            section on global affairs. Curated {curatedDate}; this is a dated
-            collection, not a live news feed.
-          </p>
-          <p>
-            Every seed includes two attempted paraphrases. Read them critically:
-            changed scope, added assumptions, or different moral language can
-            change the question itself. Tag those versions “Changed framing” to
-            keep them out of the wording-swing statistic.
+            Each question includes two rewordings. If a version changes the
+            meaning, tag it “Changed framing” to exclude it from wording swing.
           </p>
           <h3>What the experiment measures</h3>
           <p>
-            Jev assigns probabilities to the answer options you provide. We use
-            Choice for both yes/no and multiple-choice questions so comparisons
-            stay within the same primitive. Each wording is evaluated
-            independently against identical context. We send no hidden persona
-            or instructions about which position to favor.
+            Jev assigns probabilities to your answer options. Both yes/no and
+            multiple-choice questions use its Choice primitive. Each wording is
+            evaluated independently against the same context.
           </p>
           <p>
             Repeat runs show observed variability, not statistical confidence
-            intervals. Expanding the answer set changes the comparison; those
-            control results remain separate from paraphrase sensitivity. The
-            illustrative example uses invented numbers, always labeled.
+            intervals. Controls change the answer set or option order; their
+            results are excluded from wording swing.
           </p>
           <h3>Reading & sources</h3>
           <p className="muted">
-            News links informed topic selection; they do not endorse the
-            questions or supply model answers.
+            Sources for topic selection and the model’s methodology.
           </p>
           <div className="sources-list">
             {sources.map((s) => (
@@ -1338,10 +1287,7 @@ export default function App() {
             Recent comparisons <span className="muted">{history.length}</span>
           </h3>
           {!history.length && (
-            <p className="muted">
-              Real Jev runs will appear here, with their exact questions and
-              results.
-            </p>
+            <p className="muted">Run a comparison to save its results here.</p>
           )}
           <div className="saved-list">
             {history.map((r) => (
@@ -1379,9 +1325,6 @@ export default function App() {
           close={() => setDialog(null)}
           wide
         >
-          <p className="modal-intro">
-            One batch. Shared context. Your words, unchanged.
-          </p>
           <pre className="request-preview">
             {!validError
               ? JSON.stringify(buildRequest(experiment), null, 2)
