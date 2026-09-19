@@ -12,8 +12,6 @@ import {
   FolderHeart,
   Library,
   Plus,
-  Search,
-  Shuffle,
   SlidersHorizontal,
   Square,
   Trash2,
@@ -32,7 +30,7 @@ import {
   winners,
   wordDiff,
 } from "./engine";
-import { categories, curatedDate, seeds, sources } from "./seeds";
+import { seeds, sources } from "./seeds";
 import { sampleRun } from "./sample";
 import {
   isDraft,
@@ -442,9 +440,6 @@ export default function App() {
   const [dialog, setDialog] = useState<
     "connection" | "sources" | "saved" | "request" | null
   >(null);
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All topics");
-  const [typeFilter, setTypeFilter] = useState("all");
   const [showLibrary, setShowLibrary] = useState(false);
   const [advanced, setAdvanced] = useState(false);
   const [repeats, setRepeats] = useState(1);
@@ -456,16 +451,6 @@ export default function App() {
   const originalRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const mobileLibrary = useRef<HTMLDialogElement>(null);
-  const [libraryLimit, setLibraryLimit] = useState(30);
-  const filtered = seeds.filter(
-    (s) =>
-      (category === "All topics" || s.category === category) &&
-      (typeFilter === "all" ||
-        (typeFilter === "multiple" ? !!s.options : !s.options)) &&
-      `${s.title} ${s.question} ${s.category}`
-        .toLowerCase()
-        .includes(query.toLowerCase()),
-  );
   const validError = validateExperiment(experiment);
   const count =
     1 +
@@ -478,9 +463,6 @@ export default function App() {
     if (!writeStorage("draft", experiment))
       setNotice("Browser storage is full. Export your experiment to keep it.");
   }, [experiment]);
-  useEffect(() => {
-    setLibraryLimit(30);
-  }, [query, category, typeFilter]);
   useEffect(() => {
     if (!notice) return;
     const timer = setTimeout(() => setNotice(""), 4000);
@@ -626,114 +608,21 @@ export default function App() {
   const library = (
     <>
       <div className="library-heading">
-        <Library size={17} />
-        <h2>Question library</h2>
-        <span>{seeds.length}</span>
-      </div>
-      <div className="search-field">
-        <Search size={16} />
-        <input
-          aria-label="Search questions"
-          placeholder="Find a question…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        {query && (
-          <button
-            className="icon-button"
-            aria-label="Clear search"
-            onClick={() => setQuery("")}
-          >
-            <X size={14} />
-          </button>
-        )}
-      </div>
-      <div className="library-filters">
-        <select
-          aria-label="Filter by topic"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option>All topics</option>
-          {categories.map((c) => (
-            <option key={c}>{c}</option>
-          ))}
-        </select>
-        <select
-          aria-label="Filter by question type"
-          value={typeFilter}
-          onChange={(e) => setTypeFilter(e.target.value)}
-        >
-          <option value="all">All formats</option>
-          <option value="binary">Yes / No</option>
-          <option value="multiple">Multiple choice</option>
-        </select>
-      </div>
-      <div className="library-meta">
-        <span role="status">
-          {filtered.length} {filtered.length === 1 ? "question" : "questions"}
-        </span>
-        <button
-          className="text-button"
-          disabled={busy || !filtered.length}
-          onClick={() =>
-            openExperiment(
-              fromSeed(filtered[Math.floor(Math.random() * filtered.length)]),
-            )
-          }
-        >
-          <Shuffle size={13} /> Surprise me
-        </button>
+        <h2>Examples</h2>
       </div>
       <div className="library-list">
-        {filtered.slice(0, libraryLimit).map((s) => (
+        {seeds.map((s) => (
           <button
             disabled={busy}
             key={s.id}
             className={`library-item ${experiment.id === s.id ? "selected" : ""}`}
             onClick={() => openExperiment(fromSeed(s))}
           >
-            <span className="library-item-category">
-              {s.category}
-              {s.options && <span className="mc-tag">MC</span>}
-            </span>
             <span className="library-item-title">{s.title}</span>
             <span className="library-item-question">{s.question}</span>
           </button>
         ))}
-        {!filtered.length && (
-          <div className="no-matches">
-            <p>No questions found.</p>
-            <button
-              className="text-button"
-              onClick={() => {
-                setQuery("");
-                setCategory("All topics");
-                setTypeFilter("all");
-              }}
-            >
-              Clear filters
-            </button>
-          </div>
-        )}
-        {filtered.length > libraryLimit && (
-          <button
-            className="load-more"
-            onClick={() => setLibraryLimit((n) => n + 30)}
-          >
-            Show more questions <ChevronDown size={15} />
-          </button>
-        )}
       </div>
-      <button
-        className="library-sources"
-        onClick={() => {
-          setShowLibrary(false);
-          setDialog("sources");
-        }}
-      >
-        Curated September 2026 <ExternalLink size={12} />
-      </button>
     </>
   );
 
@@ -782,7 +671,7 @@ export default function App() {
               className="secondary-button"
               onClick={() => setShowLibrary(true)}
             >
-              <Library size={16} /> Browse {seeds.length} questions
+              <Library size={16} /> Examples
             </button>
             <button
               className="quiet-button"
@@ -795,7 +684,6 @@ export default function App() {
           <div className="workspace">
             <section className="editor" aria-label="Experiment editor">
               <div className="experiment-meta">
-                <span className="topic-pill">{experiment.category}</span>
                 <div className="editor-actions">
                   <button
                     disabled={busy}
@@ -1175,12 +1063,12 @@ export default function App() {
       <dialog
         ref={mobileLibrary}
         className="mobile-library modal"
-        aria-label="Question library"
+        aria-label="Example questions"
         onCancel={() => setShowLibrary(false)}
       >
         <button
           className="icon-button mobile-library-close"
-          aria-label="Close question library"
+          aria-label="Close examples"
           onClick={() => setShowLibrary(false)}
         >
           <X size={20} />
@@ -1207,12 +1095,12 @@ export default function App() {
       {dialog === "sources" && (
         <Modal title="Questions & method" close={() => setDialog(null)} wide>
           <p>
-            120 policy questions, mostly about the U.S., with a section on
-            global affairs. Curated {curatedDate}.
+            Three starting questions with two rewordings each. Edit them or
+            write your own.
           </p>
           <p>
-            Each question includes two rewordings. If a version changes the
-            meaning, tag it “Changed framing” to exclude it from wording swing.
+            If a version changes the meaning, tag it “Changed framing” to
+            exclude it from wording swing.
           </p>
           <h3>What the experiment measures</h3>
           <p>
@@ -1226,9 +1114,6 @@ export default function App() {
             results are excluded from wording swing.
           </p>
           <h3>Reading & sources</h3>
-          <p className="muted">
-            Sources for topic selection and the model’s methodology.
-          </p>
           <div className="sources-list">
             {sources.map((s) => (
               <a href={s.url} target="_blank" rel="noreferrer" key={s.url}>

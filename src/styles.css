@@ -166,9 +166,8 @@ button svg {
   flex-direction: column;
   position: sticky;
   top: 24px;
-  height: calc(100dvh - 148px);
-  min-height: 400px;
-  max-height: 1150px;
+  align-self: start;
+  max-height: calc(100dvh - 48px);
   padding-right: 22px;
   border-right: 1px solid var(--line);
 }
@@ -289,10 +288,7 @@ button svg {
   color: var(--accent);
 }
 .library-item-question {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  display: block;
   font-size: 11px;
   line-height: 1.6;
   color: var(--muted);
@@ -342,7 +338,7 @@ main {
 .experiment-meta {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 12px;
   margin-bottom: 8px;
 }
@@ -1157,7 +1153,7 @@ body:has(dialog[open]) {
   .mobile-library[open] {
     display: flex;
     flex-direction: column;
-    height: min(760px, calc(100dvh - 36px));
+    max-height: calc(100dvh - 36px);
     width: min(440px, calc(100vw - 24px));
   }
   .mobile-library-close {

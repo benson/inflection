@@ -13,7 +13,7 @@ import {
   wordDiff,
   SHARED_API,
 } from "../src/engine";
-import { seeds, categories } from "../src/seeds";
+import { seeds } from "../src/seeds";
 import { sampleRun } from "../src/sample";
 import { isDraft, isExperiment } from "../src/storage";
 
@@ -26,19 +26,30 @@ test("unfinished drafts survive reload without becoming runnable experiments", (
   assert.equal(isDraft({ original: "missing structure" }), false);
 });
 
-test("120 unique, valid questions across 12 topics, each with two different paraphrases", () => {
-  assert.equal(seeds.length, 120);
-  assert.equal(categories.length, 12);
-  assert.equal(new Set(seeds.map((s) => s.id)).size, 120);
-  assert.equal(new Set(seeds.map((s) => s.question)).size, 120);
-  assert.equal(seeds.filter((s) => s.options).length, 24);
+test("three unique, valid examples, each with two different rewordings", () => {
+  assert.equal(seeds.length, 3);
+  assert.equal(new Set(seeds.map((s) => s.id)).size, 3);
+  assert.equal(new Set(seeds.map((s) => s.question)).size, 3);
   for (const s of seeds) {
     assert.equal(validateExperiment(fromSeed(s)), null, s.title);
     assert.equal(new Set([s.question, ...s.variants]).size, 3, s.title);
   }
 });
 test("all wordings preserve exact instructions and shared option IDs; controls vary just one factor", () => {
-  const e = fromSeed(seeds[8]);
+  const e = fromSeed({
+    ...seeds[0],
+    question: "Who should regulate self-driving cars?",
+    variants: [
+      "Who should set rules for self-driving cars?",
+      "Who should oversee autonomous car regulation?",
+    ],
+    options: [
+      "National government",
+      "Local government",
+      "Industry",
+      "No regulator",
+    ],
+  });
   e.expanded = true;
   e.reversed = true;
   e.context = "A hypothetical country.";

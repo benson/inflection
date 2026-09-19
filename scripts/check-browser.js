@@ -22,25 +22,22 @@ async (page) => {
   );
   await page
     .getByRole("textbox", { name: "Original question", exact: false })
-    .fill("Should AI companies need permission to train on copyrighted work?");
+    .fill("Are autonomous vehicles safer than human drivers?");
   check(
-    await page
-      .getByText("No comparison yet", { exact: true })
-      .isVisible(),
+    await page.getByText("No comparison yet", { exact: true }).isVisible(),
     "Editing clears old probabilities",
   );
 
   const rail = page.getByRole("complementary");
-  await rail.getByRole("textbox", { name: "Search questions" }).fill("carbon");
   check(
-    (await rail.getByRole("status").textContent()) === "1 question",
-    "Library search filters results",
+    (await rail.getByRole("button").count()) === 3,
+    "Only three starter examples are shown",
   );
-  await rail.getByRole("button", { name: /Carbon tax/ }).click();
+  await rail.getByRole("button", { name: /Self-driving safety/ }).click();
   check(
     (await page
       .getByRole("textbox", { name: "Original question", exact: false })
-      .inputValue()) === "Should governments tax carbon emissions?",
+      .inputValue()) === "Are self-driving cars safer than human drivers?",
     "Selecting a seed loads its question",
   );
   await page
@@ -52,12 +49,12 @@ async (page) => {
     .click();
   await page
     .getByRole("dialog", { name: "Your experiments" })
-    .getByRole("button", { name: /Carbon tax Should/ })
+    .getByRole("button", { name: /Self-driving safety Are/ })
     .click();
   check(
     (await page
       .getByRole("textbox", { name: "Experiment title" })
-      .inputValue()) === "Carbon tax",
+      .inputValue()) === "Self-driving safety",
     "Saved questions reopen",
   );
 
@@ -267,16 +264,13 @@ async (page) => {
   );
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.getByRole("button", { name: "Browse 120 questions" }).click();
-  const mobile = page.getByRole("dialog", { name: "Question library" });
-  await mobile
-    .getByRole("textbox", { name: "Search questions" })
-    .fill("abortion");
-  await mobile.getByRole("button", { name: /Abortion access Should/ }).click();
+  await page.getByRole("button", { name: "Examples", exact: true }).click();
+  const mobile = page.getByRole("dialog", { name: "Example questions" });
+  await mobile.getByRole("button", { name: /Religion & terrorism/ }).click();
   check(
     (await page
       .getByRole("textbox", { name: "Experiment title" })
-      .inputValue()) === "Abortion access",
+      .inputValue()) === "Religion & terrorism",
     "Mobile library selection works",
   );
   check(

@@ -29,7 +29,7 @@ The setup script checks the key’s cap and sends it to Wrangler over stdin. It 
 
 ## Explore
 
-- 120 original policy questions in 12 categories; 96 yes/no and 24 multiple-choice, each with two editable paraphrases.
+- Three starting questions: self-driving car safety, U.S. political progressivism, and religion and terrorism. Each has two editable rewordings.
 - Create your own question, use two to eight shared answers, and compare up to eight wordings.
 - Word-level insertions and deletions, complete probability distributions, a common-scale dot plot, percentage-point deltas, and answer flips.
 - Repeat the entire batch 1, 3, or 5 times; show mean probabilities and observed min–max ranges.
@@ -51,10 +51,8 @@ Repeated runs estimate observed variability only; min–max lines are not confid
 
 ## Question provenance
 
-Curated September 19, 2026. News coverage informed selection of current topics; the questions are newly written policy prompts, not quoted survey questions or factual assertions. The library combines present debates with enduring controversies, mostly focused on U.S. policy. It is not a live feed and does not fetch current facts for the model.
+Benson selected the three starting questions. The rewordings preserve their intended comparisons and are editable; users can mark meaning changes as Changed framing. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
 
-- [The Week: issues shaping the 2026 midterms](https://theweek.com/politics/issues-that-will-determine-2026-midterms-israel-immigration-gas-trump-iran)
-- [Le Monde: European debates on technology, security, and energy](https://www.lemonde.fr/en/international/article/2026/09/16/as-far-right-gains-ground-eu-commission-president-pledges-a-europe-that-protects_6757608_4.html)
 - [TypeSafe’s documented limitations](https://docs.typesafe.ai/model-jaggedness/jev-1.13)
 - [Choice documentation](https://docs.typesafe.ai/primitives/choice)
 
