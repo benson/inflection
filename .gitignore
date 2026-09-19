@@ -6,3 +6,7 @@ output/
 .env.*
 !.env.example
 *.local
+.secrets/
+.wrangler/
+.dev.vars
+.dev.vars.*

@@ -1,0 +1,16 @@
+name = "inflection-api"
+main = "index.ts"
+compatibility_date = "2026-09-19"
+workers_dev = true
+preview_urls = false
+
+[observability]
+enabled = false
+
+[[ratelimits]]
+name = "REQUEST_LIMITER"
+namespace_id = "2026091901"
+
+  [ratelimits.simple]
+  limit = 20
+  period = 60

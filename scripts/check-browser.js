@@ -108,16 +108,27 @@ async (page) => {
   await page.getByRole("button", { name: "Close dialog", exact: true }).click();
 
   await page
-    .getByRole("button", { name: "Run comparison", exact: true })
+    .getByRole("button", { name: "Shared Jev access", exact: true })
     .click();
-  await page
-    .getByRole("textbox", { name: "OpenRouter API key" })
-    .fill("sk-or-browser-test-fixture");
-  await page.getByRole("button", { name: "Connect key", exact: true }).click();
+  check(
+    await page
+      .getByText("Comparisons use Benson’s OpenRouter budget.")
+      .isVisible(),
+    "Shared access explains whose budget is used",
+  );
+  check(
+    (await page.locator('input[type="password"]').count()) === 0,
+    "Visitors are never asked for an API key",
+  );
+  await page.getByRole("button", { name: "Close dialog", exact: true }).click();
   const captured = [];
   await page.route(
-    "https://openrouter.ai/api/alpha/decisions",
+    "https://inflection-api.bensonperry.workers.dev/decisions",
     async (route) => {
+      check(
+        !route.request().headers().authorization,
+        "Browser request contains no credential",
+      );
       const request = route.request().postDataJSON();
       captured.push(request);
       const answers = Object.fromEntries(
@@ -214,16 +225,26 @@ async (page) => {
     "Comparison export produces a JSON download",
   );
 
-  await page.unroute("https://openrouter.ai/api/alpha/decisions");
-  await page.route("https://openrouter.ai/api/alpha/decisions", (route) =>
-    route.fulfill({ status: 402, contentType: "application/json", body: "{}" }),
+  await page.unroute(
+    "https://inflection-api.bensonperry.workers.dev/decisions",
+  );
+  await page.route(
+    "https://inflection-api.bensonperry.workers.dev/decisions",
+    (route) =>
+      route.fulfill({
+        status: 402,
+        contentType: "application/json",
+        body: JSON.stringify({
+          error: "The shared Jev budget has been used up.",
+        }),
+      }),
   );
   await page
     .getByRole("button", { name: "Run comparison", exact: true })
     .click();
   await page.getByRole("alert").waitFor();
   check(
-    (await page.getByRole("alert").textContent()).includes("needs API credits"),
+    (await page.getByRole("alert").textContent()).includes("shared Jev budget"),
     "Unpaid API errors are visible and never turn into fake results",
   );
   check(
@@ -231,16 +252,18 @@ async (page) => {
       0,
     "Failed requests have no fabricated comparison",
   );
-  await page.unroute("https://openrouter.ai/api/alpha/decisions");
+  await page.unroute(
+    "https://inflection-api.bensonperry.workers.dev/decisions",
+  );
   await page.reload();
   await page
-    .getByRole("button", { name: "Connect OpenRouter", exact: true })
+    .getByRole("button", { name: "Shared Jev access", exact: true })
     .waitFor();
   check(
     await page
-      .getByRole("button", { name: "Connect OpenRouter", exact: true })
+      .getByRole("button", { name: "Shared Jev access", exact: true })
       .isVisible(),
-    "Reload discards the API key",
+    "Shared access persists after reload",
   );
 
   await page.setViewportSize({ width: 390, height: 844 });

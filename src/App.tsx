@@ -10,7 +10,6 @@ import {
   ExternalLink,
   FlaskConical,
   FolderHeart,
-  KeyRound,
   Library,
   Plus,
   Search,
@@ -445,8 +444,6 @@ export default function App() {
   });
   const [saved, setSaved] = useState(readSaved);
   const [history, setHistory] = useState(readHistory);
-  const [apiKey, setApiKey] = useState("");
-  const [keyDraft, setKeyDraft] = useState("");
   const [dialog, setDialog] = useState<
     "connection" | "sources" | "saved" | "request" | null
   >(null);
@@ -593,10 +590,6 @@ export default function App() {
       setError(validError);
       return;
     }
-    if (!apiKey) {
-      setDialog("connection");
-      return;
-    }
     const abort = new AbortController();
     controller.current = abort;
     setBusy(true);
@@ -606,7 +599,6 @@ export default function App() {
     try {
       const result = await evaluate(
         structuredClone(experiment),
-        apiKey,
         repeats,
         abort.signal,
         setProgress,
@@ -625,7 +617,7 @@ export default function App() {
       else
         setError(
           err instanceof TypeError
-            ? "Could not reach OpenRouter. Check your connection and try again."
+            ? "Could not reach Jev. Check your connection and try again."
             : err instanceof Error
               ? err.message
               : "The run failed. Try again.",
@@ -780,16 +772,12 @@ export default function App() {
             )}
           </button>
           <button
-            className={`connection-button ${apiKey ? "connected" : ""}`}
+            className="connection-button"
             disabled={busy}
-            onClick={() => {
-              setKeyDraft("");
-              setDialog("connection");
-            }}
+            onClick={() => setDialog("connection")}
           >
-            <span className="status-dot" />
-            {apiKey ? "Key connected" : "Connect OpenRouter"}
-            <KeyRound size={14} />
+            <FlaskConical size={14} />
+            Shared Jev access
           </button>
         </nav>
       </header>
@@ -1186,14 +1174,6 @@ export default function App() {
                       ? `Evaluating ${count} decisions. Run ${Math.min(progress + 1, repeats)} of ${repeats}.`
                       : "Compare your wordings to see probability shifts, answer flips, and the words that changed."}
                   </p>
-                  {!busy && !apiKey && (
-                    <button
-                      className="secondary-button"
-                      onClick={() => setDialog("connection")}
-                    >
-                      <KeyRound size={15} /> Connect to run Jev
-                    </button>
-                  )}
                   {!busy && (
                     <button
                       className="text-button sample-link"
@@ -1244,83 +1224,20 @@ export default function App() {
         {library}
       </dialog>
       {dialog === "connection" && (
-        <Modal
-          title="Connect to Jev"
-          close={() => {
-            setDialog(null);
-            setKeyDraft("");
-          }}
-        >
+        <Modal title="Shared Jev access" close={() => setDialog(null)}>
           <p className="modal-intro">
-            Use your OpenRouter API credits to run real comparisons.
+            Comparisons use Benson’s OpenRouter budget.
           </p>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (keyDraft.trim()) {
-                setApiKey(keyDraft.trim());
-                setKeyDraft("");
-                setDialog(null);
-                setNotice("Key connected. Run a comparison to try Jev.");
-              }
-            }}
-          >
-            <label className="field-label" htmlFor="api-key">
-              OpenRouter API key
-            </label>
-            <input
-              className="key-input"
-              id="api-key"
-              type="password"
-              autoComplete="off"
-              spellCheck={false}
-              placeholder="sk-or-…"
-              value={keyDraft}
-              onChange={(e) => setKeyDraft(e.target.value)}
-              required
-            />
-            <p className="key-privacy">
-              Kept in memory for this tab. Sent only to OpenRouter; never saved
-              in your experiments or exports.
-            </p>
-            <a
-              className="external-link"
-              href="https://openrouter.ai/settings/keys"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Get an OpenRouter API key <ExternalLink size={14} />
-            </a>
-            <div className="connection-info">
-              <span>Model</span>
-              <strong>TypeSafe / Jev 1.13</strong>
-              <span>Endpoint</span>
-              <strong>OpenRouter Decisions</strong>
-            </div>
-            <div className="modal-actions">
-              {apiKey && (
-                <button
-                  className="quiet-button"
-                  type="button"
-                  onClick={() => {
-                    setApiKey("");
-                    setKeyDraft("");
-                    setDialog(null);
-                    setNotice("Key disconnected.");
-                  }}
-                >
-                  Disconnect key
-                </button>
-              )}
-              <button
-                className="primary-button"
-                type="submit"
-                disabled={!keyDraft.trim()}
-              >
-                Connect key <ArrowRight size={16} />
-              </button>
-            </div>
-          </form>
+          <p>
+            Questions go through Inflection’s server to OpenRouter and TypeSafe.
+            Saved experiments stay in your browser.
+          </p>
+          <div className="connection-info">
+            <span>Model</span>
+            <strong>TypeSafe / Jev 1.13</strong>
+            <span>Access</span>
+            <strong>20 runs per minute</strong>
+          </div>
         </Modal>
       )}
       {dialog === "sources" && (

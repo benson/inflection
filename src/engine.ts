@@ -9,6 +9,7 @@ import type {
 
 export const MODEL = "typesafe/jev-1.13";
 export const ENDPOINT = "https://openrouter.ai/api/alpha/decisions";
+export const SHARED_API = "https://inflection-api.bensonperry.workers.dev";
 export const binaryOptions = (): Experiment["options"] => [
   { id: "yes", label: "Yes" },
   { id: "no", label: "No" },
@@ -232,41 +233,30 @@ export function parseResponse(
 
 export async function evaluate(
   experiment: Experiment,
-  apiKey: string,
   repeats: number,
   signal: AbortSignal,
   progress: (n: number) => void,
 ): Promise<Run> {
-  if (!apiKey.trim())
-    throw new Error("Connect an OpenRouter API key to run Jev.");
   if (![1, 3, 5].includes(repeats)) throw new Error("Choose 1, 3, or 5 runs.");
   const request = buildRequest(experiment);
   const conditions = conditionsFor(experiment);
   const responses: Run["responses"] = [];
   const start = performance.now();
   for (let i = 0; i < repeats; i++) {
-    const response = await fetch(ENDPOINT, {
+    const response = await fetch(`${SHARED_API}/decisions`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${apiKey.trim()}`,
         "Content-Type": "application/json",
-        "X-OpenRouter-Title": "Inflection",
       },
       body: JSON.stringify(request),
       signal: AbortSignal.any([signal, AbortSignal.timeout(45000)]),
     });
     if (!response.ok) {
-      const messages: Record<number, string> = {
-        401: "This OpenRouter key was not accepted. Check it in Connection.",
-        402: "Your OpenRouter account needs API credits.",
-        403: "OpenRouter declined this request. Check account permissions or provider restrictions.",
-        404: "The Jev decisions endpoint or model is unavailable.",
-        429: "OpenRouter is rate limiting requests. Wait a moment, then try again.",
-        529: "Jev is busy. Try again shortly.",
-      };
+      const data = await response.json().catch(() => null);
       throw new Error(
-        messages[response.status] ??
-          `OpenRouter returned HTTP ${response.status}. Try again shortly.`,
+        typeof data?.error === "string" && data.error.length <= 240
+          ? data.error
+          : `Jev returned HTTP ${response.status}. Try again shortly.`,
       );
     }
     const parsed = parseResponse(await response.json(), conditions);

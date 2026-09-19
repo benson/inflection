@@ -9,7 +9,23 @@ npm ci
 npm run dev
 ```
 
-Open http://127.0.0.1:5197. Select **Connect OpenRouter** and enter an OpenRouter API key with credits, then run a comparison. The key is kept only in React memory for the current tab, sent directly to OpenRouter, and excluded from local storage and exports. Reloading disconnects it. No backend, environment file, or TypeSafe waitlist access is needed. No credentials are included in the repository.
+Open http://127.0.0.1:5197 and select **Run comparison**. The public app and local development use Benson’s shared, capped OpenRouter budget through a Cloudflare Worker. Visitors do not need an account or key. The credential is a Worker secret and never reaches the browser, GitHub repository, static build, or exports.
+
+## Shared server
+
+`worker/index.ts` proxies only Jev’s native Decisions endpoint at `https://inflection-api.bensonperry.workers.dev/decisions`. It fixes the model, validates and bounds requests, strips unknown fields, sanitizes provider errors, and allows the production and local development browser origins. Questions pass through the Worker to OpenRouter and TypeSafe. The Worker does not persist question bodies or enable observability logs.
+
+Cloudflare throttles each IP to 20 requests per minute; a repeat consumes one request. This is a best-effort per-location rate limit, not a spending cap or authentication. The dedicated key’s OpenRouter spending limit is the budget control; keep it enabled. CORS is a browser boundary, not protection against non-browser callers.
+
+To deploy or rotate the secret, with Cloudflare account credentials available locally:
+
+```sh
+npx wrangler deploy --config worker/wrangler.toml
+# Paste a dedicated, capped OpenRouter key into .secrets/openrouter-key.txt.
+node scripts/connect-key.mjs
+```
+
+The setup script checks the key’s cap and sends it to Wrangler over stdin. It never prints the key or accepts it as a CLI argument. Remove the local setup file after verifying a live comparison. `/status`, requested with an allowed Origin header, reports whether a secret is configured; it does not test provider balance or availability. Frontend publishing does not deploy the Worker.
 
 ## Explore
 
@@ -21,7 +37,7 @@ Open http://127.0.0.1:5197. Select **Connect OpenRouter** and enter an OpenRoute
 - Mark substantive changes as **Changed framing**; they are excluded from the paraphrase swing statistic.
 - Save questions, inspect 20 recent real comparisons, export full request/response metadata, and import exported experiments.
 
-The initial example has explicitly labeled, invented probabilities. It is a fixed illustration, not a result from Jev. Editing or selecting any other question clears its results. There is no fake-answer fallback. Connecting a key does not incur a charge; only **Run comparison** sends requests.
+The initial example has explicitly labeled, invented probabilities. It is a fixed illustration, not a result from Jev. Editing or selecting any other question clears its results. There is no fake-answer fallback. Only **Run comparison** sends inference requests.
 
 ## Method
 
@@ -49,6 +65,6 @@ npm test
 npm run build
 ```
 
-Node tests cover library integrity, controlled request construction, invalid distributions, ties, swing arithmetic, repeated runs, and the OpenRouter transport with mocked responses. `scripts/check-browser.js` is a Playwright CLI workflow covering actual browser interactions and a clearly mocked API response. Live inference requires the owner’s key and credits.
+Node tests cover library integrity, controlled request construction, invalid distributions, ties, swing arithmetic, repeated runs, credential-free browser transport, and the Worker’s validation, origin checks, throttling, and secret isolation. `scripts/check-browser.js` is a Playwright CLI workflow covering actual browser interactions and a clearly mocked API response. Live inference requires the Worker’s configured key and available credits.
 
 The relative asset base supports GitHub Pages at `bensonperry.com/inflection/`. The deploy workflow runs the focused checks before publishing `dist`. Browser state and keys are not built into that static artifact.

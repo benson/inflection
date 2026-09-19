@@ -11,7 +11,7 @@ import {
   validateExperiment,
   winners,
   wordDiff,
-  ENDPOINT,
+  SHARED_API,
 } from "../src/engine";
 import { seeds, categories } from "../src/seeds";
 import { sampleRun } from "../src/sample";
@@ -105,14 +105,14 @@ test("word diff highlights substitutions and negation, and bounds long inputs", 
   assert.ok(diff.some((d) => d.type === "added" && d.text === "illegal?"));
   assert.equal(wordDiff("a ".repeat(600), "b ".repeat(600)).length, 1);
 });
-test("OpenRouter transport uses Decisions, preserves probability output, never exports a key", async () => {
+test("shared transport preserves probabilities without browser credentials", async () => {
   const originalFetch = globalThis.fetch,
     calls: { url: unknown; body: any }[] = [];
   globalThis.fetch = async (url, init) => {
     calls.push({ url, body: JSON.parse(init!.body as string) });
     assert.equal(
       (init!.headers as Record<string, string>).Authorization,
-      "Bearer fake-test-key",
+      undefined,
     );
     return new Response(
       JSON.stringify({
@@ -126,13 +126,12 @@ test("OpenRouter transport uses Decisions, preserves probability output, never e
   try {
     const run = await evaluate(
       fromSeed(seeds[0]),
-      "fake-test-key",
       3,
       new AbortController().signal,
       () => {},
     );
     assert.equal(calls.length, 3);
-    assert.ok(calls.every((c) => c.url === ENDPOINT));
+    assert.ok(calls.every((c) => c.url === `${SHARED_API}/decisions`));
     assert.equal(run.responses.length, 3);
     assert.equal(run.sample, false);
     assert.ok(!JSON.stringify(run).includes("fake-test-key"));
@@ -143,17 +142,15 @@ test("OpenRouter transport uses Decisions, preserves probability output, never e
 });
 test("a rejected or unpaid request surfaces an error instead of synthetic output", async () => {
   const originalFetch = globalThis.fetch;
-  globalThis.fetch = async () => new Response("{}", { status: 402 });
+  globalThis.fetch = async () =>
+    Response.json(
+      { error: "The shared Jev budget has been used up." },
+      { status: 402 },
+    );
   try {
     await assert.rejects(
-      evaluate(
-        fromSeed(seeds[0]),
-        "fake-test-key",
-        1,
-        new AbortController().signal,
-        () => {},
-      ),
-      /needs API credits/,
+      evaluate(fromSeed(seeds[0]), 1, new AbortController().signal, () => {}),
+      /shared Jev budget/,
     );
   } finally {
     globalThis.fetch = originalFetch;
