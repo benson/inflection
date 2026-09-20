@@ -1,19 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import {
-  ArrowRight,
   Bookmark,
   Check,
   ChevronDown,
-  ChevronRight,
   Download,
-  ExternalLink,
   FlaskConical,
-  FolderHeart,
-  Library,
   Plus,
-  SlidersHorizontal,
-  Square,
   Trash2,
   X,
 } from "lucide-react";
@@ -101,7 +94,7 @@ function Modal({
           aria-label="Close dialog"
           onClick={close}
         >
-          <X size={19} />
+          <X size={16} />
         </button>
       </div>
       {children}
@@ -126,16 +119,28 @@ function Diff({ original, text }: { original: string; text: string }) {
 }
 
 function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
+  const plotRef = useRef<SVGSVGElement>(null);
+  const [plotWidth, setPlotWidth] = useState(388);
+  useEffect(() => {
+    const plot = plotRef.current;
+    if (!plot) return;
+    const observer = new ResizeObserver(() => {
+      setPlotWidth(plot.getBoundingClientRect().width);
+    });
+    observer.observe(plot);
+    return () => observer.disconnect();
+  }, []);
   const base = meanProb(run, "original", optionId);
   const conditions = run.conditions;
-  const h = conditions.length * 51 + 40;
-  const left = 119,
-    width = 217;
+  const h = conditions.length * 48 + 32;
+  const left = 112,
+    width = plotWidth - left - 48;
   const x = (p: number) => left + p * width;
   return (
     <svg
+      ref={plotRef}
       className="probability-plot"
-      viewBox={`0 0 388 ${h}`}
+      viewBox={`0 0 ${plotWidth} ${h}`}
       role="img"
       aria-label="Probability by wording on a common zero to one hundred percent scale"
     >
@@ -143,28 +148,28 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
         <g key={p}>
           <line
             x1={x(p)}
-            y1="19"
+            y1="12"
             x2={x(p)}
-            y2={h - 30}
+            y2={h - 32}
             stroke="var(--line)"
             strokeDasharray={p === 0.5 ? "3 4" : undefined}
           />
-          <text x={x(p)} y={h - 10} textAnchor="middle" className="axis-label">
+          <text x={x(p)} y={h - 8} textAnchor="middle" className="axis-label">
             {p * 100}%
           </text>
         </g>
       ))}
       <line
         x1={x(base)}
-        y1="20"
+        y1="12"
         x2={x(base)}
-        y2={h - 30}
+        y2={h - 32}
         stroke="var(--muted)"
         strokeDasharray="2 4"
       />
       {conditions.map((c, i) => {
         const p = meanProb(run, c.id, optionId),
-          y = i * 51 + 30;
+          y = i * 48 + 24;
         const vals = run.responses.map(
           (r) => r.answers[c.id].probabilities[optionId] ?? 0,
         );
@@ -204,7 +209,12 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
               stroke="var(--accent)"
               strokeWidth="2"
             />
-            <text x="388" y={y + 4} textAnchor="end" className="plot-value">
+            <text
+              x={plotWidth}
+              y={y + 4}
+              textAnchor="end"
+              className="plot-value"
+            >
               {pct(p)}
             </text>
           </g>
@@ -214,7 +224,7 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
   );
 }
 
-function Results({ run, onExport }: { run: Run; onExport: () => void }) {
+function Results({ run }: { run: Run }) {
   const [tracked, setTracked] = useState(run.experiment.options[0].id);
   const [showDiff, setShowDiff] = useState(true);
   const [details, setDetails] = useState(false);
@@ -239,65 +249,62 @@ function Results({ run, onExport }: { run: Run; onExport: () => void }) {
     : undefined;
   return (
     <section className="results" aria-label="Comparison results">
-      <div className="section-heading">
-        <span className="eyebrow">RESULTS</span>
-        <button
-          className="icon-button"
-          onClick={onExport}
-          aria-label="Export comparison"
-        >
-          <Download size={17} />
-        </button>
-      </div>
       {run.sample && (
         <div className="sample-note">
-          <FlaskConical size={16} />
-          <span>
-            <strong>Illustrative example</strong>These numbers are made up to
-            show the interface.
+          <FlaskConical size={14} aria-hidden="true" />
+          <span>Illustrative · invented numbers, not model output</span>
+          <span className="sr-only">
+            These numbers are made up to show the interface.
           </span>
         </div>
       )}
       <div className="stats">
         <div>
           <div className="stat-number">
-            {(maxWordingSwing(run) * 100).toFixed(1)}
-            <span> pp</span>
+            {Math.round(maxWordingSwing(run) * 100)}
           </div>
           <span
             className="stat-caption"
             title="Largest probability range for any shared answer across the original and versions tagged as rewordings."
           >
-            Largest wording swing
+            Largest swing, pp
           </span>
         </div>
         <div>
           <div className="stat-number">
             {flips}
-            <span> / {comparable.length}</span>
+            <span> of </span>
+            {comparable.length}
           </div>
-          <span className="stat-caption">Rewordings flip the answer</span>
+          <span className="stat-caption">Flips</span>
         </div>
       </div>
-      <div className="plot-header">
-        <label htmlFor="track-option">Track probability of</label>
-        <select
-          id="track-option"
-          value={selected.id}
-          onChange={(e) => setTracked(e.target.value)}
-        >
-          {run.experiment.options.map((o) => (
-            <option key={o.id} value={o.id}>
-              {o.label}
-            </option>
-          ))}
-        </select>
-      </div>
+      {run.conditions.some((c) =>
+        ["framing", "expanded", "reversed"].includes(c.kind),
+      ) && (
+        <p className="condition-legend">Tagged rows are excluded from swing</p>
+      )}
+      {run.experiment.options.length > 2 && (
+        <div className="plot-header">
+          <select
+            id="track-option"
+            aria-label="Track probability of"
+            value={selected.id}
+            onChange={(e) => setTracked(e.target.value)}
+          >
+            {run.experiment.options.map((o) => (
+              <option key={o.id} value={o.id}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
       <ProbabilityPlot run={run} optionId={selected.id} />
       <p className="plot-footnote">
         {run.responses.length > 1
-          ? `Mean of ${run.responses.length} runs. Thick lines show the observed range.`
-          : "Dotted line marks the original. Changes are percentage points."}
+          ? `Mean of ${run.responses.length} runs · thick lines show observed range`
+          : `Dotted line: original · tracking ${selected.label}`}
       </p>
       <div className="answer-heading">
         <h3>Answers by wording</h3>
@@ -323,10 +330,25 @@ function Results({ run, onExport }: { run: Run; onExport: () => void }) {
           return (
             <article className="answer" key={c.id}>
               <div className="answer-top">
-                <span className="small-caps">
-                  {String(i + 1).padStart(2, "0")} / {c.label}
-                </span>
-                {i > 0 && <span className="delta">{points(delta)}</span>}
+                <div className="condition-label">
+                  <span>
+                    {String(i + 1).padStart(2, "0")} · {c.label}
+                  </span>
+                  {["framing", "expanded", "reversed"].includes(c.kind) && (
+                    <span className="condition-tag">
+                      {c.kind === "framing"
+                        ? "Framing"
+                        : c.kind === "expanded"
+                          ? "+2 answers"
+                          : "Reversed order"}
+                    </span>
+                  )}
+                </div>
+                <div className="answer-delta">
+                  {leading.length > 1 && <span className="tie-label">Tie</span>}
+                  {isFlip && <span className="flip-pill">Flip</span>}
+                  {i > 0 && <span className="delta">{points(delta)}</span>}
+                </div>
               </div>
               <p className="answer-question">
                 {showDiff && c.kind !== "original" ? (
@@ -335,57 +357,53 @@ function Results({ run, onExport }: { run: Run; onExport: () => void }) {
                   c.text
                 )}
               </p>
-              {["framing", "expanded", "reversed"].includes(c.kind) && (
-                <span className="condition-note">
-                  {c.kind === "framing"
-                    ? "Different framing · excluded from wording swing"
-                    : c.kind === "expanded"
-                      ? "Answer set changed · excluded from wording swing"
-                      : "Option-order control · excluded from wording swing"}
-                </span>
+              {c.options.length > 2 && (
+                <div
+                  className="distribution"
+                  aria-label={`${c.label} answer distribution`}
+                >
+                  {allOptions
+                    .filter((o) => c.options.some((co) => co.id === o.id))
+                    .map((o) => {
+                      const p = meanProb(run, c.id, o.id);
+                      return (
+                        <span
+                          key={o.id}
+                          title={`${o.label}: ${pct(p)}`}
+                          style={{
+                            width: `${p * 100}%`,
+                            background:
+                              colors[
+                                allOptions.findIndex((a) => a.id === o.id)
+                              ],
+                          }}
+                        />
+                      );
+                    })}
+                </div>
               )}
-              <div className="answer-winner">
-                <strong>
-                  {leading.length === 1
-                    ? c.options.find((o) => o.id === leading[0])?.label
-                    : "Tie"}
-                </strong>
-                {isFlip && <span className="flip-pill">Answer changed</span>}
-              </div>
               <div
-                className="distribution"
-                aria-label={`${c.label} answer distribution`}
+                className={`distribution-legend ${c.options.length === 2 ? "binary-figures" : ""}`}
               >
                 {allOptions
                   .filter((o) => c.options.some((co) => co.id === o.id))
-                  .map((o) => {
-                    const p = meanProb(run, c.id, o.id);
-                    return (
-                      <span
-                        key={o.id}
-                        title={`${o.label}: ${pct(p)}`}
-                        style={{
-                          width: `${p * 100}%`,
-                          background:
-                            colors[allOptions.findIndex((a) => a.id === o.id)],
-                        }}
-                      />
-                    );
-                  })}
-              </div>
-              <div className="distribution-legend">
-                {allOptions
-                  .filter((o) => c.options.some((co) => co.id === o.id))
                   .map((o) => (
-                    <span key={o.id}>
-                      <i
-                        style={{
-                          background:
-                            colors[allOptions.findIndex((a) => a.id === o.id)],
-                        }}
-                      />
-                      {o.label}
-                      <b>{pct(meanProb(run, c.id, o.id))}</b>
+                    <span
+                      key={o.id}
+                      className={leading.includes(o.id) ? "winning-answer" : ""}
+                    >
+                      {c.options.length > 2 && (
+                        <i
+                          style={{
+                            background:
+                              colors[
+                                allOptions.findIndex((a) => a.id === o.id)
+                              ],
+                          }}
+                        />
+                      )}
+                      {o.label}{" "}
+                      <b>{Math.round(meanProb(run, c.id, o.id) * 100)}%</b>
                     </span>
                   ))}
               </div>
@@ -394,17 +412,24 @@ function Results({ run, onExport }: { run: Run; onExport: () => void }) {
         })}
       </div>
       <div className="result-footer">
+        <button
+          className="text-button"
+          aria-expanded={details}
+          onClick={() => setDetails(!details)}
+        >
+          Details <ChevronDown size={16} className={details ? "rotated" : ""} />
+        </button>
         <span>
           {run.sample
-            ? "Simulated · not model output"
-            : `${run.responses.length} ${run.responses.length === 1 ? "run" : "runs"} · ${(run.durationMs / 1000).toFixed(2)}s${cost !== undefined ? ` · $${cost.toFixed(6)}` : ""}`}
+            ? "Illustrative · not model output"
+            : [...new Set(run.responses.map((r) => r.model))].join(", ")}
         </span>
-        <button className="text-button" onClick={() => setDetails(!details)}>
-          Details <ChevronDown size={14} />
-        </button>
       </div>
       {details && (
         <div className="technical-details">
+          {!run.sample && (
+            <p>{`${run.responses.length} ${run.responses.length === 1 ? "run" : "runs"} · ${(run.durationMs / 1000).toFixed(2)}s${cost !== undefined ? ` · $${cost.toFixed(6)}` : ""}`}</p>
+          )}
           <p>
             Probabilities describe the model’s allocation across the supplied
             answers. They do not establish whether a moral or political position
@@ -442,10 +467,9 @@ export default function App() {
     () => selectedRun ?? findMatchingRun(experiment, history),
     [selectedRun, experiment, history],
   );
-  const [dialog, setDialog] = useState<
-    "connection" | "sources" | "saved" | "request" | null
-  >(null);
-  const [showLibrary, setShowLibrary] = useState(false);
+  const [dialog, setDialog] = useState<"sources" | "saved" | "request" | null>(
+    null,
+  );
   const [advanced, setAdvanced] = useState(false);
   const [repeats, setRepeats] = useState(1);
   const [busy, setBusy] = useState(false);
@@ -455,7 +479,6 @@ export default function App() {
   const controller = useRef<AbortController | null>(null);
   const originalRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
-  const mobileLibrary = useRef<HTMLDialogElement>(null);
   const validError = validateExperiment(experiment);
   const count =
     1 +
@@ -473,10 +496,6 @@ export default function App() {
     const timer = setTimeout(() => setNotice(""), 4000);
     return () => clearTimeout(timer);
   }, [notice]);
-  useEffect(() => {
-    if (showLibrary) mobileLibrary.current?.showModal();
-    else mobileLibrary.current?.close();
-  }, [showLibrary]);
   useEffect(() => () => controller.current?.abort(), []);
 
   function change(patch: Partial<Experiment>) {
@@ -490,7 +509,6 @@ export default function App() {
     setRun(result);
     setError("");
     setDialog(null);
-    setShowLibrary(false);
   }
   function newQuestion() {
     openExperiment(blankExperiment());
@@ -610,27 +628,6 @@ export default function App() {
     }
   }
 
-  const library = (
-    <>
-      <div className="library-heading">
-        <h2>Examples</h2>
-      </div>
-      <div className="library-list">
-        {seeds.map((s) => (
-          <button
-            disabled={busy}
-            key={s.id}
-            className={`library-item ${experiment.id === s.id ? "selected" : ""}`}
-            onClick={() => openExperiment(fromSeed(s))}
-          >
-            <span className="library-item-title">{s.title}</span>
-            <span className="library-item-question">{s.question}</span>
-          </button>
-        ))}
-      </div>
-    </>
-  );
-
   return (
     <div className="app-shell">
       <header className="topbar">
@@ -640,79 +637,42 @@ export default function App() {
         </div>
         <nav>
           <button
-            className="quiet-button saved-nav"
+            className="text-button saved-nav"
             disabled={busy}
             onClick={() => setDialog("saved")}
           >
-            <FolderHeart size={16} /> Saved{" "}
+            Saved{" "}
             {saved.length > 0 && (
               <span className="count-badge">{saved.length}</span>
             )}
           </button>
-          <button
-            className="connection-button"
-            disabled={busy}
-            onClick={() => setDialog("connection")}
-          >
-            <FlaskConical size={14} />
-            Shared Jev access
-          </button>
         </nav>
       </header>
-      <div className="layout">
-        <aside className="library-panel">{library}</aside>
-        <main>
-          <div className="intro">
+      <main className="layout">
+        <nav className="example-chips" aria-label="Example questions">
+          {seeds.map((s) => (
             <button
-              className="secondary-button new-question"
               disabled={busy}
-              onClick={newQuestion}
+              key={s.id}
+              className="example-chip"
+              aria-pressed={experiment.id === s.id}
+              onClick={() => openExperiment(fromSeed(s))}
             >
-              <Plus size={16} /> Your own question
+              {s.title}
             </button>
-          </div>
-          <div className="mobile-tools">
-            <button
-              className="secondary-button"
-              onClick={() => setShowLibrary(true)}
-            >
-              <Library size={16} /> Examples
-            </button>
-            <button
-              className="quiet-button"
-              disabled={busy}
-              onClick={() => setDialog("saved")}
-            >
-              <Bookmark size={16} /> Saved
-            </button>
-          </div>
-          <div className="workspace">
-            <section className="editor" aria-label="Experiment editor">
-              <div className="experiment-meta">
-                <div className="editor-actions">
-                  <button
-                    disabled={busy}
-                    className="icon-button"
-                    aria-label="Save experiment"
-                    title="Save experiment"
-                    onClick={saveExperiment}
-                  >
-                    {savedCurrent ? (
-                      <Bookmark size={17} fill="currentColor" />
-                    ) : (
-                      <Bookmark size={17} />
-                    )}
-                  </button>
-                  <button
-                    className="icon-button"
-                    aria-label="Export experiment"
-                    title="Export experiment"
-                    onClick={() => exportData(experiment)}
-                  >
-                    <Download size={17} />
-                  </button>
-                </div>
-              </div>
+          ))}
+          <button
+            className="example-chip"
+            disabled={busy}
+            aria-pressed={!seeds.some((s) => s.id === experiment.id)}
+            onClick={newQuestion}
+          >
+            <Plus size={16} /> Your own question
+          </button>
+        </nav>
+        <div className="workspace">
+          <section className="editor" aria-label="Experiment editor">
+            <div className="editor-heading">
               <input
                 className="experiment-title"
                 aria-label="Experiment title"
@@ -721,384 +681,336 @@ export default function App() {
                 disabled={busy}
                 onChange={(e) => change({ title: e.target.value })}
               />
-              <fieldset disabled={busy} className="editor-fieldset">
-                <div className="format-row">
-                  <div className="segmented" aria-label="Answer format">
-                    <button
-                      type="button"
-                      aria-pressed={experiment.mode === "binary"}
-                      onClick={() => changeMode("binary")}
-                    >
-                      Yes / No
-                    </button>
-                    <button
-                      type="button"
-                      aria-pressed={experiment.mode === "multiple"}
-                      onClick={() => changeMode("multiple")}
-                    >
-                      Multiple choice
-                    </button>
-                  </div>
+              <div className="editor-actions">
+                <button
+                  disabled={busy}
+                  className="icon-button"
+                  aria-label="Save experiment"
+                  title="Save experiment"
+                  onClick={saveExperiment}
+                >
+                  {savedCurrent ? (
+                    <Bookmark size={16} fill="currentColor" />
+                  ) : (
+                    <Bookmark size={16} />
+                  )}
+                </button>
+                <button
+                  className="icon-button"
+                  aria-label={run ? "Export comparison" : "Export experiment"}
+                  title={run ? "Export comparison" : "Export experiment"}
+                  onClick={() => exportData()}
+                >
+                  <Download size={16} />
+                </button>
+              </div>
+            </div>
+            <fieldset disabled={busy} className="editor-fieldset">
+              <div className="format-row">
+                <div className="segmented" aria-label="Answer format">
+                  <button
+                    type="button"
+                    aria-pressed={experiment.mode === "binary"}
+                    onClick={() => changeMode("binary")}
+                  >
+                    Yes / No
+                  </button>
+                  <button
+                    type="button"
+                    aria-pressed={experiment.mode === "multiple"}
+                    onClick={() => changeMode("multiple")}
+                  >
+                    Multiple choice
+                  </button>
                 </div>
-                {experiment.mode === "multiple" && (
-                  <div className="option-editor">
-                    <span className="field-label">Answer options</span>
-                    {experiment.options.map((o, i) => (
-                      <div className="option-input" key={o.id}>
-                        <span style={{ color: colors[i] }}>
-                          {String.fromCharCode(65 + i)}
-                        </span>
-                        <input
-                          aria-label={`Answer option ${i + 1}`}
-                          maxLength={300}
-                          placeholder={`Option ${i + 1}`}
-                          value={o.label}
-                          onChange={(e) =>
-                            change({
-                              options: experiment.options.map((a) =>
-                                a.id === o.id
-                                  ? { ...a, label: e.target.value }
-                                  : a,
-                              ),
-                            })
-                          }
-                        />
-                        <button
-                          className="icon-button"
-                          aria-label={`Remove answer option ${i + 1}`}
-                          disabled={experiment.options.length <= 2}
-                          onClick={() =>
-                            change({
-                              options: experiment.options.filter(
-                                (a) => a.id !== o.id,
-                              ),
-                            })
-                          }
-                        >
-                          <X size={14} />
-                        </button>
-                      </div>
-                    ))}
-                    {experiment.options.length < 8 && (
+              </div>
+              {experiment.mode === "multiple" && (
+                <div className="option-editor">
+                  <span className="field-label">Answer options</span>
+                  {experiment.options.map((o, i) => (
+                    <div className="option-input" key={o.id}>
+                      <span style={{ color: colors[i] }}>
+                        {String.fromCharCode(65 + i)}
+                      </span>
+                      <input
+                        aria-label={`Answer option ${i + 1}`}
+                        maxLength={300}
+                        placeholder={`Option ${i + 1}`}
+                        value={o.label}
+                        onChange={(e) =>
+                          change({
+                            options: experiment.options.map((a) =>
+                              a.id === o.id
+                                ? { ...a, label: e.target.value }
+                                : a,
+                            ),
+                          })
+                        }
+                      />
                       <button
-                        className="text-button"
+                        className="icon-button"
+                        aria-label={`Remove answer option ${i + 1}`}
+                        disabled={experiment.options.length <= 2}
                         onClick={() =>
                           change({
-                            options: [
-                              ...experiment.options,
-                              {
-                                id: `option_${crypto.randomUUID().replaceAll("-", "")}`,
-                                label: "",
-                              },
-                            ],
+                            options: experiment.options.filter(
+                              (a) => a.id !== o.id,
+                            ),
                           })
                         }
                       >
-                        <Plus size={14} /> Add answer option
+                        <X size={14} />
                       </button>
-                    )}
-                  </div>
-                )}
-                <div className="wording-card original-card">
-                  <div className="wording-card-top">
-                    <label htmlFor="original">
-                      <span className="wording-number">01</span> Original
-                      question
-                    </label>
-                  </div>
-                  <textarea
-                    ref={originalRef}
-                    id="original"
-                    maxLength={3000}
-                    rows={3}
-                    placeholder="Should…?"
-                    value={experiment.original}
-                    onChange={(e) => change({ original: e.target.value })}
-                  />
-                </div>
-                <div className="variants-label">
-                  <h3>Other wordings</h3>
-                  <span>{experiment.variants.length} / 7</span>
-                </div>
-                {experiment.variants.map((v, i) => (
-                  <div className="wording-card variant-card" key={v.id}>
-                    <div className="wording-card-top">
-                      <label htmlFor={v.id}>
-                        <span className="wording-number">
-                          {String(i + 2).padStart(2, "0")}
-                        </span>{" "}
-                        Wording {i + 1}
-                      </label>
-                      <div className="variant-tools">
-                        <select
-                          aria-label={`Wording ${i + 1} comparison type`}
-                          value={v.kind}
-                          onChange={(e) =>
-                            change({
-                              variants: experiment.variants.map((a) =>
-                                a.id === v.id
-                                  ? {
-                                      ...a,
-                                      kind: e.target.value as
-                                        "paraphrase" | "framing",
-                                    }
-                                  : a,
-                              ),
-                            })
-                          }
-                        >
-                          <option value="paraphrase">Rewording</option>
-                          <option value="framing">Changed framing</option>
-                        </select>
-                        <button
-                          className="icon-button"
-                          aria-label={`Remove wording ${i + 1}`}
-                          onClick={() =>
-                            change({
-                              variants: experiment.variants.filter(
-                                (a) => a.id !== v.id,
-                              ),
-                            })
-                          }
-                        >
-                          <X size={14} />
-                        </button>
-                      </div>
                     </div>
-                    <textarea
-                      id={v.id}
-                      aria-label={`Wording ${i + 1}`}
-                      maxLength={3000}
-                      rows={3}
-                      placeholder="Change a word, a phrase, or the whole framing…"
-                      value={v.text}
-                      onChange={(e) =>
+                  ))}
+                  {experiment.options.length < 8 && (
+                    <button
+                      className="text-button"
+                      onClick={() =>
                         change({
-                          variants: experiment.variants.map((a) =>
-                            a.id === v.id ? { ...a, text: e.target.value } : a,
-                          ),
+                          options: [
+                            ...experiment.options,
+                            {
+                              id: `option_${crypto.randomUUID().replaceAll("-", "")}`,
+                              label: "",
+                            },
+                          ],
                         })
                       }
-                    />
-                    {v.text && v.text !== experiment.original && (
-                      <div
-                        className="inline-diff"
-                        aria-label={`Edits in wording ${i + 1}`}
-                      >
-                        <Diff original={experiment.original} text={v.text} />
-                      </div>
-                    )}
-                  </div>
-                ))}
+                    >
+                      <Plus size={14} /> Add answer option
+                    </button>
+                  )}
+                </div>
+              )}
+              <div className="wording-row original-row">
+                <div className="wording-row-top">
+                  <label htmlFor="original">
+                    <span className="wording-number">01</span> Original
+                  </label>
+                </div>
+                <textarea
+                  ref={originalRef}
+                  id="original"
+                  aria-label="Original question"
+                  maxLength={3000}
+                  rows={2}
+                  placeholder="Should…?"
+                  value={experiment.original}
+                  onChange={(e) => change({ original: e.target.value })}
+                />
+              </div>
+              <div className="variants-label">
+                <h3>
+                  Wordings <span>{experiment.variants.length} / 7</span>
+                </h3>
                 <button
-                  className="add-wording"
+                  className="text-button add-wording"
                   disabled={experiment.variants.length >= 7}
                   onClick={addVariant}
                 >
                   <Plus size={16} /> Add a wording
                 </button>
-                <button
-                  className="advanced-toggle"
-                  aria-expanded={advanced}
-                  onClick={() => setAdvanced(!advanced)}
-                >
-                  <SlidersHorizontal size={15} /> Experiment controls{" "}
-                  <ChevronDown
-                    size={15}
-                    className={advanced ? "rotated" : ""}
-                  />
-                </button>
-                {advanced && (
-                  <div className="advanced-controls">
-                    <label className="check-label">
-                      <input
-                        type="checkbox"
-                        checked={experiment.expanded}
-                        onChange={(e) => change({ expanded: e.target.checked })}
-                      />
-                      <span>
-                        Add a control with “Insufficient information” and “False
-                        premise”
+              </div>
+              {experiment.variants.map((v, i) => (
+                <div className="wording-row" key={v.id}>
+                  <div className="wording-row-top">
+                    <label htmlFor={v.id}>
+                      <span className="wording-number">
+                        {String(i + 2).padStart(2, "0")}
                       </span>
+                      <span className="sr-only">Wording {i + 1}</span>
                     </label>
-                    <label className="check-label">
-                      <input
-                        type="checkbox"
-                        checked={experiment.reversed}
-                        onChange={(e) => change({ reversed: e.target.checked })}
-                      />
-                      <span>Add a control with reversed answer order</span>
-                    </label>
-                    <label className="field-label" htmlFor="shared-context">
-                      Shared context
-                    </label>
-                    <textarea
-                      id="shared-context"
-                      rows={3}
-                      maxLength={12000}
-                      placeholder="Optional facts or assumptions, kept identical for every wording."
-                      value={experiment.context}
-                      onChange={(e) => change({ context: e.target.value })}
-                    />
-                    <p>
-                      Controls use the original question. Changed framing and
-                      control rows are excluded from the wording-swing
-                      statistic.
-                    </p>
-                    <button
-                      className="text-button"
-                      disabled={!!validError}
-                      onClick={() => setDialog("request")}
-                    >
-                      View exact API request <ChevronRight size={14} />
-                    </button>
+                    <div className="variant-tools">
+                      <button
+                        className="text-button"
+                        aria-label={`Wording ${i + 1} comparison type: ${v.kind === "framing" ? "Changed framing" : "Rewording"}`}
+                        aria-pressed={v.kind === "framing"}
+                        onClick={() =>
+                          change({
+                            variants: experiment.variants.map((a) =>
+                              a.id === v.id
+                                ? {
+                                    ...a,
+                                    kind:
+                                      v.kind === "paraphrase"
+                                        ? "framing"
+                                        : "paraphrase",
+                                  }
+                                : a,
+                            ),
+                          })
+                        }
+                      >
+                        {v.kind === "framing" ? "Changed framing" : "Rewording"}
+                      </button>
+                      <button
+                        className="icon-button"
+                        aria-label={`Remove wording ${i + 1}`}
+                        onClick={() =>
+                          change({
+                            variants: experiment.variants.filter(
+                              (a) => a.id !== v.id,
+                            ),
+                          })
+                        }
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
                   </div>
-                )}
-              </fieldset>
-              <div className="run-bar">
-                <div className="repeat-control">
-                  <label htmlFor="repeat-count">Repeat each wording</label>
-                  <select
-                    id="repeat-count"
-                    disabled={busy}
-                    value={repeats}
-                    onChange={(e) => setRepeats(Number(e.target.value))}
-                  >
-                    <option value={1}>1 time</option>
-                    <option value={3}>3 times</option>
-                    <option value={5}>5 times</option>
-                  </select>
+                  <textarea
+                    id={v.id}
+                    aria-label={`Wording ${i + 1}`}
+                    maxLength={3000}
+                    rows={2}
+                    placeholder="Change a word, a phrase, or the whole framing…"
+                    value={v.text}
+                    onChange={(e) =>
+                      change({
+                        variants: experiment.variants.map((a) =>
+                          a.id === v.id ? { ...a, text: e.target.value } : a,
+                        ),
+                      })
+                    }
+                  />
                 </div>
-                {busy ? (
+              ))}
+              <button
+                className="advanced-toggle"
+                aria-expanded={advanced}
+                onClick={() => setAdvanced(!advanced)}
+              >
+                Controls{" "}
+                <ChevronDown size={16} className={advanced ? "rotated" : ""} />
+              </button>
+              {advanced && (
+                <div className="advanced-controls">
+                  <label className="check-label">
+                    <input
+                      type="checkbox"
+                      checked={experiment.expanded}
+                      onChange={(e) => change({ expanded: e.target.checked })}
+                    />
+                    <span>
+                      Extra answers: insufficient information, false premise
+                    </span>
+                  </label>
+                  <label className="check-label">
+                    <input
+                      type="checkbox"
+                      checked={experiment.reversed}
+                      onChange={(e) => change({ reversed: e.target.checked })}
+                    />
+                    <span>Reversed answer order</span>
+                  </label>
+                  <label className="field-label" htmlFor="shared-context">
+                    Shared context
+                  </label>
+                  <textarea
+                    id="shared-context"
+                    rows={3}
+                    maxLength={12000}
+                    placeholder="optional facts or assumptions, identical for every wording"
+                    value={experiment.context}
+                    onChange={(e) => change({ context: e.target.value })}
+                  />
                   <button
-                    className="primary-button"
-                    onClick={() => controller.current?.abort()}
+                    className="text-button"
+                    disabled={!!validError}
+                    onClick={() => setDialog("request")}
                   >
-                    <Square size={14} /> Stop · {progress}/{repeats}
+                    View exact API request
                   </button>
-                ) : (
-                  <button className="primary-button" onClick={runExperiment}>
-                    <span>Run comparison</span>
-                    <ArrowRight size={17} />
+                </div>
+              )}
+            </fieldset>
+            <div className="run-bar">
+              {busy ? (
+                <button
+                  className="primary-button"
+                  onClick={() => controller.current?.abort()}
+                >
+                  Stop · {progress}/{repeats}
+                </button>
+              ) : (
+                <button className="primary-button" onClick={runExperiment}>
+                  <span>Run comparison</span>
+                </button>
+              )}
+              <div
+                className="segmented repeat-control"
+                role="group"
+                aria-label="Repeat each wording"
+              >
+                {[1, 3, 5].map((n) => (
+                  <button
+                    key={n}
+                    disabled={busy}
+                    aria-pressed={repeats === n}
+                    onClick={() => setRepeats(n)}
+                  >
+                    ×{n}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="run-caption">
+              {count} decisions{repeats > 1 ? ` × ${repeats} runs` : ""}
+            </div>
+            {error && (
+              <p role="alert" className="error-message">
+                {error}
+              </p>
+            )}
+          </section>
+          <div className="results-column">
+            {run ? (
+              <Results key={run.id} run={run} />
+            ) : (
+              <section className="results empty-results" aria-live="polite">
+                <p>
+                  {busy
+                    ? `Evaluating ${count} decisions. Run ${Math.min(progress + 1, repeats)} of ${repeats}.`
+                    : "Run a comparison to see probabilities"}
+                </p>
+                {!busy && (
+                  <button
+                    className="text-button sample-link"
+                    onClick={() => {
+                      const r = sampleRun();
+                      openExperiment(r.experiment, r);
+                    }}
+                  >
+                    View the example
                   </button>
                 )}
-              </div>
-              <div className="run-caption">
-                <span>
-                  {count} decisions × {repeats} {repeats === 1 ? "run" : "runs"}
-                </span>
-                <span>Jev 1.13 via OpenRouter</span>
-              </div>
-              {error && (
-                <p role="alert" className="error-message">
-                  {error}
-                </p>
-              )}
-            </section>
-            <div className="results-column">
-              {run ? (
-                <Results
-                  key={run.id}
-                  run={run}
-                  onExport={() => exportData(run)}
-                />
-              ) : (
-                <section className="results empty-results" aria-live="polite">
-                  <div className="eyebrow">THE DIFFERENCE</div>
-                  <div className="empty-graphic" aria-hidden="true">
-                    <svg viewBox="0 0 240 120">
-                      <path
-                        d="M20 30H220M20 60H220M20 90H220"
-                        stroke="var(--line)"
-                      />
-                      <path
-                        d="M93 20V105"
-                        stroke="var(--muted)"
-                        strokeDasharray="3 5"
-                      />
-                      <path
-                        d="M93 30H93M93 60H141M93 90H61"
-                        stroke="var(--line-strong)"
-                        strokeWidth="2"
-                      />
-                      <circle
-                        cx="93"
-                        cy="30"
-                        r="6"
-                        fill="var(--paper)"
-                        stroke="var(--accent)"
-                        strokeWidth="2"
-                      />
-                      <circle cx="141" cy="60" r="6" fill="var(--accent)" />
-                      <circle cx="61" cy="90" r="6" fill="var(--accent)" />
-                    </svg>
-                  </div>
-                  <h2>{busy ? "Running comparison…" : "No comparison yet"}</h2>
-                  <p>
-                    {busy
-                      ? `Evaluating ${count} decisions. Run ${Math.min(progress + 1, repeats)} of ${repeats}.`
-                      : "Run a comparison to see the probabilities."}
-                  </p>
-                  {!busy && (
-                    <button
-                      className="text-button sample-link"
-                      onClick={() => {
-                        const r = sampleRun();
-                        openExperiment(r.experiment, r);
-                      }}
-                    >
-                      Explore an illustrative example <ArrowRight size={14} />
-                    </button>
-                  )}
-                </section>
-              )}
-            </div>
+              </section>
+            )}
           </div>
-          <footer className="page-footer">
-            <a href="https://bensonperry.com/">bensonperry.com</a>
-            <button
-              className="text-button"
-              onClick={() => setDialog("sources")}
-            >
-              Questions & method <ArrowRight size={13} />
-            </button>
-          </footer>
-        </main>
-      </div>
-      <dialog
-        ref={mobileLibrary}
-        className="mobile-library modal"
-        aria-label="Example questions"
-        onCancel={() => setShowLibrary(false)}
-      >
-        <button
-          className="icon-button mobile-library-close"
-          aria-label="Close examples"
-          onClick={() => setShowLibrary(false)}
-        >
-          <X size={20} />
-        </button>
-        {library}
-      </dialog>
-      {dialog === "connection" && (
-        <Modal title="Shared Jev access" close={() => setDialog(null)}>
-          <p className="modal-intro">
-            Comparisons use Benson’s OpenRouter budget.
-          </p>
-          <p>
-            Questions go through Inflection’s server to OpenRouter and TypeSafe.
-            Saved experiments stay in your browser.
-          </p>
+        </div>
+        <footer className="page-footer">
+          <a href="https://bensonperry.com/">bensonperry.com</a>
+          {" · "}
+          <button className="text-button" onClick={() => setDialog("sources")}>
+            Questions & method
+          </button>
+          {" · Jev 1.13 via OpenRouter · shared budget, 20 runs per minute"}
+        </footer>
+      </main>
+      {dialog === "sources" && (
+        <Modal title="Questions & method" close={() => setDialog(null)} wide>
           <div className="connection-info">
             <span>Model</span>
             <strong>TypeSafe / Jev 1.13</strong>
             <span>Access</span>
             <strong>20 runs per minute</strong>
+            <p>
+              Comparisons use a shared, capped budget; questions go through
+              Inflection’s server to OpenRouter and TypeSafe; saved experiments
+              stay in your browser.
+            </p>
           </div>
-        </Modal>
-      )}
-      {dialog === "sources" && (
-        <Modal title="Questions & method" close={() => setDialog(null)} wide>
           <p>
             If a version changes the meaning, tag it “Changed framing” to
             exclude it from wording swing.
@@ -1111,8 +1023,8 @@ export default function App() {
           </p>
           <p>
             Repeat runs show observed variability, not statistical confidence
-            intervals. Controls change the answer set or option order; their
-            results are excluded from wording swing.
+            intervals. Controls use the original question and are excluded from
+            wording swing.
           </p>
           <h3>Reading & sources</h3>
           <div className="sources-list">
@@ -1123,7 +1035,6 @@ export default function App() {
                   <span>{s.publisher}</span>
                   <p>{s.note}</p>
                 </div>
-                <ExternalLink size={16} />
               </a>
             ))}
           </div>

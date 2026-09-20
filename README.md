@@ -67,6 +67,6 @@ npm test
 npm run build
 ```
 
-Node tests cover library integrity, controlled request construction, invalid distributions, ties, swing arithmetic, repeated runs, credential-free browser transport, and the Worker’s validation, origin checks, throttling, and secret isolation. `scripts/check-browser.js` is a Playwright CLI workflow covering actual browser interactions and a clearly mocked API response. Live inference requires the Worker’s configured key and available credits.
+Node tests cover example integrity, controlled request construction, invalid distributions, ties, swing arithmetic, repeated runs, credential-free browser transport, and the Worker’s validation, origin checks, throttling, and secret isolation. With the dev server running and Playwright already installed, `node scripts/check-browser.js` checks the example chips, responsive layout, browser interactions, and a clearly mocked API response. Its header documents using an existing external Playwright installation. Live inference requires the Worker’s configured key and available credits.
 
 The relative asset base supports GitHub Pages at `bensonperry.com/inflection/`. The deploy workflow runs the focused checks before publishing `dist`. Browser state and keys are not built into that static artifact.

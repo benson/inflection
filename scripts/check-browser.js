@@ -1,4 +1,12 @@
-async (page) => {
+// With `npm run dev` running, execute `node scripts/check-browser.js`.
+// Uses an existing Playwright installation; PLAYWRIGHT_MODULE may point to its
+// entry file when it is installed outside this checkout. Never installs browsers.
+// The exported workflow can also be called with a Playwright CLI page.
+import { mkdir } from "node:fs/promises";
+import { resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+
+export default async function checkBrowser(page) {
   const checks = [];
   const check = (condition, message) => {
     if (!condition) throw new Error(message);
@@ -13,27 +21,85 @@ async (page) => {
       if (k.startsWith("inflection-v1-")) localStorage.removeItem(k);
   });
   await page.reload();
-  await page.getByText("Illustrative example", { exact: true }).waitFor();
+  await page
+    .getByText("Illustrative · invented numbers, not model output", {
+      exact: true,
+    })
+    .waitFor();
   check(
     (await page.locator(".sample-note").textContent()).includes(
       "These numbers are made up to show the interface.",
     ),
     "Synthetic example is unmistakably labeled",
   );
+  check(
+    (await page
+      .getByRole("combobox", { name: "Track probability of" })
+      .count()) === 0 && (await page.locator(".binary-figures").count()) === 3,
+    "Two-answer results use compact figures and track the first option",
+  );
+  check(
+    (await page.locator(".stat-number").allTextContents())
+      .map((text) => text.trim())
+      .join(" / ") === "29 / 1 of 2",
+    "Sample stats show integer swing and flips out of comparable wordings",
+  );
+  for (const width of [860, 859, 700, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.waitForFunction(() => {
+      const plot = document.querySelector(".probability-plot");
+      return (
+        Math.abs(
+          plot.viewBox.baseVal.width - plot.getBoundingClientRect().width,
+        ) < 0.1
+      );
+    });
+    const layout = await page.evaluate(() => {
+      const editor = document.querySelector(".editor").getBoundingClientRect();
+      const results = document
+        .querySelector(".results-column")
+        .getBoundingClientRect();
+      return {
+        stacked: results.top >= editor.bottom,
+        overflow: document.documentElement.scrollWidth > window.innerWidth,
+      };
+    });
+    check(
+      layout.stacked === width < 860 && !layout.overflow,
+      `Columns and page overflow are correct at ${width}px`,
+    );
+    check(
+      await page
+        .locator(".plot-label")
+        .first()
+        .evaluate(
+          (label) =>
+            Math.abs(
+              Number.parseFloat(getComputedStyle(label).fontSize) *
+                label.getScreenCTM().a -
+                12,
+            ) < 0.1,
+        ),
+      `Plot labels remain 12px at ${width}px`,
+    );
+  }
+  await page.setViewportSize({ width: 1440, height: 1100 });
   await page
     .getByRole("textbox", { name: "Original question", exact: false })
     .fill("Are autonomous vehicles safer than human drivers?");
   check(
-    await page.getByText("No comparison yet", { exact: true }).isVisible(),
+    await page
+      .getByText("Run a comparison to see probabilities", { exact: true })
+      .isVisible(),
     "Editing clears old probabilities",
   );
 
-  const rail = page.getByRole("complementary");
+  const chips = page.getByRole("navigation", { name: "Example questions" });
   check(
-    (await rail.getByRole("button").count()) === 4,
-    "Only four starter examples are shown",
+    (await chips.getByRole("button").count()) === 5,
+    "Four starter examples and a custom question chip are shown",
   );
-  await rail.getByRole("button", { name: /Self-driving safety/ }).click();
+  await chips.getByRole("button", { name: /Self-driving safety/ }).click();
   check(
     (await page
       .getByRole("textbox", { name: "Original question", exact: false })
@@ -85,13 +151,13 @@ async (page) => {
     .getByRole("textbox", { name: "Wording 2", exact: true })
     .fill("Which policy should receive priority?");
   await page
-    .getByRole("combobox", { name: "Wording 2 comparison type" })
-    .selectOption("framing");
-  await page.getByRole("button", { name: "Experiment controls" }).click();
+    .getByRole("button", { name: "Wording 2 comparison type: Rewording" })
+    .click();
+  await page.getByRole("button", { name: "Controls", exact: true }).click();
   await page
-    .getByRole("checkbox", { name: /Insufficient information/ })
+    .getByRole("checkbox", { name: /insufficient information/ })
     .check();
-  await page.getByRole("checkbox", { name: /reversed answer order/ }).check();
+  await page.getByRole("checkbox", { name: /Reversed answer order/i }).check();
   await page
     .getByRole("textbox", { name: "Shared context" })
     .fill("This is a browser test fixture, not a real policy evaluation.");
@@ -105,13 +171,13 @@ async (page) => {
   await page.getByRole("button", { name: "Close dialog", exact: true }).click();
 
   await page
-    .getByRole("button", { name: "Shared Jev access", exact: true })
+    .getByRole("button", { name: "Questions & method", exact: true })
     .click();
   check(
-    await page
-      .getByText("Comparisons use Benson’s OpenRouter budget.")
-      .isVisible(),
-    "Shared access explains whose budget is used",
+    (await page.locator(".connection-info").textContent()).includes(
+      "Comparisons use a shared, capped budget",
+    ),
+    "Questions and method explains the shared budget and connection",
   );
   check(
     (await page.locator('input[type="password"]').count()) === 0,
@@ -158,8 +224,9 @@ async (page) => {
     },
   );
   await page
-    .getByRole("combobox", { name: "Repeat each wording" })
-    .selectOption("3");
+    .getByRole("group", { name: "Repeat each wording" })
+    .getByRole("button", { name: "×3", exact: true })
+    .click();
   await page
     .getByRole("button", { name: "Run comparison", exact: true })
     .click();
@@ -178,13 +245,16 @@ async (page) => {
     "No invisible prompt is prepended",
   );
   check(
-    (await page.locator(".stat-number").first().textContent()).includes("55.0"),
+    (await page.locator(".stat-number").first().textContent()).trim() === "55",
     "Probability swing is calculated correctly for multiple choice",
   );
   check(
-    await page
-      .getByText("Different framing · excluded from wording swing")
-      .isVisible(),
+    (await page.locator(".condition-tag").allTextContents()).includes(
+      "Framing",
+    ) &&
+      (await page
+        .getByText("Tagged rows are excluded from swing", { exact: true })
+        .isVisible()),
     "Changed framing is separately identified",
   );
   await page
@@ -301,24 +371,30 @@ async (page) => {
   );
   await page.reload();
   await page
-    .getByRole("button", { name: "Shared Jev access", exact: true })
+    .getByRole("button", { name: "Questions & method", exact: true })
     .waitFor();
   check(
     await page
-      .getByRole("button", { name: "Shared Jev access", exact: true })
+      .getByRole("button", { name: "Questions & method", exact: true })
       .isVisible(),
-    "Shared access persists after reload",
+    "Questions and method remains available after reload",
   );
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.getByRole("button", { name: "Examples", exact: true }).click();
-  const mobile = page.getByRole("dialog", { name: "Example questions" });
-  await mobile.getByRole("button", { name: /Religion & terrorism/ }).click();
+  check(
+    await chips.evaluate(
+      (row) =>
+        row.scrollWidth > row.clientWidth &&
+        getComputedStyle(row).flexWrap === "nowrap",
+    ),
+    "Phone example chips form a horizontally scrolling row",
+  );
+  await chips.getByRole("button", { name: /Religion & terrorism/ }).click();
   check(
     (await page
       .getByRole("textbox", { name: "Experiment title" })
       .inputValue()) === "Religion & terrorism",
-    "Mobile library selection works",
+    "Mobile example chip selection works",
   );
   check(
     await page.evaluate(
@@ -326,9 +402,7 @@ async (page) => {
     ),
     "Phone layout has no horizontal overflow",
   );
-  await page
-    .getByRole("button", { name: "Explore an illustrative example" })
-    .click();
+  await page.getByRole("button", { name: "View the example" }).click();
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({
     path: "output/playwright/mobile.png",
@@ -344,4 +418,33 @@ async (page) => {
   await page.reload();
   await page.screenshot({ path: "output/playwright/desktop.png" });
   return { passed: checks.length, checks };
-};
+}
+
+if (
+  process.argv[1] &&
+  fileURLToPath(import.meta.url) === resolve(process.argv[1])
+) {
+  let playwright;
+  try {
+    playwright = await import(
+      process.env.PLAYWRIGHT_MODULE
+        ? pathToFileURL(resolve(process.env.PLAYWRIGHT_MODULE)).href
+        : "playwright"
+    );
+  } catch (error) {
+    if (error.code !== "ERR_MODULE_NOT_FOUND") throw error;
+    console.error(
+      "Playwright is not installed here. Set PLAYWRIGHT_MODULE to an existing installation to run browser checks.",
+    );
+    process.exit(1);
+  }
+  await mkdir("output/playwright", { recursive: true });
+  const browser = await playwright.chromium.launch({ headless: true });
+  try {
+    const page = await browser.newPage();
+    page.setDefaultTimeout(10000);
+    console.log(JSON.stringify(await checkBrowser(page), null, 2));
+  } finally {
+    await browser.close();
+  }
+}
