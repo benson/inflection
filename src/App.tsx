@@ -17,7 +17,7 @@ import {
   findMatchingRun,
   fromSeed,
   maxWordingSwing,
-  tallyText,
+  answerTally,
   meanProb,
   validateExperiment,
   winners,
@@ -180,7 +180,7 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
     return () => observer.disconnect();
   }, []);
   const conditions = run.conditions;
-  const h = conditions.length * 48 + 32;
+  const h = conditions.length * 24 + 32;
   const left = 32,
     width = plotWidth - left - 48;
   const x = (p: number) => left + p * width;
@@ -209,7 +209,7 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
       ))}
       {conditions.map((c, i) => {
         const p = meanProb(run, c.id, optionId),
-          y = i * 48 + 24;
+          y = i * 24 + 12;
         const vals = run.responses.map(
           (r) => r.answers[c.id].probabilities[optionId] ?? 0,
         );
@@ -252,6 +252,53 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
   );
 }
 
+function ResultDetails({
+  experiment,
+  run,
+}: {
+  experiment: Experiment;
+  run?: Run;
+}) {
+  const cost = run?.responses.every((r) => typeof r.usage?.cost === "number")
+    ? run.responses.reduce((s, r) => s + r.usage!.cost!, 0)
+    : undefined;
+  return (
+    <details className="result-details">
+      <summary className="result-footer">
+        <span className="text-button">
+          details <ChevronDown size={16} />
+        </span>
+        {run && <span>{run.responses[0].model}</span>}
+      </summary>
+      <div className="technical-details">
+        {run && (
+          <>
+            {run.source === "local" && (
+              <p>{`${(run.durationMs / 1000).toFixed(2)}s${cost !== undefined ? ` · $${cost.toFixed(6)}` : ""}`}</p>
+            )}
+            <p>
+              Probabilities describe the model’s allocation across the supplied
+              answers. They do not establish whether a moral or political
+              position is correct.
+            </p>
+            <p>
+              Largest swing is the largest range of mean probabilities for any
+              answer across all wordings. Answers tally each wording’s winner;
+              ties count as a tie. A paraphrase can still change meaning; review
+              the highlighted edits.
+            </p>
+            <p>{`Model: ${run.responses[0].model}. ${new Date(run.createdAt).toLocaleString()}.`}</p>
+          </>
+        )}
+        <h3 className="field-label">exact api request</h3>
+        <pre className="request-preview">
+          {JSON.stringify(run?.request ?? buildRequest(experiment), null, 2)}
+        </pre>
+      </div>
+    </details>
+  );
+}
+
 function Results({
   run,
   tracked,
@@ -280,28 +327,45 @@ function Results({
       : run.source === "shared"
         ? `shared link · ${date}`
         : `your run · ${run.responses.length > 1 ? `${run.responses.length} repeats` : "just now"}`;
-  const cost = run.responses.every((r) => typeof r.usage?.cost === "number")
-    ? run.responses.reduce((s, r) => s + r.usage!.cost!, 0)
-    : undefined;
   return (
     <section className="results" aria-label="Comparison results">
       <div className="result-source">{tag}</div>
       <div className="stats">
-        <div>
-          <div className="stat-number">
+        <div className="swing-stat">
+          <span className="stat-number">
             {Math.round(maxWordingSwing(run) * 100)}
-          </div>
+          </span>
           <span
             className="stat-caption"
             title="Largest range of mean probabilities for any answer across all wordings."
           >
-            largest swing, pp
+            pp largest swing
           </span>
         </div>
         <div className="tally-stat">
-          <div className="answer-tally">{tallyText(run)}</div>
+          <div className="answer-tally">
+            {answerTally(run).map((answer, i) => (
+              <Fragment key={answer.id}>
+                {i > 0 && " · "}
+                <span>
+                  {run.experiment.mode === "binary"
+                    ? answer.label.toLowerCase()
+                    : answer.label}{" "}
+                  <span className="tally-number">{answer.count}</span>
+                </span>
+              </Fragment>
+            ))}
+          </div>
           <span className="stat-caption">answers</span>
         </div>
+        <label className="check-label">
+          <input
+            type="checkbox"
+            checked={showDiff}
+            onChange={(e) => setShowDiff(e.target.checked)}
+          />{" "}
+          show edits
+        </label>
       </div>
       {run.experiment.options.length > 2 && (
         <div className="plot-header">
@@ -322,81 +386,66 @@ function Results({
       {run.responses.length > 1 && (
         <p className="plot-footnote">thick lines show the observed range</p>
       )}
-      <div className="answer-heading">
-        <h3>answers by wording</h3>
-        <label className="check-label">
-          <input
-            type="checkbox"
-            checked={showDiff}
-            onChange={(e) => setShowDiff(e.target.checked)}
-          />{" "}
-          show edits
-        </label>
-      </div>
       <div className="answer-list">
         {run.conditions.map((c) => {
           const leading = winners(run, c.id);
+          const binary = c.options.length === 2;
+          const figures = (
+            <div
+              className={`distribution-legend ${binary ? "binary-figures" : ""}`}
+            >
+              {c.options.map((o) => (
+                <span
+                  key={o.id}
+                  className={leading.includes(o.id) ? "winning-answer" : ""}
+                >
+                  {o.label}{" "}
+                  <b>
+                    {Math.round(meanProb(run, c.id, o.id) * 100)}
+                    {binary ? "" : "%"}
+                  </b>
+                </span>
+              ))}
+              {leading.length > 1 && <span className="answer-tie">tie</span>}
+            </div>
+          );
           return (
             <article className="answer" key={c.id}>
-              <div className="answer-top">
-                <span>{c.label}</span>
-                {leading.length > 1 && <span>tie</span>}
-              </div>
-              <p className="answer-question">
-                {showDiff && c.id !== "w1" ? (
-                  <Diff
-                    before={run.experiment.wordings[0].text}
-                    text={c.text}
-                  />
-                ) : (
-                  c.text
+              <span className="answer-number">{c.label}</span>
+              <div className="answer-copy">
+                <p className="answer-question">
+                  {showDiff && c.id !== "w1" ? (
+                    <Diff
+                      before={run.experiment.wordings[0].text}
+                      text={c.text}
+                    />
+                  ) : (
+                    c.text
+                  )}
+                </p>
+                {!binary && (
+                  <div className="answer-distribution">
+                    <div className="distribution-bar" aria-hidden="true">
+                      {c.options.map((o, i) => (
+                        <span
+                          key={o.id}
+                          style={{
+                            width: `${meanProb(run, c.id, o.id) * 100}%`,
+                            backgroundColor: colors[i],
+                          }}
+                        />
+                      ))}
+                    </div>
+                    {figures}
+                  </div>
                 )}
-              </p>
-              <div
-                className={`distribution-legend ${c.options.length === 2 ? "binary-figures" : ""}`}
-              >
-                {c.options.map((o) => (
-                  <span
-                    key={o.id}
-                    className={leading.includes(o.id) ? "winning-answer" : ""}
-                  >
-                    {o.label}{" "}
-                    <b>
-                      {Math.round(meanProb(run, c.id, o.id) * 100)}
-                      {c.options.length > 2 ? "%" : ""}
-                    </b>
-                  </span>
-                ))}
               </div>
+              {binary && figures}
             </article>
           );
         })}
       </div>
-      <details className="result-details">
-        <summary className="result-footer">
-          <span className="text-button">
-            details <ChevronDown size={16} />
-          </span>
-          <span>{run.responses[0].model}</span>
-        </summary>
-        <div className="technical-details">
-          {run.source === "local" && (
-            <p>{`${(run.durationMs / 1000).toFixed(2)}s${cost !== undefined ? ` · $${cost.toFixed(6)}` : ""}`}</p>
-          )}
-          <p>
-            Probabilities describe the model’s allocation across the supplied
-            answers. They do not establish whether a moral or political position
-            is correct.
-          </p>
-          <p>
-            Largest swing is the largest range of mean probabilities for any
-            answer across all wordings. Answers tally each wording’s winner;
-            ties count as a tie. A paraphrase can still change meaning; review
-            the highlighted edits.
-          </p>
-          <p>{`Model: ${run.responses[0].model}. ${new Date(run.createdAt).toLocaleString()}.`}</p>
-        </div>
-      </details>
+      <ResultDetails experiment={run.experiment} run={run} />
     </section>
   );
 }
@@ -425,9 +474,7 @@ export default function App({
       findRecordedRun(experiment),
     [selectedRun, experiment, history],
   );
-  const [dialog, setDialog] = useState<"about" | "history" | "request" | null>(
-    null,
-  );
+  const [dialog, setDialog] = useState<"about" | "history" | null>(null);
   const [tracked, setTracked] = useState("");
   const [repeats, setRepeats] = useState(1);
   const [busy, setBusy] = useState(false);
@@ -807,25 +854,9 @@ export default function App({
               </div>
               {experiment.wordings.map((w, i) => (
                 <div className="wording-row" key={w.id}>
-                  <div className="wording-row-top">
-                    <label htmlFor={w.id}>
-                      <span className="wording-number">{i + 1}</span>
-                    </label>
-                    <button
-                      className="icon-button"
-                      aria-label={`Remove wording ${i + 1}`}
-                      disabled={experiment.wordings.length <= 2}
-                      onClick={() =>
-                        change({
-                          wordings: experiment.wordings
-                            .filter((a) => a.id !== w.id)
-                            .map((a, j) => ({ ...a, id: `w${j + 1}` })),
-                        })
-                      }
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
+                  <label className="wording-number" htmlFor={w.id}>
+                    {i + 1}
+                  </label>
                   <WordingTextarea
                     inputRef={i === 0 ? wordingRef : undefined}
                     id={w.id}
@@ -841,6 +872,20 @@ export default function App({
                       })
                     }
                   />
+                  <button
+                    className="icon-button"
+                    aria-label={`Remove wording ${i + 1}`}
+                    disabled={experiment.wordings.length <= 2}
+                    onClick={() =>
+                      change({
+                        wordings: experiment.wordings
+                          .filter((a) => a.id !== w.id)
+                          .map((a, j) => ({ ...a, id: `w${j + 1}` })),
+                      })
+                    }
+                  >
+                    <Trash2 size={16} />
+                  </button>
                 </div>
               ))}
               <details className="shared-context">
@@ -859,13 +904,6 @@ export default function App({
                   />
                 </div>
               </details>
-              <button
-                className="text-button request-button"
-                disabled={!!validError}
-                onClick={() => setDialog("request")}
-              >
-                view exact API request
-              </button>
             </fieldset>
             <div className="run-bar">
               {busy ? (
@@ -932,6 +970,7 @@ export default function App({
                     View the example
                   </button>
                 )}
+                {!validError && <ResultDetails experiment={experiment} />}
               </section>
             )}
           </div>
@@ -1102,19 +1141,6 @@ export default function App({
             accept="application/json,.json"
             onChange={(e) => importData(e.target.files?.[0])}
           />
-        </Modal>
-      )}
-      {dialog === "request" && (
-        <Modal
-          title="Exactly what Jev receives"
-          close={() => setDialog(null)}
-          wide
-        >
-          <pre className="request-preview">
-            {!validError
-              ? JSON.stringify(buildRequest(experiment), null, 2)
-              : validError}
-          </pre>
         </Modal>
       )}
       {notice && (

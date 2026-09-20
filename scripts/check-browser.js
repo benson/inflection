@@ -14,7 +14,7 @@ export default async function checkBrowser(page) {
   };
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.setViewportSize({ width: 1280, height: 1100 });
   await page.addInitScript(() => {
     window.__canvasText = [];
     window.__canvasRects = [];
@@ -129,6 +129,40 @@ export default async function checkBrowser(page) {
       (await page.locator(".answer-tally").textContent()) === "yes 1 · no 3",
     "Recorded stats show integer swing and an answer tally",
   );
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForFunction(() => {
+    const plot = document.querySelector(".probability-plot");
+    return Math.abs(plot.viewBox.baseVal.width - plot.clientWidth) < 0.1;
+  });
+  const density = {
+    viewportWidth: 1280,
+    example: "Reno and Los Angeles",
+    // Chromium on Windows, first example with edits/details closed at 1f5adb0.
+    before: 883.796875,
+    after: await page
+      .locator(".results-column")
+      .evaluate((column) => column.getBoundingClientRect().height),
+  };
+  check(
+    density.after <= density.before * 0.6,
+    "The first example's results column is at most 60% of its previous height at 1280px",
+  );
+  await page.screenshot({
+    path: "output/playwright/density-after.png",
+    fullPage: true,
+  });
+  await page.locator(".result-footer").click();
+  check(
+    (await page.locator(".request-preview").isVisible()) &&
+      JSON.parse(await page.locator(".request-preview").textContent()).questions
+        .w1.instructions ===
+        "Is Reno, Nevada farther west than Los Angeles, California?" &&
+      (await page
+        .locator(".editor .request-preview, .request-button")
+        .count()) === 0,
+    "Recorded details reveal the exact request without a duplicate editor control",
+  );
+  await page.locator(".result-footer").click();
   check(
     (await page.getByRole("dialog").count()) === 0 &&
       (await page.locator(".about-intro").count()) === 0 &&
@@ -254,7 +288,7 @@ export default async function checkBrowser(page) {
     ).every((text) => !/\d+\.\d/.test(text)),
     "Displayed probabilities are integers",
   );
-  for (const width of [860, 859, 701, 700, 320]) {
+  for (const width of [860, 859, 701, 700, 400, 399, 320]) {
     await page.setViewportSize({ width, height: 900 });
     await page.waitForFunction(() => {
       const plot = document.querySelector(".probability-plot");
@@ -329,8 +363,8 @@ export default async function checkBrowser(page) {
           const lineHeight = parseFloat(style.lineHeight);
           return (
             style.resize === "none" &&
-            style.paddingTop === "8px" &&
-            style.paddingBottom === "8px" &&
+            style.paddingTop === "4px" &&
+            style.paddingBottom === "4px" &&
             Math.abs(node.scrollHeight - node.clientHeight) <= 1 &&
             contentHeight >= lineHeight - 1 &&
             Math.abs(
@@ -341,6 +375,22 @@ export default async function checkBrowser(page) {
         }),
       ),
       `Wording fields fit their content after resizing to ${width}px`,
+    );
+    check(
+      await page.locator(".answer").evaluateAll((rows) =>
+        rows.every((row) => {
+          const wording = row
+            .querySelector(".answer-question")
+            .getBoundingClientRect();
+          const figures = row
+            .querySelector(".binary-figures")
+            .getBoundingClientRect();
+          return window.innerWidth < 400
+            ? figures.top >= wording.bottom && figures.left === wording.left
+            : figures.left >= wording.right && figures.top < wording.bottom;
+        }),
+      ),
+      `Answer figures stay beside the wording or below it under 400px at ${width}px`,
     );
     if (width <= 700) {
       await howThisWorks.click();
@@ -466,14 +516,14 @@ export default async function checkBrowser(page) {
   await page
     .getByRole("textbox", { name: "Shared context" })
     .fill("This is a browser test fixture, not a real policy evaluation.");
-  await page.getByRole("button", { name: "view exact API request" }).click();
+  await page.locator(".result-footer").click();
   check(
     (await page.locator(".request-preview").textContent()).includes(
       '"type": "choice"',
     ),
-    "Exact typed request is reviewable",
+    "Exact typed request is reviewable in the results footer before running",
   );
-  await page.getByRole("button", { name: "Close dialog", exact: true }).click();
+  await page.locator(".result-footer").click();
 
   await page
     .getByRole("button", { name: "Questions & method", exact: true })
@@ -572,6 +622,33 @@ export default async function checkBrowser(page) {
       .replace(/\s+/g, " ")
       .trim() === "details typesafe/jev-1.13-browser-fixture",
     "Local details footer contains only the toggle and resolved model",
+  );
+  await page.locator(".result-footer").click();
+  check(
+    JSON.stringify(
+      JSON.parse(await page.locator(".request-preview").textContent()),
+    ) === JSON.stringify(captured[0]),
+    "Completed results preserve the exact request sent to the API",
+  );
+  await page.locator(".result-footer").click();
+  check(
+    await page.locator(".answer").evaluateAll((rows) =>
+      rows.every((row) => {
+        const copy = row.querySelector(".answer-copy");
+        const bar = copy.querySelector(".distribution-bar");
+        const legend = copy.querySelector(".distribution-legend");
+        const bounds = bar.getBoundingClientRect();
+        const legendBounds = legend.getBoundingClientRect();
+        return (
+          bounds.height === 6 &&
+          bar.children.length === 3 &&
+          legendBounds.left > bounds.right &&
+          legendBounds.top <= bounds.top &&
+          legendBounds.bottom >= bounds.bottom
+        );
+      }),
+    ),
+    "Multiple-choice rows keep six-pixel distribution bars and inline legends below the text",
   );
   await page
     .getByRole("combobox", { name: "Track probability of" })
@@ -1083,7 +1160,7 @@ export default async function checkBrowser(page) {
   await page.goto("http://127.0.0.1:5197/");
   await page.locator(".result-source").waitFor();
   await page.screenshot({ path: "output/playwright/desktop.png" });
-  return { passed: checks.length, checks };
+  return { passed: checks.length, density, checks };
 }
 
 async function checkImageLayouts(page, check) {

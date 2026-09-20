@@ -103,7 +103,7 @@ button svg {
   display: flex;
   align-items: center;
   gap: 24px;
-  padding: 32px 0 24px;
+  padding: 24px 0 16px;
 }
 .brand-lockup {
   display: flex;
@@ -179,7 +179,7 @@ button svg {
   overflow-x: auto;
   scrollbar-width: none;
   padding: 4px;
-  margin: 0 -4px 32px;
+  margin: 0 -4px 24px;
 }
 .example-chips::-webkit-scrollbar {
   display: none;
@@ -199,7 +199,7 @@ button svg {
 .workspace {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 40px;
+  column-gap: 32px;
   align-items: start;
 }
 .editor,
@@ -217,8 +217,8 @@ button svg {
   background: transparent;
   border: 0;
   padding: 0;
-  margin: 0 0 16px;
-  font: 400 24px / 1.4 var(--serif);
+  margin: 0 0 12px;
+  font: 400 22px / 1.4 var(--serif);
 }
 .editor-actions {
   display: flex;
@@ -237,7 +237,7 @@ button svg {
   color: var(--muted);
 }
 .format-row {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 .field-label {
   display: block;
@@ -259,48 +259,49 @@ button svg {
   text-transform: lowercase;
 }
 .wording-row {
-  margin-bottom: 16px;
-}
-.wording-row-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 32px;
-  gap: 8px;
-  color: var(--muted);
-}
-.wording-row-top label {
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-  text-transform: lowercase;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 12px;
+  margin-bottom: 8px;
 }
 .wording-number {
-  display: inline-block;
-  width: 32px;
-  flex-shrink: 0;
+  padding-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 .wording-row textarea {
   display: block;
-  width: calc(100% - 32px);
-  margin-left: 32px;
+  width: 100%;
   border: 0;
   border-bottom: 1px solid var(--line);
   border-radius: 0;
-  padding: 8px 0;
+  padding: 4px 0;
   resize: none;
   overflow: hidden;
   background: transparent;
   font-size: 15px;
   line-height: 1.4;
 }
+.wording-row .icon-button {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 6px;
+  opacity: 0.5;
+}
+.wording-row:hover .icon-button:not(:disabled),
+.wording-row:focus-within .icon-button:not(:disabled) {
+  opacity: 1;
+}
 .wordings-label {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: 24px 0 8px;
+  margin: 16px 0 8px;
   color: var(--muted);
 }
 .wordings-label h3 {
@@ -320,7 +321,7 @@ button svg {
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 16px 0;
+  padding: 12px 0;
   font-size: 12px;
   color: var(--muted);
   text-transform: lowercase;
@@ -396,7 +397,7 @@ details[open] > summary svg {
   align-items: center;
   flex-wrap: wrap;
   border-top: 1px solid var(--line);
-  padding-top: 16px;
+  padding-top: 12px;
   gap: 12px;
 }
 .repeat-control button {
@@ -419,38 +420,50 @@ details[open] > summary svg {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   color: var(--muted);
   font-size: 12px;
+  white-space: nowrap;
   text-transform: lowercase;
 }
 .stats {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 24px;
-  margin-bottom: 24px;
+  gap: 8px 24px;
+  margin: 8px 0 12px;
 }
-.stat-number {
-  font: 400 32px / 1.4 var(--serif);
+.stat-number,
+.tally-number {
+  font: 400 24px / 1.4 var(--serif);
   font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.swing-stat,
+.tally-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.swing-stat {
+  white-space: nowrap;
 }
 .tally-stat {
-  flex: 1;
+  flex-wrap: wrap;
   min-width: 0;
 }
 .answer-tally {
-  font-size: 18px;
-  overflow-wrap: anywhere;
-}
-.request-button {
-  margin-bottom: 16px;
-}
-.stat-caption {
-  display: block;
   font-size: 12px;
   color: var(--muted);
-  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.stats .check-label {
+  margin-left: auto;
+  white-space: nowrap;
+}
+.stat-caption {
+  font-size: 12px;
+  color: var(--muted);
   text-transform: lowercase;
 }
 .plot-header {
@@ -469,6 +482,7 @@ details[open] > summary svg {
 .probability-plot {
   display: block;
   width: 100%;
+  margin: 0 0 8px;
   overflow: visible;
 }
 .axis-label,
@@ -490,45 +504,29 @@ details[open] > summary svg {
 .plot-footnote {
   font-size: 12px;
   color: var(--muted);
-  margin: 8px 0 24px;
-}
-.answer-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 24px;
-  margin-bottom: 8px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
-  text-transform: lowercase;
-}
-.answer-heading h3 {
-  font-size: 12px;
-  font-weight: 500;
-}
-.answer-heading .check-label {
-  white-space: nowrap;
+  margin: 0 0 12px;
 }
 .answer {
-  padding: 12px 0;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 12px;
+  padding: 8px 0;
 }
 .answer + .answer {
   border-top: 1px solid var(--line);
 }
-.answer-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+.answer-number {
   font-size: 12px;
   color: var(--muted);
-  text-transform: lowercase;
+  font-variant-numeric: tabular-nums;
+}
+.answer-copy {
+  min-width: 0;
 }
 .answer-question {
   font: 400 15px / 1.4 var(--serif);
   color: var(--ink);
-  margin: 8px 0;
   overflow-wrap: anywhere;
 }
 mark {
@@ -541,12 +539,26 @@ del {
   color: var(--muted);
   text-decoration: line-through;
 }
+.answer-distribution {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin-top: 4px;
+}
+.distribution-bar {
+  display: flex;
+  flex: 0 0 80px;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--surface-sunken);
+}
 .distribution-legend {
   display: flex;
   flex-wrap: wrap;
   gap: 4px 12px;
-  margin-top: 8px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
@@ -564,9 +576,13 @@ del {
   color: var(--ink);
 }
 .binary-figures {
+  flex-wrap: nowrap;
   gap: 4px 8px;
-  margin-top: 0;
+  white-space: nowrap;
   text-transform: lowercase;
+}
+.answer-tie {
+  font-size: 12px;
 }
 .binary-figures > span + span::before {
   content: "·";
@@ -831,7 +847,7 @@ body:has(dialog[open]) {
     flex-wrap: wrap;
     align-items: flex-start;
     gap: 16px;
-    padding: 24px 0;
+    padding: 24px 0 16px;
   }
   .topbar nav {
     width: 100%;
@@ -856,7 +872,6 @@ body:has(dialog[open]) {
   .primary-button,
   .segmented button,
   .example-chip,
-  .add-wording,
   .context-toggle,
   .about-nav,
   .history-nav {
@@ -879,6 +894,12 @@ body:has(dialog[open]) {
   }
   .history-toolbar {
     flex-wrap: wrap;
+  }
+}
+@media (max-width: 399px) {
+  .answer .binary-figures {
+    grid-column: 2;
+    margin-top: 4px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
