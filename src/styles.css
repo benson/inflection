@@ -50,6 +50,7 @@ a {
   color: inherit;
 }
 button:focus-visible,
+summary:focus-visible,
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
@@ -89,15 +90,6 @@ fieldset {
 }
 button svg {
   vertical-align: middle;
-}
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
 }
 .app-shell {
   padding: 0 32px 32px;
@@ -150,14 +142,14 @@ button svg {
   padding: 4px 0;
 }
 .about-nav,
-.saved-nav {
+.history-nav {
   font-size: 13px;
   white-space: nowrap;
 }
 .about-nav {
   color: var(--accent);
 }
-.saved-nav {
+.history-nav {
   color: var(--muted);
 }
 .count-badge {
@@ -219,7 +211,6 @@ button svg {
   align-items: baseline;
   gap: 12px;
 }
-/* The editor title and workspace gap are explicit exceptions to the scale. */
 .experiment-title {
   flex: 1;
   width: 100%;
@@ -227,11 +218,13 @@ button svg {
   border: 0;
   padding: 0;
   margin: 0 0 16px;
-  font: 400 22px / 1.4 var(--serif);
+  font: 400 24px / 1.4 var(--serif);
 }
 .editor-actions {
   display: flex;
-  gap: 4px;
+  gap: 12px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .icon-button {
   display: inline-flex;
@@ -302,10 +295,7 @@ button svg {
   font-size: 15px;
   line-height: 1.4;
 }
-.original-row textarea {
-  border-bottom-color: var(--line-strong);
-}
-.variants-label {
+.wordings-label {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -313,30 +303,19 @@ button svg {
   margin: 24px 0 8px;
   color: var(--muted);
 }
-.variants-label h3 {
+.wordings-label h3 {
   font-size: 12px;
   font-weight: 400;
   text-transform: lowercase;
 }
-.variants-label h3 span {
+.wordings-label h3 span {
   margin-left: 8px;
   font-variant-numeric: tabular-nums;
-}
-.variant-tools {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  opacity: 0.5;
-  transition: opacity 120ms ease;
-}
-.wording-row:hover .variant-tools,
-.wording-row:focus-within .variant-tools {
-  opacity: 1;
 }
 .add-wording {
   color: var(--accent);
 }
-.advanced-toggle {
+.context-toggle {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -346,27 +325,24 @@ button svg {
   color: var(--muted);
   text-transform: lowercase;
 }
-.advanced-toggle svg {
+.context-toggle svg {
   margin-left: auto;
 }
-.rotated {
+details[open] > summary svg {
   transform: rotate(180deg);
 }
-.advanced-controls {
+.context-editor {
   display: grid;
   gap: 16px;
   padding: 0 0 24px;
 }
-.advanced-controls textarea {
+.context-editor textarea {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 12px;
   font-size: 13px;
   width: 100%;
-}
-.advanced-controls > .text-button {
-  justify-self: start;
 }
 .check-label {
   display: flex;
@@ -439,7 +415,7 @@ button svg {
   padding: 12px;
   font-size: 13px;
 }
-.sample-note {
+.result-source {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -450,6 +426,8 @@ button svg {
 }
 .stats {
   display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
   gap: 24px;
   margin-bottom: 24px;
 }
@@ -457,21 +435,22 @@ button svg {
   font: 400 32px / 1.4 var(--serif);
   font-variant-numeric: tabular-nums;
 }
-.stat-number span {
-  font: 400 15px var(--body);
-  color: var(--muted);
+.tally-stat {
+  flex: 1;
+  min-width: 0;
+}
+.answer-tally {
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+.request-button {
+  margin-bottom: 16px;
 }
 .stat-caption {
   display: block;
   font-size: 12px;
   color: var(--muted);
   margin-top: 4px;
-  text-transform: lowercase;
-}
-.condition-legend {
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 16px;
   text-transform: lowercase;
 }
 .plot-header {
@@ -518,6 +497,7 @@ button svg {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  margin-top: 24px;
   margin-bottom: 8px;
   padding-top: 16px;
   border-top: 1px solid var(--line);
@@ -545,26 +525,12 @@ button svg {
   color: var(--muted);
   text-transform: lowercase;
 }
-.condition-label {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.condition-tag {
-  background: var(--surface-sunken);
-  border-radius: 4px;
-  padding: 0 4px;
-}
-.answer-delta {
+.answer-tags {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-left: auto;
   white-space: nowrap;
-}
-.delta {
-  font-variant-numeric: tabular-nums;
 }
 .answer-question {
   font: 400 15px / 1.4 var(--serif);
@@ -590,19 +556,6 @@ del {
   padding: 0 4px;
   text-transform: lowercase;
 }
-.distribution {
-  height: 6px;
-  display: flex;
-  width: 100%;
-  border-radius: 4px;
-  overflow: hidden;
-  background: var(--surface-sunken);
-}
-.distribution > span {
-  display: block;
-  min-width: 0;
-  height: 100%;
-}
 .distribution-legend {
   display: flex;
   flex-wrap: wrap;
@@ -617,12 +570,6 @@ del {
   align-items: center;
   gap: 4px;
   overflow-wrap: anywhere;
-}
-.distribution-legend i {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  flex-shrink: 0;
 }
 .distribution-legend b {
   font-weight: inherit;
@@ -672,7 +619,7 @@ del {
   font-size: 13px;
   text-transform: lowercase;
 }
-.sample-link {
+.recorded-link {
   margin-top: 8px;
   color: var(--accent);
 }
@@ -794,36 +741,36 @@ body:has(dialog[open]) {
 .muted {
   color: var(--muted);
 }
-.saved-toolbar {
+.history-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
-.saved-toolbar p {
+.history-toolbar p {
   color: var(--muted);
 }
-.saved-list > div {
+.history-list > div {
   display: flex;
   align-items: center;
   gap: 12px;
   border-bottom: 1px solid var(--line);
   padding: 12px 0;
 }
-.saved-list > div > button:first-child {
+.history-list > div > button:first-child {
   display: block;
   flex: 1;
   text-align: left;
   padding: 0;
   min-width: 0;
 }
-.saved-list strong {
+.history-list strong {
   display: block;
   font-size: 13px;
   font-weight: 500;
   overflow-wrap: anywhere;
 }
-.saved-list span {
+.history-list span {
   display: block;
   margin-top: 4px;
   font-size: 13px;
@@ -916,34 +863,36 @@ body:has(dialog[open]) {
   }
   .wording-row textarea,
   .option-input input,
-  .advanced-controls textarea,
+  .context-editor textarea,
   .plot-header select {
-    font-size: 16px;
+    font-size: 15px;
   }
   .secondary-button,
   .primary-button,
   .segmented button,
   .example-chip,
   .add-wording,
-  .advanced-toggle,
+  .context-toggle,
   .about-nav,
-  .saved-nav {
+  .history-nav {
     min-height: 42px;
   }
-  .variant-tools {
-    opacity: 1;
-  }
-  .variant-tools .text-button,
   .icon-button {
     min-height: 42px;
   }
   .icon-button {
     min-width: 42px;
   }
+  .editor-heading {
+    flex-wrap: wrap;
+  }
+  .editor-actions {
+    margin-bottom: 16px;
+  }
   .modal-title {
     align-items: flex-start;
   }
-  .saved-toolbar {
+  .history-toolbar {
     flex-wrap: wrap;
   }
 }
@@ -958,4 +907,12 @@ body:has(dialog[open]) {
   button:not(:disabled):active {
     transform: none;
   }
+}
+
+summary {
+  cursor: pointer;
+  list-style: none;
+}
+summary::-webkit-details-marker {
+  display: none;
 }

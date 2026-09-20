@@ -15,26 +15,65 @@ export default async function checkBrowser(page) {
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.addInitScript(() => {
+    window.__canvasText = [];
+    const fillText = CanvasRenderingContext2D.prototype.fillText;
+    CanvasRenderingContext2D.prototype.fillText = function (...args) {
+      window.__canvasText.push({ text: args[0], font: this.font });
+      return fillText.apply(this, args);
+    };
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        writeText: async (text) => {
+          window.__sharedText = text;
+        },
+        write: async (items) => {
+          if (window.__denyImage) throw new Error("Clipboard fixture denial");
+          const blob = await items[0].getType("image/png");
+          const bitmap = await createImageBitmap(blob);
+          const canvas = document.createElement("canvas");
+          canvas.width = bitmap.width;
+          canvas.height = bitmap.height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(bitmap, 0, 0);
+          window.__image = {
+            width: bitmap.width,
+            height: bitmap.height,
+            type: blob.type,
+            background: [...ctx.getImageData(0, 0, 1, 1).data],
+          };
+          bitmap.close();
+        },
+      },
+    });
+  });
   await page.goto("http://127.0.0.1:5197/");
   await page.evaluate(() => {
     for (const k of Object.keys(localStorage))
-      if (k.startsWith("inflection-v1-")) localStorage.removeItem(k);
+      if (k.startsWith("inflection-v2-")) localStorage.removeItem(k);
   });
+  await page.evaluate(() =>
+    localStorage.setItem(
+      "inflection-v1-draft",
+      JSON.stringify({ title: "obsolete draft" }),
+    ),
+  );
   await page.reload();
   await page
-    .getByText("recorded 20 sep 2026 · jev 1.13-20260917 · mean of 3 runs", {
+    .getByText("recorded 20 sep 2026 · mean of 3 runs", {
       exact: true,
     })
     .waitFor();
   check(
-    (await page.locator(".sample-note").textContent()).includes(
-      "recorded 20 sep 2026 · jev 1.13-20260917 · mean of 3 runs",
+    (await page.locator(".result-source").textContent()).includes(
+      "recorded 20 sep 2026 · mean of 3 runs",
     ),
-    "Recorded example identifies date, model, and three repeats",
+    "Recorded example identifies date and three repeats",
   );
   check(
     (await page
-      .getByRole("textbox", { name: "Original question", exact: true })
+      .getByRole("textbox", { name: "Wording 1", exact: true })
       .inputValue()) ===
       "Is Reno, Nevada farther west than Los Angeles, California?",
     "First visit opens the Reno and Los Angeles example",
@@ -46,10 +85,9 @@ export default async function checkBrowser(page) {
     "Two-answer results use compact figures and track the first option",
   );
   check(
-    (await page.locator(".stat-number").allTextContents())
-      .map((text) => text.trim())
-      .join(" / ") === "66 / 1 of 3",
-    "Recorded stats show integer swing and flips out of comparable wordings",
+    (await page.locator(".stat-number").textContent()).trim() === "66" &&
+      (await page.locator(".answer-tally").textContent()) === "yes 1 · no 3",
+    "Recorded stats show integer swing and an answer tally",
   );
   check(
     (await page.getByRole("dialog").count()) === 0 &&
@@ -137,7 +175,7 @@ export default async function checkBrowser(page) {
     "How this works remains available after reload without opening automatically",
   );
   check(
-    await page.locator(".sample-note").isVisible(),
+    await page.locator(".result-source").isVisible(),
     "Reload restores a seed's recorded run",
   );
   await howThisWorks.click();
@@ -148,6 +186,15 @@ export default async function checkBrowser(page) {
   await about
     .getByRole("button", { name: "Close dialog", exact: true })
     .click();
+  check(
+    !(await page.getByRole("checkbox", { name: "Show edits" }).isChecked()),
+    "Show edits defaults off",
+  );
+  await page.getByRole("checkbox", { name: "Show edits" }).check();
+  check(
+    (await page.locator(".answer-question mark").count()) > 0,
+    "Show edits highlights word changes against wording 1",
+  );
   check(
     await page
       .locator(".answer-question mark, .answer-question del")
@@ -164,11 +211,9 @@ export default async function checkBrowser(page) {
   );
   check(
     (
-      await page
-        .locator(".plot-value, .delta, .binary-figures")
-        .allTextContents()
+      await page.locator(".plot-value, .binary-figures").allTextContents()
     ).every((text) => !/\d+\.\d/.test(text)),
-    "Displayed probabilities and deltas are integers",
+    "Displayed probabilities are integers",
   );
   for (const width of [860, 859, 701, 700, 320]) {
     await page.setViewportSize({ width, height: 900 });
@@ -201,13 +246,13 @@ export default async function checkBrowser(page) {
           .getBoundingClientRect();
         const nav = bar.querySelector("nav").getBoundingClientRect();
         const buttons = [...bar.querySelectorAll("nav button")];
-        const [about, saved] = buttons.map((button) =>
+        const [about, history] = buttons.map((button) =>
           button.getBoundingClientRect(),
         );
         return (
           nav.top >= brand.bottom === window.innerWidth <= 700 &&
-          about.top === saved.top &&
-          about.right < saved.left &&
+          about.top === history.top &&
+          about.right < history.left &&
           buttons.every(
             (button) => getComputedStyle(button).fontSize === "13px",
           ) &&
@@ -284,7 +329,7 @@ export default async function checkBrowser(page) {
   }
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page
-    .getByRole("textbox", { name: "Original question", exact: false })
+    .getByRole("textbox", { name: "Wording 1", exact: false })
     .fill("Are autonomous vehicles safer than human drivers?");
   check(
     await page
@@ -307,29 +352,29 @@ export default async function checkBrowser(page) {
   ]) {
     await chips.getByRole("button", { name: title, exact: true }).click();
     check(
-      await page.locator(".sample-note").isVisible(),
+      await page.locator(".result-source").isVisible(),
       `${title} opens with recorded results`,
     );
-    const original = page.getByRole("textbox", {
-      name: "Original question",
+    const firstWording = page.getByRole("textbox", {
+      name: "Wording 1",
       exact: true,
     });
-    const text = await original.inputValue();
-    await original.fill(text + " Really?");
+    const text = await firstWording.inputValue();
+    await firstWording.fill(text + " Really?");
     check(
-      (await page.locator(".sample-note").count()) === 0,
+      (await page.locator(".result-source").count()) === 0,
       `${title} edit clears the recording`,
     );
-    await original.fill(text);
+    await firstWording.fill(text);
     check(
-      await page.locator(".sample-note").isVisible(),
+      await page.locator(".result-source").isVisible(),
       `${title} exact text restores the recording`,
     );
   }
   check(
     await page.evaluate(
       () =>
-        JSON.parse(localStorage.getItem("inflection-v1-history") || "[]")
+        JSON.parse(localStorage.getItem("inflection-v2-history") || "[]")
           .length === 0,
     ),
     "Recorded runs never enter browser history",
@@ -337,34 +382,23 @@ export default async function checkBrowser(page) {
   await chips.getByRole("button", { name: /Self-driving safety/ }).click();
   check(
     (await page
-      .getByRole("textbox", { name: "Original question", exact: false })
+      .getByRole("textbox", { name: "Wording 1", exact: false })
       .inputValue()) === "Are self-driving cars safer than human drivers?",
     "Selecting a seed loads its question",
   );
-  await page
-    .getByRole("button", { name: "Save experiment", exact: true })
-    .click();
-  await page
-    .getByRole("button", { name: /^Saved/ })
-    .first()
-    .click();
-  await page
-    .getByRole("dialog", { name: "Your experiments" })
-    .getByRole("button", { name: /Self-driving safety Are/ })
-    .click();
+  await page.getByRole("button", { name: /^history/i }).click();
   check(
-    (await page
-      .getByRole("textbox", { name: "Experiment title" })
-      .inputValue()) === "Self-driving safety",
-    "Saved questions reopen",
+    (await page.locator(".history-list > div").count()) === 0,
+    "History contains only runs made in this browser",
   );
+  await page.keyboard.press("Escape");
 
   await page.getByRole("button", { name: "Your own question" }).click();
   await page
     .getByRole("textbox", { name: "Experiment title" })
     .fill("Browser QA fixture");
   await page
-    .getByRole("textbox", { name: "Original question", exact: false })
+    .getByRole("textbox", { name: "Wording 1", exact: false })
     .fill("Which policy should be prioritized?");
   await page
     .getByRole("button", { name: "Multiple choice", exact: true })
@@ -379,24 +413,22 @@ export default async function checkBrowser(page) {
     .getByRole("textbox", { name: "Answer option 3", exact: true })
     .fill("Education");
   await page
-    .getByRole("textbox", { name: "Wording 1", exact: true })
-    .fill("Which policy should come first?");
-  await page.getByRole("button", { name: /Add a wording/ }).click();
-  await page
     .getByRole("textbox", { name: "Wording 2", exact: true })
+    .fill("Which policy should come first?");
+  await page.getByRole("button", { name: /add a wording/i }).click();
+  await page
+    .getByRole("textbox", { name: "Wording 3", exact: true })
     .fill("Which policy should receive priority?");
-  await page
-    .getByRole("button", { name: "Wording 2 comparison type: Rewording" })
-    .click();
-  await page.getByRole("button", { name: "Controls", exact: true }).click();
-  await page
-    .getByRole("checkbox", { name: /insufficient information/ })
-    .check();
-  await page.getByRole("checkbox", { name: /Reversed answer order/i }).check();
+  await page.locator(".context-toggle").click();
+  check(
+    (await page.locator(".context-editor textarea").count()) === 1 &&
+      (await page.locator(".context-editor input").count()) === 0,
+    "Shared context opens directly to its textarea",
+  );
   await page
     .getByRole("textbox", { name: "Shared context" })
     .fill("This is a browser test fixture, not a real policy evaluation.");
-  await page.getByRole("button", { name: "View exact API request" }).click();
+  await page.getByRole("button", { name: "view exact API request" }).click();
   check(
     (await page.locator(".request-preview").textContent()).includes(
       '"type": "choice"',
@@ -463,7 +495,7 @@ export default async function checkBrowser(page) {
     },
   );
   await page
-    .getByRole("group", { name: "Repeat each wording" })
+    .getByRole("group", { name: "Repeats" })
     .getByRole("button", { name: "×3", exact: true })
     .click();
   await page
@@ -475,11 +507,11 @@ export default async function checkBrowser(page) {
     "Three repeats issue exactly three Decisions requests",
   );
   check(
-    Object.keys(captured[0].questions).length === 5,
-    "Original, two variants, and two controls reach the API",
+    Object.keys(captured[0].questions).join(",") === "w1,w2,w3",
+    "Only numbered wordings reach the API",
   );
   check(
-    captured[0].questions.original.instructions ===
+    captured[0].questions.w1.instructions ===
       "Which policy should be prioritized?",
     "No invisible prompt is prepended",
   );
@@ -488,13 +520,22 @@ export default async function checkBrowser(page) {
     "Probability swing is calculated correctly for multiple choice",
   );
   check(
-    (await page.locator(".condition-tag").allTextContents()).includes(
-      "Framing",
-    ) &&
-      (await page
-        .getByText("Tagged rows are excluded from swing", { exact: true })
-        .isVisible()),
-    "Changed framing is separately identified",
+    (await page.locator(".answer-tally").textContent()) ===
+      "Housing 2 · Energy 1",
+    "Multiple-choice answers tally winning options only",
+  );
+  check(
+    (await page.locator(".flip-pill").allTextContents()).join() === "differs",
+    "The minority winner is tagged differs",
+  );
+  check(
+    (await page.locator(".result-source").textContent()) ===
+      "your run · 3 repeats",
+    "Repeated browser runs identify their source",
+  );
+  check(
+    (await page.locator(".result-footer").textContent()).includes("your run"),
+    "Details identify your run",
   );
   await page
     .getByRole("combobox", { name: "Track probability of" })
@@ -512,7 +553,7 @@ export default async function checkBrowser(page) {
     JSON.stringify(
       Object.fromEntries(
         Object.entries(localStorage).filter(([k]) =>
-          k.startsWith("inflection-v1-"),
+          k.startsWith("inflection-v2-"),
         ),
       ),
     ),
@@ -521,52 +562,158 @@ export default async function checkBrowser(page) {
     !stored.includes("sk-or-browser-test-fixture"),
     "Credentials never enter browser storage",
   );
+  await page.getByRole("button", { name: /^history/i }).click();
+  const historyDialog = page.getByRole("dialog", {
+    name: "history",
+    exact: true,
+  });
   const downloadPromise = page.waitForEvent("download");
-  await page
-    .getByRole("button", { name: "Export comparison", exact: true })
+  await historyDialog
+    .getByRole("button", {
+      name: "export json: Browser QA fixture",
+      exact: true,
+    })
     .click();
   const download = await downloadPromise;
   check(
     download.suggestedFilename().endsWith(".json"),
-    "Comparison export produces a JSON download",
+    "Per-item history export downloads JSON",
   );
-
-  const measured = await page
-    .getByRole("region", { name: "Comparison results" })
-    .textContent();
-  await page
-    .getByRole("button", { name: "Save experiment", exact: true })
-    .click();
+  await download.saveAs("output/playwright/history.json");
+  await page.keyboard.press("Escape");
   await chips.getByRole("button", { name: /Self-driving safety/ }).click();
-  await page
-    .getByRole("button", { name: /^Saved/ })
-    .first()
+  await page.getByRole("button", { name: /^history/i }).click();
+  await historyDialog
+    .getByRole("button", { name: /^Browser QA fixture/ })
     .click();
-  await page
-    .getByRole("dialog", { name: "Your experiments" })
-    .getByRole("button", {
-      name: "Browser QA fixture Which policy should be prioritized?",
-      exact: true,
-    })
-    .click();
-  // Tracking defaults to the first answer when a result is remounted.
+  check(
+    (await page.locator(".result-source").textContent()) ===
+      "your run · 3 repeats",
+    "History restores your run without inference",
+  );
   await page
     .getByRole("combobox", { name: "Track probability of" })
     .selectOption("option_2");
-  await page.getByRole("checkbox", { name: "Show edits" }).uncheck();
+  await page.getByRole("button", { name: "copy image", exact: true }).click();
+  await page.getByText("image copied", { exact: true }).waitFor();
+  const image = await page.evaluate(() => window.__image);
+  check(
+    image.width === 1200 &&
+      image.height === 630 &&
+      image.type === "image/png" &&
+      image.background.join() === "247,242,234,255",
+    "Image clipboard receives a 1200 × 630 PNG on theme paper",
+  );
+  const imageText = await page.evaluate(() => window.__canvasText);
+  check(
+    imageText.some(
+      (t) => t.text === "Browser QA fixture" && t.font.includes("44px"),
+    ) &&
+      imageText.some(
+        (t) => t.text === "largest swing 55 pp · answers Housing 2 · Energy 1",
+      ) &&
+      imageText.some((t) => t.text === "probability of Energy") &&
+      imageText.some((t) => t.text === "bensonperry.com/inflection"),
+    "Canvas uses the title, stats, selected answer, and site credit",
+  );
+  await page.evaluate(() => {
+    window.__denyImage = true;
+  });
+  const pngPromise = page.waitForEvent("download");
+  await page.getByRole("button", { name: "copy image", exact: true }).click();
+  const png = await pngPromise;
+  await png.saveAs("output/playwright/shared.png");
+  await page.getByText("image saved", { exact: true }).waitFor();
+  check(
+    png.suggestedFilename() === "inflection-browser-qa-fixture.png",
+    "Image copy denial falls back to a named PNG download",
+  );
+
+  await page
+    .getByRole("textbox", { name: "Experiment title" })
+    .fill("Shared title — café");
+  await page.getByRole("button", { name: "copy link", exact: true }).click();
+  await page.getByText("link copied", { exact: true }).waitFor();
+  const sharedUrl = await page.evaluate(() => window.__sharedText);
+  check(/#s=[A-Za-z0-9_-]+$/.test(sharedUrl), "Link uses a base64url hash");
+  const recipient = await page.context().browser().newPage();
+  recipient.on("pageerror", (e) => errors.push(e.message));
+  await recipient.goto(sharedUrl);
+  await recipient.locator(".result-source").waitFor();
+  check(
+    (await recipient.locator(".result-source").textContent()).startsWith(
+      "shared link · ",
+    ) &&
+      new URL(recipient.url()).hash === "" &&
+      (await recipient.locator(".answer-tally").textContent()) ===
+        "Housing 2 · Energy 1",
+    "Loading a share in another tab restores results and clears the hash",
+  );
+  await recipient.close();
+  await page.goto(sharedUrl);
+  await page.waitForFunction(() =>
+    document
+      .querySelector(".result-source")
+      ?.textContent.startsWith("shared link"),
+  );
+  check(
+    (await page.locator(".result-source").textContent()).startsWith(
+      "shared link · ",
+    ) &&
+      (await page.locator(".result-footer").textContent()).includes(
+        "shared link · not run in this browser",
+      ),
+    "Shared results keep a separate source label",
+  );
   check(
     (await page
-      .getByRole("region", { name: "Comparison results" })
-      .textContent()) === measured,
-    "Reopening a saved question restores the same comparison without inference",
+      .getByRole("textbox", { name: "Experiment title" })
+      .inputValue()) === "Shared title — café" &&
+      new URL(page.url()).hash === "",
+    "Share restores Unicode title and clears the hash",
   );
-  const wording = page.getByRole("textbox", { name: "Wording 1", exact: true });
+  check(
+    (await page.locator(".answer-tally").textContent()) ===
+      "Housing 2 · Energy 1" &&
+      (await page.evaluate(
+        () => JSON.parse(localStorage.getItem("inflection-v2-history")).length,
+      )) === 1,
+    "Shared averages are preserved without adding to browser history",
+  );
+  await page.getByRole("button", { name: /^history/i }).click();
+  await historyDialog
+    .locator('input[type="file"]')
+    .setInputFiles("output/playwright/history.json");
+  await page
+    .getByText("Experiment imported. Run it to get fresh probabilities.", {
+      exact: true,
+    })
+    .waitFor();
+  check(
+    (await page
+      .getByRole("textbox", { name: "Experiment title" })
+      .inputValue()) === "Browser QA fixture",
+    "History imports exported experiment inputs",
+  );
+  const wording = page.getByRole("textbox", { name: "Wording 2", exact: true });
   await wording.fill("Which policy should come first now?");
   check(
     await page
       .getByText("Run a comparison to see probabilities", { exact: true })
       .isVisible(),
     "A changed wording hides mismatched results",
+  );
+  await page.getByRole("button", { name: "copy link", exact: true }).click();
+  await page.getByText("link copied", { exact: true }).waitFor();
+  const draftUrl = await page.evaluate(() => window.__sharedText);
+  await page.goto(draftUrl);
+  await page
+    .getByText("Run a comparison to see probabilities", { exact: true })
+    .waitFor();
+  check(
+    new URL(page.url()).hash === "" &&
+      (await wording.inputValue()) === "Which policy should come first now?",
+    "Input-only links restore without results or inference",
   );
   await wording.fill("Which policy should come first?");
   check(
@@ -644,7 +791,7 @@ export default async function checkBrowser(page) {
     "Phone layout has no horizontal overflow",
   );
   check(
-    await page.locator(".sample-note").isVisible(),
+    await page.locator(".result-source").isVisible(),
     "Mobile seed shows its recording",
   );
   await page.evaluate(() => window.scrollTo(0, 0));
@@ -652,14 +799,110 @@ export default async function checkBrowser(page) {
     path: "output/playwright/mobile.png",
     fullPage: true,
   });
+  check(
+    (await page.locator(".probability-plot circle").count()) ===
+      (await page.locator(".wording-row").count()) &&
+      (await page.locator(".probability-plot > line").count()) === 0,
+    "Every wording has one dot with no reference line",
+  );
+  check(
+    (await page.locator(".plot-label").allTextContents()).join() === "1,2,3,4",
+    "Plot labels are just numbers",
+  );
+  check(
+    (
+      await page
+        .getByRole("region", { name: "Comparison results" })
+        .textContent()
+    ).match(/mean of 3 runs/g).length === 1,
+    "Mean copy appears only once",
+  );
+  await page.getByRole("button", { name: "Your own question" }).click();
+  check(
+    (await page
+      .getByRole("textbox", { name: "Experiment title" })
+      .getAttribute("placeholder")) === "name this comparison",
+    "Empty title has the requested placeholder",
+  );
+  await page
+    .getByRole("textbox", { name: "Wording 1", exact: true })
+    .fill("Is this a test?");
+  await page
+    .getByRole("textbox", { name: "Wording 2", exact: true })
+    .fill("Is this a test fixture?");
+  for (let i = 0; i < 6; i++)
+    await page
+      .getByRole("button", { name: "add a wording", exact: true })
+      .click();
+  check(
+    await page
+      .getByRole("button", { name: "add a wording", exact: true })
+      .isDisabled(),
+    "At most eight wordings can be added",
+  );
+  for (let i = 8; i >= 3; i--)
+    await page
+      .getByRole("button", { name: `Remove wording ${i}`, exact: true })
+      .click();
+  check(
+    await page
+      .getByRole("button", { name: "Remove wording 1", exact: true })
+      .isDisabled(),
+    "At least two numbered rows remain",
+  );
+  await page.route(
+    "https://inflection-api.bensonperry.workers.dev/decisions",
+    (route) => {
+      const q = route.request().postDataJSON().questions;
+      return route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          model: "fixture",
+          answers: Object.fromEntries(
+            Object.keys(q).map((id) => [
+              id,
+              {
+                type: "choice",
+                choice: "yes",
+                confidence: 0,
+                probabilities: { yes: 0.5, no: 0.5 },
+              },
+            ]),
+          ),
+        }),
+      });
+    },
+  );
+  await page
+    .getByRole("group", { name: "Repeats" })
+    .getByRole("button", { name: "×1", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Run comparison", exact: true })
+    .click();
+  await page.getByText("your run · just now", { exact: true }).waitFor();
+  check(
+    (await page.locator(".plot-footnote").count()) === 0 &&
+      (await page.locator(".answer-tally").textContent()) ===
+        "yes 0 · no 0 · tie 2",
+    "Single runs omit range copy and ties count once per wording",
+  );
+  await page.goto("http://127.0.0.1:5197/#s=invalid-gzip");
+  await page.getByText("your run · just now", { exact: true }).waitFor();
+  check(
+    (await page.locator(".wording-row").count()) === 2,
+    "Invalid links are ignored without damaging the browser draft",
+  );
   check(errors.length === 0, `No browser exceptions: ${errors.join("; ")}`);
   // This browser is a dedicated QA session. Remove its fixture data before delivery.
   await page.evaluate(() => {
     for (const k of Object.keys(localStorage))
-      if (k.startsWith("inflection-v1-")) localStorage.removeItem(k);
+      if (k.startsWith("inflection-v2-")) localStorage.removeItem(k);
   });
   await page.setViewportSize({ width: 1440, height: 1100 });
-  await page.reload();
+  await page.goto("http://127.0.0.1:5197/");
+  await page.locator(".result-source").waitFor();
   await page.screenshot({ path: "output/playwright/desktop.png" });
   return { passed: checks.length, checks };
 }

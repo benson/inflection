@@ -16,9 +16,7 @@ export function findRecordedRun(experiment: Experiment): Run | null {
       (run) =>
         JSON.stringify(run.request) === request &&
         run.conditions.length === conditions.length &&
-        run.conditions.every(
-          (c, i) => c.id === conditions[i].id && c.kind === conditions[i].kind,
-        ),
+        run.conditions.every((c, i) => c.id === conditions[i].id),
     );
     return run ? structuredClone(run) : null;
   } catch {

@@ -29,15 +29,15 @@ The setup script checks the key’s cap and sends it to Wrangler over stdin. It 
 
 ## Explore
 
-- Five starting questions: Reno and Los Angeles, Cubs and the Ottomans, Closest state to Africa, Self-driving safety, and Religion & terrorism. Each has two or three editable variants.
-- Create your own question, use two to eight shared answers, and compare up to eight wordings.
-- Word-level insertions and deletions, complete probability distributions, a common-scale dot plot, percentage-point deltas, and answer flips.
+- Five starting questions: Reno and Los Angeles, Cubs and the Ottomans, Closest state to Africa, Self-driving safety, and Religion & terrorism. Each has three or four editable wordings.
+- Compare two to eight wordings, numbered 1 to N, with two to eight shared answers and optional shared context.
+- See complete distributions, a common-scale dot plot, the largest swing in percentage points, and an answer tally. Optionally show word edits against wording 1.
 - Repeat the entire batch 1, 3, or 5 times; show mean probabilities and observed min–max ranges.
-- Add original-question controls for reversed answer order and an expanded answer set (insufficient information / false premise).
-- Mark substantive changes as **Changed framing**; they are excluded from the paraphrase swing statistic.
-- Save questions, inspect 20 recent real comparisons, export full request/response metadata, and import exported experiments.
+- Copy a gzip-compressed share link with the title, inputs, and any displayed results. Opening it validates and restores the comparison, then clears the hash; shared results are labeled separately from this browser’s runs.
+- Copy a 1200 × 630 PNG of the title, stats, and selected answer’s dot plot; browsers that cannot copy images download the PNG instead.
+- Inspect this browser’s 20 recent runs in history, export each as JSON, and import experiments there. Drafts and history use `inflection-v2-` storage keys; v1 data is ignored, without migration.
 
-Every example opens with a recorded three-repeat comparison from 20 September 2026, using `typesafe/jev-1.13-20260917` and the same request the app sends. Editing the inputs clears the recording; restoring the exact request restores it. Returning to unchanged inputs, undoing an edit, or reloading restores the latest matching real comparison from the 20-run browser history. Matching includes questions, answers and their order, context, controls, and framing labels; changing the experiment title does not invalidate a comparison. Unmeasured inputs show no results. A failed rerun preserves the previous matching comparison. There is no fake-answer fallback. Only **Run comparison** sends inference requests.
+Every example opens with a recorded three-repeat comparison from 20 September 2026, using `typesafe/jev-1.13-20260917` and the same question text, answer order, and context the app sends (with numbered wording IDs). Editing the inputs clears the recording; restoring the exact request restores it. Returning to unchanged inputs, undoing an edit, or reloading restores the latest matching real comparison from the 20-run browser history. Matching includes questions, answers and their order, and shared context; changing the experiment title does not invalidate a comparison. Unmeasured inputs show no results. A failed rerun preserves the previous matching comparison. There is no fake-answer fallback. Only **Run comparison** sends inference requests.
 
 ## Method
 
@@ -45,13 +45,15 @@ Both binary and multiple-choice questions use Jev’s `choice` primitive. This a
 
 The API contract was checked against [OpenRouter’s official OpenAPI specification](https://openrouter.ai/openapi.json): `POST https://openrouter.ai/api/alpha/decisions`, model `typesafe/jev-1.13`. This alpha route is distinct from chat completions. The full resolved model ID is preserved in each response. Requests timeout after 45 seconds; canceled or failed batches are not replaced with fabricated results or silently retried.
 
-The **largest wording swing** is the maximum, across shared options, of the probability range across the original and variants marked Rewording. Expanded-answer, reversed-order, and Changed framing conditions are excluded. Flips count only a unique winning answer changing from the original to a paraphrase. Exact ties are displayed as ties. The plot follows a selected shared answer and its original baseline. Extra answers in the expanded control are shown in that row’s distribution, without inventing a measured baseline for them.
+- **Largest swing, pp** is the maximum over answer options of (highest mean probability − lowest mean probability) across all wordings 1 to N, multiplied by 100.
+- **Answers** tallies how many wordings have each winning answer. Tied probabilities count once as a tie. The `differs` tag marks rows that differ from the most frequent winner; if the tally has no unique leader, no row is tagged.
+- The dot plot follows a selected shared answer, with one numbered dot per wording and thick lines for the observed range when repeated. There is no reference line.
 
 Repeated runs estimate observed variability only; min–max lines are not confidence intervals. A paraphrase is an editorial attempt, not a certified meaning-preserving transformation. Results measure this model under these questions and options; they do not establish political or moral truth. TypeSafe’s confidence scalar is retained in JSON; the interface emphasizes the full distribution.
 
 ## Question provenance
 
-The first four examples come from the [fact search on 20 September 2026](research/2026-09-20/README.md#fact-search--september-20-2026), which selected questions with a correct answer and wrapper or syntactic variants only; each shipped variant set was confirmed with three repeats and a reversed-order control. The [religion example](research/2026-09-20/README.md#religion-example-reinstated--september-20-2026) is the largest confirmed swing on a syntactic edit and is included last. All prompts and framing labels are editable. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
+The first four examples come from the [fact search on 20 September 2026](research/2026-09-20/README.md#fact-search--september-20-2026), which selected questions with a correct answer and wrapper or syntactic edits only; each shipped wording set was confirmed with three repeats. The [religion example](research/2026-09-20/README.md#religion-example-reinstated--september-20-2026) is the largest confirmed swing on a syntactic edit and is included last. All wordings are editable. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
 
 - [TypeSafe’s documented limitations](https://docs.typesafe.ai/model-jaggedness/jev-1.13)
 - [Choice documentation](https://docs.typesafe.ai/primitives/choice)
@@ -67,6 +69,6 @@ npm test
 npm run build
 ```
 
-Node tests cover example integrity, controlled request construction, invalid distributions, ties, swing arithmetic, repeated runs, credential-free browser transport, and the Worker’s validation, origin checks, throttling, and secret isolation. With the dev server running and Playwright already installed, `node scripts/check-browser.js` checks the example chips, responsive layout, browser interactions, and a clearly mocked API response. Its header documents using an existing external Playwright installation. Live inference requires the Worker’s configured key and available credits.
+Node tests cover example integrity, controlled request construction, invalid distributions, ties, swing arithmetic, answer tallies, shared-link validation, v2 history, repeated runs, credential-free browser transport, and the Worker’s validation, origin checks, throttling, and secret isolation. With the dev server running and Playwright already installed, `node scripts/check-browser.js` checks the example chips, responsive layout, browser interactions, and a clearly mocked API response. Its header documents using an existing external Playwright installation. Live inference requires the Worker’s configured key and available credits.
 
 The relative asset base supports GitHub Pages at `bensonperry.com/inflection/`. The deploy workflow runs the focused checks before publishing `dist`. Browser state and keys are not built into that static artifact.

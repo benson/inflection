@@ -1,35 +1,28 @@
 export type Option = { id: string; label: string };
-export type Variant = {
+export type Wording = {
   id: string;
   text: string;
-  kind: "paraphrase" | "framing";
 };
 export type Experiment = {
   id: string;
   title: string;
   category: string;
   mode: "binary" | "multiple";
-  original: string;
-  variants: Variant[];
+  wordings: Wording[];
   options: Option[];
   context: string;
-  expanded: boolean;
-  reversed: boolean;
 };
 export type Seed = {
   id: string;
   title: string;
   category: string;
-  question: string;
-  variants: string[];
-  variantKinds?: Variant["kind"][];
+  wordings: string[];
   options?: string[];
 };
 export type Condition = {
   id: string;
   text: string;
   label: string;
-  kind: "original" | "paraphrase" | "framing" | "expanded" | "reversed";
   options: Option[];
 };
 export type Answer = {
@@ -49,7 +42,7 @@ export type DecisionRequest = {
 export type Run = {
   id: string;
   createdAt: string;
-  sample: boolean;
+  source: "local" | "recorded" | "shared";
   experiment: Experiment;
   conditions: Condition[];
   responses: {

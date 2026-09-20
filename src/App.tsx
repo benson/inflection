@@ -7,16 +7,7 @@ import {
   useState,
 } from "react";
 import type { ComponentProps, ReactNode, RefObject } from "react";
-import {
-  Bookmark,
-  Check,
-  ChevronDown,
-  Download,
-  FlaskConical,
-  Plus,
-  Trash2,
-  X,
-} from "lucide-react";
+import { Check, ChevronDown, Plus, Trash2, X } from "lucide-react";
 import type { Experiment, Run } from "./types";
 import {
   binaryOptions,
@@ -26,6 +17,8 @@ import {
   findMatchingRun,
   fromSeed,
   maxWordingSwing,
+  majorityWinner,
+  tallyText,
   meanProb,
   validateExperiment,
   winners,
@@ -37,10 +30,11 @@ import {
   isDraft,
   isExperiment,
   readHistory,
-  readSaved,
   readStorage,
   writeStorage,
 } from "./storage";
+
+import { copyImage, decodeShare, downloadBlob, encodeShare } from "./share";
 
 const colors = [
   "#653d78",
@@ -55,11 +49,6 @@ const colors = [
   "#51514b",
 ];
 const pct = (n: number) => `${Math.round(n * 100)}%`;
-const points = (n: number) => {
-  const rounded = Math.round(Math.abs(n * 100));
-  return `${rounded ? (n > 0 ? "+" : "−") : ""}${rounded} pp`;
-};
-
 function growTextarea(element: HTMLTextAreaElement) {
   element.style.height = "auto";
   element.style.height = `${element.scrollHeight + element.offsetHeight - element.clientHeight}px`;
@@ -151,9 +140,9 @@ function Modal({
   );
 }
 
-function Diff({ original, text }: { original: string; text: string }) {
+function Diff({ before, text }: { before: string; text: string }) {
   const groups: ReturnType<typeof wordDiff> = [];
-  for (const part of wordDiff(original, text)) {
+  for (const part of wordDiff(before, text)) {
     const previous = groups.at(-1);
     if (previous?.type === part.type) previous.text += part.text;
     else groups.push({ ...part });
@@ -191,10 +180,9 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
     observer.observe(plot);
     return () => observer.disconnect();
   }, []);
-  const base = meanProb(run, "original", optionId);
   const conditions = run.conditions;
   const h = conditions.length * 48 + 32;
-  const left = 112,
+  const left = 32,
     width = plotWidth - left - 48;
   const x = (p: number) => left + p * width;
   return (
@@ -220,14 +208,6 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
           </text>
         </g>
       ))}
-      <line
-        x1={x(base)}
-        y1="12"
-        x2={x(base)}
-        y2={h - 32}
-        stroke="var(--muted)"
-        strokeDasharray="2 4"
-      />
       {conditions.map((c, i) => {
         const p = meanProb(run, c.id, optionId),
           y = i * 48 + 24;
@@ -237,20 +217,8 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
         return (
           <g key={c.id}>
             <text x="0" y={y + 4} className="plot-label">
-              {c.kind === "expanded"
-                ? "More options"
-                : c.kind === "reversed"
-                  ? "Order reversed"
-                  : c.label}
+              {c.label}
             </text>
-            <line
-              x1={x(base)}
-              y1={y}
-              x2={x(p)}
-              y2={y}
-              stroke="var(--line-strong)"
-              strokeWidth="2"
-            />
             {vals.length > 1 && (
               <line
                 x1={x(Math.min(...vals))}
@@ -266,7 +234,7 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
               cx={x(p)}
               cy={y}
               r="5.5"
-              fill={i === 0 ? "var(--paper)" : "var(--accent)"}
+              fill="var(--accent)"
               stroke="var(--accent)"
               strokeWidth="2"
             />
@@ -285,37 +253,41 @@ function ProbabilityPlot({ run, optionId }: { run: Run; optionId: string }) {
   );
 }
 
-function Results({ run }: { run: Run }) {
-  const [tracked, setTracked] = useState(run.experiment.options[0].id);
-  const [showDiff, setShowDiff] = useState(true);
-  const [details, setDetails] = useState(false);
-  const allOptions = Array.from(
-    new Map(
-      run.conditions.flatMap((c) => c.options).map((o) => [o.id, o]),
-    ).values(),
-  );
+function Results({
+  run,
+  tracked,
+  setTracked,
+}: {
+  run: Run;
+  tracked: string;
+  setTracked: (id: string) => void;
+}) {
+  const [showDiff, setShowDiff] = useState(false);
   const selected =
     run.experiment.options.find((o) => o.id === tracked) ??
     run.experiment.options[0];
-  const baseWinners = winners(run, "original");
-  const comparable = run.conditions.filter((c) => c.kind === "paraphrase");
-  const flips = comparable.filter((c) => {
-    const w = winners(run, c.id);
-    return (
-      w.length === 1 && baseWinners.length === 1 && w[0] !== baseWinners[0]
-    );
-  }).length;
+  const majority = majorityWinner(run);
+  const date = new Date(run.createdAt)
+    .toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    })
+    .toLowerCase()
+    .replace("sept", "sep");
+  const tag =
+    run.source === "recorded"
+      ? `recorded ${date} · mean of ${run.responses.length} runs`
+      : run.source === "shared"
+        ? `shared link · ${date}`
+        : `your run · ${run.responses.length > 1 ? `${run.responses.length} repeats` : "just now"}`;
   const cost = run.responses.every((r) => typeof r.usage?.cost === "number")
     ? run.responses.reduce((s, r) => s + r.usage!.cost!, 0)
     : undefined;
   return (
     <section className="results" aria-label="Comparison results">
-      {run.sample && (
-        <div className="sample-note">
-          <FlaskConical size={14} aria-hidden="true" />
-          <span>recorded 20 sep 2026 · jev 1.13-20260917 · mean of 3 runs</span>
-        </div>
-      )}
+      <div className="result-source">{tag}</div>
       <div className="stats">
         <div>
           <div className="stat-number">
@@ -323,29 +295,19 @@ function Results({ run }: { run: Run }) {
           </div>
           <span
             className="stat-caption"
-            title="Largest probability range for any shared answer across the original and versions tagged as rewordings."
+            title="Largest range of mean probabilities for any answer across all wordings."
           >
-            Largest swing, pp
+            largest swing, pp
           </span>
         </div>
-        <div>
-          <div className="stat-number">
-            {flips}
-            <span> of </span>
-            {comparable.length}
-          </div>
-          <span className="stat-caption">Flips</span>
+        <div className="tally-stat">
+          <div className="answer-tally">{tallyText(run)}</div>
+          <span className="stat-caption">answers</span>
         </div>
       </div>
-      {run.conditions.some((c) =>
-        ["framing", "expanded", "reversed"].includes(c.kind),
-      ) && (
-        <p className="condition-legend">Tagged rows are excluded from swing</p>
-      )}
       {run.experiment.options.length > 2 && (
         <div className="plot-header">
           <select
-            id="track-option"
             aria-label="Track probability of"
             value={selected.id}
             onChange={(e) => setTracked(e.target.value)}
@@ -359,137 +321,79 @@ function Results({ run }: { run: Run }) {
         </div>
       )}
       <ProbabilityPlot run={run} optionId={selected.id} />
-      <p className="plot-footnote">
-        {run.responses.length > 1
-          ? `Mean of ${run.responses.length} runs · thick lines show observed range`
-          : `Dotted line: original · tracking ${selected.label}`}
-      </p>
+      {run.responses.length > 1 && (
+        <p className="plot-footnote">thick lines show the observed range</p>
+      )}
       <div className="answer-heading">
-        <h3>Answers by wording</h3>
+        <h3>answers by wording</h3>
         <label className="check-label">
           <input
             type="checkbox"
             checked={showDiff}
             onChange={(e) => setShowDiff(e.target.checked)}
           />{" "}
-          Show edits
+          show edits
         </label>
       </div>
       <div className="answer-list">
-        {run.conditions.map((c, i) => {
+        {run.conditions.map((c) => {
           const leading = winners(run, c.id);
-          const isFlip =
-            leading.length === 1 &&
-            baseWinners.length === 1 &&
-            leading[0] !== baseWinners[0];
-          const delta =
-            meanProb(run, c.id, selected.id) -
-            meanProb(run, "original", selected.id);
+          const winner = leading.length === 1 ? leading[0] : "__tie__";
           return (
             <article className="answer" key={c.id}>
               <div className="answer-top">
-                <div className="condition-label">
-                  <span>
-                    {String(i + 1).padStart(2, "0")} · {c.label}
-                  </span>
-                  {["framing", "expanded", "reversed"].includes(c.kind) && (
-                    <span className="condition-tag">
-                      {c.kind === "framing"
-                        ? "Framing"
-                        : c.kind === "expanded"
-                          ? "+2 answers"
-                          : "Reversed order"}
-                    </span>
+                <span>{c.label}</span>
+                <div className="answer-tags">
+                  {leading.length > 1 && <span>tie</span>}
+                  {majority !== null && winner !== majority && (
+                    <span className="flip-pill">differs</span>
                   )}
-                </div>
-                <div className="answer-delta">
-                  {leading.length > 1 && <span className="tie-label">Tie</span>}
-                  {isFlip && <span className="flip-pill">Flip</span>}
-                  {i > 0 && <span className="delta">{points(delta)}</span>}
                 </div>
               </div>
               <p className="answer-question">
-                {showDiff && c.kind !== "original" ? (
-                  <Diff original={run.experiment.original} text={c.text} />
+                {showDiff && c.id !== "w1" ? (
+                  <Diff
+                    before={run.experiment.wordings[0].text}
+                    text={c.text}
+                  />
                 ) : (
                   c.text
                 )}
               </p>
-              {c.options.length > 2 && (
-                <div
-                  className="distribution"
-                  aria-label={`${c.label} answer distribution`}
-                >
-                  {allOptions
-                    .filter((o) => c.options.some((co) => co.id === o.id))
-                    .map((o) => {
-                      const p = meanProb(run, c.id, o.id);
-                      return (
-                        <span
-                          key={o.id}
-                          title={`${o.label}: ${pct(p)}`}
-                          style={{
-                            width: `${p * 100}%`,
-                            background:
-                              colors[
-                                allOptions.findIndex((a) => a.id === o.id)
-                              ],
-                          }}
-                        />
-                      );
-                    })}
-                </div>
-              )}
               <div
                 className={`distribution-legend ${c.options.length === 2 ? "binary-figures" : ""}`}
               >
-                {allOptions
-                  .filter((o) => c.options.some((co) => co.id === o.id))
-                  .map((o) => (
-                    <span
-                      key={o.id}
-                      className={leading.includes(o.id) ? "winning-answer" : ""}
-                    >
-                      {c.options.length > 2 && (
-                        <i
-                          style={{
-                            background:
-                              colors[
-                                allOptions.findIndex((a) => a.id === o.id)
-                              ],
-                          }}
-                        />
-                      )}
-                      {o.label}{" "}
-                      <b>
-                        {Math.round(meanProb(run, c.id, o.id) * 100)}
-                        {c.options.length > 2 ? "%" : ""}
-                      </b>
-                    </span>
-                  ))}
+                {c.options.map((o) => (
+                  <span
+                    key={o.id}
+                    className={leading.includes(o.id) ? "winning-answer" : ""}
+                  >
+                    {o.label}{" "}
+                    <b>
+                      {Math.round(meanProb(run, c.id, o.id) * 100)}
+                      {c.options.length > 2 ? "%" : ""}
+                    </b>
+                  </span>
+                ))}
               </div>
             </article>
           );
         })}
       </div>
-      <div className="result-footer">
-        <button
-          className="text-button"
-          aria-expanded={details}
-          onClick={() => setDetails(!details)}
-        >
-          Details <ChevronDown size={16} className={details ? "rotated" : ""} />
-        </button>
-        <span>
-          {run.sample
-            ? "recorded · not run in this browser"
-            : [...new Set(run.responses.map((r) => r.model))].join(", ")}
-        </span>
-      </div>
-      {details && (
+      <details className="result-details">
+        <summary className="result-footer">
+          <span className="text-button">
+            details <ChevronDown size={16} />
+          </span>
+          <span>
+            {run.source === "local"
+              ? "your run"
+              : `${run.source === "recorded" ? "recorded" : "shared link"} · not run in this browser`}
+          </span>
+        </summary>
         <div className="technical-details">
-          {!run.sample && (
-            <p>{`${run.responses.length} ${run.responses.length === 1 ? "run" : "runs"} · ${(run.durationMs / 1000).toFixed(2)}s${cost !== undefined ? ` · $${cost.toFixed(6)}` : ""}`}</p>
+          {run.source === "local" && (
+            <p>{`${(run.durationMs / 1000).toFixed(2)}s${cost !== undefined ? ` · $${cost.toFixed(6)}` : ""}`}</p>
           )}
           <p>
             Probabilities describe the model’s allocation across the supplied
@@ -497,30 +401,32 @@ function Results({ run }: { run: Run }) {
             is correct.
           </p>
           <p>
-            “Wording swing” compares the original and versions tagged
-            “Rewording.” A paraphrase can still change meaning; review the
-            highlighted edits. Ties are not counted as flips.
+            Largest swing is the largest range of mean probabilities for any
+            answer across all wordings. Answers tally each wording’s winner;
+            ties count as a tie. A paraphrase can still change meaning; review
+            the highlighted edits.
           </p>
-          <p>
-            {`Model: ${[...new Set(run.responses.map((r) => r.model))].join(", ")}. ${new Date(run.createdAt).toLocaleString()}.`}
-          </p>
+          <p>{`Model: ${run.responses[0].model}. ${new Date(run.createdAt).toLocaleString()}.`}</p>
         </div>
-      )}
+      </details>
     </section>
   );
 }
 
-export default function App() {
+export default function App({
+  shared,
+}: {
+  shared: { experiment: Experiment; run: Run | null } | null;
+}) {
   const initial = useMemo(() => recordedRun(seeds[0].id)!, []);
   const [experiment, setExperiment] = useState<Experiment>(() => {
-    const saved = readStorage("draft", null);
-    return isDraft(saved) ? saved : initial.experiment;
+    const draft = readStorage("draft", null);
+    return shared?.experiment ?? (isDraft(draft) ? draft : initial.experiment);
   });
   const [selectedRun, setRun] = useState<Run | null>(() => {
-    const saved = readStorage("draft", null);
-    return isDraft(saved) ? null : initial;
+    const draft = readStorage("draft", null);
+    return shared?.run ?? (isDraft(draft) || shared ? null : initial);
   });
-  const [saved, setSaved] = useState(readSaved);
   const [history, setHistory] = useState(readHistory);
   const run = useMemo(
     () =>
@@ -529,29 +435,26 @@ export default function App() {
       findRecordedRun(experiment),
     [selectedRun, experiment, history],
   );
-  const [dialog, setDialog] = useState<"about" | "saved" | "request" | null>(
+  const [dialog, setDialog] = useState<"about" | "history" | "request" | null>(
     null,
   );
-  const [advanced, setAdvanced] = useState(false);
+  const [tracked, setTracked] = useState("");
   const [repeats, setRepeats] = useState(1);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const controller = useRef<AbortController | null>(null);
-  const originalRef = useRef<HTMLTextAreaElement>(null);
+  const wordingRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const validError = validateExperiment(experiment);
-  const count =
-    1 +
-    experiment.variants.filter((v) => v.text.trim()).length +
-    Number(experiment.expanded) +
-    Number(experiment.reversed);
-  const savedCurrent = saved.some((s) => s.id === experiment.id);
+  const count = experiment.wordings.filter((w) => w.text.trim()).length;
 
   useEffect(() => {
     if (!writeStorage("draft", experiment))
-      setNotice("Browser storage is full. Export your experiment to keep it.");
+      setNotice(
+        "Browser storage is full. Copy a link to keep this comparison.",
+      );
   }, [experiment]);
   useEffect(() => {
     if (!notice) return;
@@ -559,22 +462,47 @@ export default function App() {
     return () => clearTimeout(timer);
   }, [notice]);
   useEffect(() => () => controller.current?.abort(), []);
+  useEffect(() => {
+    let active = true;
+    const restoreLink = async () => {
+      if (busy) return;
+      const hash = window.location.hash;
+      const result = await decodeShare(hash);
+      if (!active || !result || window.location.hash !== hash) return;
+      setExperiment(result.experiment);
+      setRun(result.run);
+      setTracked("");
+      setError("");
+      setDialog(null);
+      window.history.replaceState(
+        null,
+        "",
+        window.location.pathname + window.location.search,
+      );
+    };
+    window.addEventListener("hashchange", restoreLink);
+    return () => {
+      active = false;
+      window.removeEventListener("hashchange", restoreLink);
+    };
+  }, [busy]);
 
   function change(patch: Partial<Experiment>) {
     setExperiment((e) => ({ ...e, ...patch }));
-    setRun(null);
+    if (Object.keys(patch).some((key) => key !== "title")) setRun(null);
     setError("");
   }
   function openExperiment(e: Experiment, result: Run | null = null) {
     if (busy) return;
     setExperiment(structuredClone(e));
     setRun(result);
+    setTracked("");
     setError("");
     setDialog(null);
   }
   function newQuestion() {
     openExperiment(blankExperiment());
-    setTimeout(() => originalRef.current?.focus(), 0);
+    setTimeout(() => wordingRef.current?.focus(), 0);
   }
   function changeMode(mode: Experiment["mode"]) {
     if (mode === experiment.mode) return;
@@ -590,46 +518,52 @@ export default function App() {
             ],
     });
   }
-  function addVariant() {
+  function addWording() {
     change({
-      variants: [
-        ...experiment.variants,
-        {
-          id: `v${crypto.randomUUID().replaceAll("-", "")}`,
-          text: experiment.original,
-          kind: "paraphrase",
-        },
+      wordings: [
+        ...experiment.wordings,
+        { id: `w${experiment.wordings.length + 1}`, text: "" },
       ],
     });
   }
-  function saveExperiment() {
-    if (validError) {
-      setError(validError);
-      return;
-    }
-    const next = [
-      structuredClone(experiment),
-      ...saved.filter((s) => s.id !== experiment.id),
-    ].slice(0, 50);
-    setSaved(next);
-    if (writeStorage("saved", next))
-      setNotice("Experiment saved on this device.");
-    else setNotice("Could not save. Export your experiment to keep it.");
-  }
-  function exportData(value: Experiment | Run = run ?? experiment) {
-    const data = {
-      format: "inflection-v1",
-      exportedAt: new Date().toISOString(),
-      ...("responses" in value ? { run: value } : { experiment: value }),
-    };
-    const url = URL.createObjectURL(
-      new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }),
+  function exportData(value: Run) {
+    downloadBlob(
+      new Blob(
+        [
+          JSON.stringify(
+            {
+              format: "inflection-v2",
+              exportedAt: new Date().toISOString(),
+              run: value,
+            },
+            null,
+            2,
+          ),
+        ],
+        { type: "application/json" },
+      ),
+      `inflection-${value.createdAt.slice(0, 10)}.json`,
     );
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `inflection-${"sample" in value && value.sample ? "recorded-" : ""}${new Date().toISOString().slice(0, 10)}.json`;
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  async function shareLink() {
+    try {
+      const url = new URL(window.location.href);
+      url.hash = `s=${await encodeShare(experiment, run)}`;
+      await navigator.clipboard.writeText(url.href);
+      setNotice("link copied");
+    } catch (err) {
+      setNotice(
+        err instanceof Error ? err.message : "Could not copy the link.",
+      );
+    }
+  }
+  async function shareImage() {
+    if (!run) return;
+    try {
+      setNotice(await copyImage(experiment, run, tracked));
+    } catch {
+      setNotice("Could not create the image.");
+    }
   }
   async function importData(file?: File) {
     if (!file) return;
@@ -637,7 +571,7 @@ export default function App() {
       if (file.size > 2_000_000) throw new Error();
       const data = JSON.parse(await file.text());
       const e = data.experiment ?? data.run?.experiment;
-      if (data.format !== "inflection-v1" || !isExperiment(e))
+      if (data.format !== "inflection-v2" || !isExperiment(e))
         throw new Error();
       openExperiment(e);
       setNotice("Experiment imported. Run it to get fresh probabilities.");
@@ -657,7 +591,6 @@ export default function App() {
     setBusy(true);
     setProgress(0);
     setError("");
-    setRun(null);
     try {
       const result = await evaluate(
         structuredClone(experiment),
@@ -666,7 +599,7 @@ export default function App() {
         setProgress,
       );
       setRun(result);
-      const next = [result, ...history.filter((r) => !r.sample)].slice(0, 20);
+      const next = [result, ...history].slice(0, 20);
       setHistory(next);
       if (!writeStorage("history", next))
         setNotice(
@@ -705,13 +638,13 @@ export default function App() {
             how this works
           </button>
           <button
-            className="text-button saved-nav"
+            className="text-button history-nav"
             disabled={busy}
-            onClick={() => setDialog("saved")}
+            onClick={() => setDialog("history")}
           >
-            Saved{" "}
-            {saved.length > 0 && (
-              <span className="count-badge">{saved.length}</span>
+            history{" "}
+            {history.length > 0 && (
+              <span className="count-badge">{history.length}</span>
             )}
           </button>
         </nav>
@@ -724,7 +657,7 @@ export default function App() {
               key={s.id}
               className="example-chip"
               aria-pressed={experiment.id === s.id}
-              onClick={() => openExperiment(fromSeed(s), recordedRun(s.id))}
+              onClick={() => openExperiment(fromSeed(s))}
             >
               {s.title}
             </button>
@@ -744,6 +677,7 @@ export default function App() {
               <input
                 className="experiment-title"
                 aria-label="Experiment title"
+                placeholder="name this comparison"
                 maxLength={120}
                 value={experiment.title}
                 disabled={busy}
@@ -751,25 +685,18 @@ export default function App() {
               />
               <div className="editor-actions">
                 <button
-                  disabled={busy}
-                  className="icon-button"
-                  aria-label="Save experiment"
-                  title="Save experiment"
-                  onClick={saveExperiment}
+                  className="text-button"
+                  disabled={busy || !run}
+                  onClick={shareImage}
                 >
-                  {savedCurrent ? (
-                    <Bookmark size={16} fill="currentColor" />
-                  ) : (
-                    <Bookmark size={16} />
-                  )}
+                  copy image
                 </button>
                 <button
-                  className="icon-button"
-                  aria-label={run ? "Export comparison" : "Export experiment"}
-                  title={run ? "Export comparison" : "Export experiment"}
-                  onClick={() => exportData()}
+                  className="text-button"
+                  disabled={busy || !!validError}
+                  onClick={shareLink}
                 >
-                  <Download size={16} />
+                  copy link
                 </button>
               </div>
             </div>
@@ -851,145 +778,79 @@ export default function App() {
                   )}
                 </div>
               )}
-              <div className="wording-row original-row">
-                <div className="wording-row-top">
-                  <label htmlFor="original">
-                    <span className="wording-number">01</span> Original
-                  </label>
-                </div>
-                <WordingTextarea
-                  inputRef={originalRef}
-                  id="original"
-                  aria-label="Original question"
-                  maxLength={3000}
-                  placeholder="Should…?"
-                  value={experiment.original}
-                  onChange={(e) => change({ original: e.target.value })}
-                />
-              </div>
-              <div className="variants-label">
+              <div className="wordings-label">
                 <h3>
-                  Wordings <span>{experiment.variants.length} / 7</span>
+                  wordings <span>{experiment.wordings.length} / 8</span>
                 </h3>
                 <button
                   className="text-button add-wording"
-                  disabled={experiment.variants.length >= 7}
-                  onClick={addVariant}
+                  disabled={experiment.wordings.length >= 8}
+                  onClick={addWording}
                 >
-                  <Plus size={16} /> Add a wording
+                  <Plus size={16} /> add a wording
                 </button>
               </div>
-              {experiment.variants.map((v, i) => (
-                <div className="wording-row" key={v.id}>
+              {experiment.wordings.map((w, i) => (
+                <div className="wording-row" key={w.id}>
                   <div className="wording-row-top">
-                    <label htmlFor={v.id}>
-                      <span className="wording-number">
-                        {String(i + 2).padStart(2, "0")}
-                      </span>
-                      <span className="sr-only">Wording {i + 1}</span>
+                    <label htmlFor={w.id}>
+                      <span className="wording-number">{i + 1}</span>
                     </label>
-                    <div className="variant-tools">
-                      <button
-                        className="text-button"
-                        aria-label={`Wording ${i + 1} comparison type: ${v.kind === "framing" ? "Changed framing" : "Rewording"}`}
-                        aria-pressed={v.kind === "framing"}
-                        onClick={() =>
-                          change({
-                            variants: experiment.variants.map((a) =>
-                              a.id === v.id
-                                ? {
-                                    ...a,
-                                    kind:
-                                      v.kind === "paraphrase"
-                                        ? "framing"
-                                        : "paraphrase",
-                                  }
-                                : a,
-                            ),
-                          })
-                        }
-                      >
-                        {v.kind === "framing" ? "Changed framing" : "Rewording"}
-                      </button>
-                      <button
-                        className="icon-button"
-                        aria-label={`Remove wording ${i + 1}`}
-                        onClick={() =>
-                          change({
-                            variants: experiment.variants.filter(
-                              (a) => a.id !== v.id,
-                            ),
-                          })
-                        }
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
+                    <button
+                      className="icon-button"
+                      aria-label={`Remove wording ${i + 1}`}
+                      disabled={experiment.wordings.length <= 2}
+                      onClick={() =>
+                        change({
+                          wordings: experiment.wordings
+                            .filter((a) => a.id !== w.id)
+                            .map((a, j) => ({ ...a, id: `w${j + 1}` })),
+                        })
+                      }
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
                   <WordingTextarea
-                    id={v.id}
+                    inputRef={i === 0 ? wordingRef : undefined}
+                    id={w.id}
                     aria-label={`Wording ${i + 1}`}
                     maxLength={3000}
-                    placeholder="Change a word, a phrase, or the whole framing…"
-                    value={v.text}
+                    placeholder="write a wording…"
+                    value={w.text}
                     onChange={(e) =>
                       change({
-                        variants: experiment.variants.map((a) =>
-                          a.id === v.id ? { ...a, text: e.target.value } : a,
+                        wordings: experiment.wordings.map((a) =>
+                          a.id === w.id ? { ...a, text: e.target.value } : a,
                         ),
                       })
                     }
                   />
                 </div>
               ))}
-              <button
-                className="advanced-toggle"
-                aria-expanded={advanced}
-                onClick={() => setAdvanced(!advanced)}
-              >
-                Controls{" "}
-                <ChevronDown size={16} className={advanced ? "rotated" : ""} />
-              </button>
-              {advanced && (
-                <div className="advanced-controls">
-                  <label className="check-label">
-                    <input
-                      type="checkbox"
-                      checked={experiment.expanded}
-                      onChange={(e) => change({ expanded: e.target.checked })}
-                    />
-                    <span>
-                      Extra answers: insufficient information, false premise
-                    </span>
-                  </label>
-                  <label className="check-label">
-                    <input
-                      type="checkbox"
-                      checked={experiment.reversed}
-                      onChange={(e) => change({ reversed: e.target.checked })}
-                    />
-                    <span>Reversed answer order</span>
-                  </label>
-                  <label className="field-label" htmlFor="shared-context">
-                    Shared context
-                  </label>
+              <details className="shared-context">
+                <summary className="context-toggle">
+                  shared context <ChevronDown size={16} />
+                </summary>
+                <div className="context-editor">
                   <textarea
                     id="shared-context"
+                    aria-label="Shared context"
                     rows={3}
                     maxLength={12000}
                     placeholder="optional facts or assumptions, identical for every wording"
                     value={experiment.context}
                     onChange={(e) => change({ context: e.target.value })}
                   />
-                  <button
-                    className="text-button"
-                    disabled={!!validError}
-                    onClick={() => setDialog("request")}
-                  >
-                    View exact API request
-                  </button>
                 </div>
-              )}
+              </details>
+              <button
+                className="text-button request-button"
+                disabled={!!validError}
+                onClick={() => setDialog("request")}
+              >
+                view exact API request
+              </button>
             </fieldset>
             <div className="run-bar">
               {busy ? (
@@ -1007,7 +868,7 @@ export default function App() {
               <div
                 className="segmented repeat-control"
                 role="group"
-                aria-label="Repeat each wording"
+                aria-label="Repeats"
               >
                 {[1, 3, 5].map((n) => (
                   <button
@@ -1032,7 +893,12 @@ export default function App() {
           </section>
           <div className="results-column">
             {run ? (
-              <Results key={run.id} run={run} />
+              <Results
+                key={run.id}
+                run={run}
+                tracked={tracked}
+                setTracked={setTracked}
+              />
             ) : (
               <section className="results empty-results" aria-live="polite">
                 <p>
@@ -1042,7 +908,7 @@ export default function App() {
                 </p>
                 {!busy && (
                   <button
-                    className="text-button sample-link"
+                    className="text-button recorded-link"
                     onClick={() => {
                       const r = recordedRun(seeds[0].id)!;
                       openExperiment(r.experiment, r);
@@ -1086,22 +952,22 @@ export default function App() {
             <p>
               that's what makes it fun. ask a chat model a spicy question and
               you get a careful essay, or a refusal, and you'd need a second
-              model to turn the essay back into a number. jev just gives you
-              the number.
+              model to turn the essay back into a number. jev just gives you the
+              number.
             </p>
             <p>
               you'd expect a computer to read the same question the same way
               however you phrase it. it doesn't. reno is west of los angeles.
               ask "is reno farther west than los angeles" and jev says 33% yes.
-              ask "is los angeles farther east than reno" and it says 69%.
-              same fact, same words, different order.
+              ask "is los angeles farther east than reno" and it says 69%. same
+              fact, same words, different order.
             </p>
             <p>
               this isn't noise on questions with no answer. on settled facts,
-              monty hall, the birthday problem, nuclear versus coal, jev
-              doesn't move a point however you phrase it. the flips happen
-              where the model is unsure of a fact, and it doesn't tell you
-              it's unsure. the number just moves.
+              monty hall, the birthday problem, nuclear versus coal, jev doesn't
+              move a point however you phrase it. the flips happen where the
+              model is unsure of a fact, and it doesn't tell you it's unsure.
+              the number just moves.
             </p>
             <p>
               and it isn't only trivia. "does islam inspire more terrorism than
@@ -1111,17 +977,17 @@ export default function App() {
               different questions. most people don't read them that way.
             </p>
             <p>
-              two questions that mean the same thing to a person should get
-              the same answer from one model of the world, even if not the
-              same digits. typesafe's docs say not to expect arithmetic
-              consistency between separately asked questions. this site is
-              what that looks like in practice.
+              two questions that mean the same thing to a person should get the
+              same answer from one model of the world, even if not the same
+              digits. typesafe's docs say not to expect arithmetic consistency
+              between separately asked questions. this site is what that looks
+              like in practice.
             </p>
             <p>
-              this doesn't happen on every question. in a screen of about
-              forty questions, most didn't move at all, and the examples here
-              are the ones that did. the point is that it can happen, on edits
-              you didn't mean anything by.
+              this doesn't happen on every question. in a screen of about forty
+              questions, most didn't move at all, and the examples here are the
+              ones that did. the point is that it can happen, on edits you
+              didn't mean anything by.
             </p>
             <p>
               none of this is a knock on jev. it's a genuinely useful tool, and
@@ -1150,13 +1016,13 @@ export default function App() {
             evaluated independently against the same context.
           </p>
           <p>
-            If a version changes the meaning, tag it “Changed framing” to
-            exclude it from wording swing.
+            Largest swing is the largest range of mean probabilities for any
+            answer across wordings 1 to N. Answers tally each wording’s winner;
+            ties count as a tie.
           </p>
           <p>
             Repeat runs show observed variability, not statistical confidence
-            intervals. Controls use the original question and are excluded from
-            wording swing.
+            intervals. A paraphrase can still change meaning; review the edits.
           </p>
           <div className="connection-info">
             <span>Model</span>
@@ -1165,8 +1031,8 @@ export default function App() {
             <strong>20 runs per minute</strong>
             <p>
               Comparisons use a shared, capped budget; questions go through
-              Inflection’s server to OpenRouter and TypeSafe; saved experiments
-              stay in your browser.
+              Inflection’s server to OpenRouter and TypeSafe; recent runs stay
+              in your browser.
             </p>
           </div>
           <h3>Reading & sources</h3>
@@ -1183,45 +1049,16 @@ export default function App() {
           </div>
         </Modal>
       )}
-      {dialog === "saved" && (
-        <Modal title="Your experiments" close={() => setDialog(null)} wide>
-          <div className="saved-toolbar">
-            <p>Saved on this device.</p>
+      {dialog === "history" && (
+        <Modal title="history" close={() => setDialog(null)} wide>
+          <div className="history-toolbar">
+            <p>This browser’s 20 most recent runs.</p>
             <button
               className="secondary-button"
               onClick={() => fileRef.current?.click()}
             >
-              <Plus size={15} /> Import JSON
+              <Plus size={15} /> import json
             </button>
-          </div>
-          <h3>
-            Saved questions <span className="muted">{saved.length}</span>
-          </h3>
-          {!saved.length && (
-            <p className="muted">
-              Use the bookmark on an experiment to keep it here.
-            </p>
-          )}
-          <div className="saved-list">
-            {saved.map((e) => (
-              <div key={e.id}>
-                <button onClick={() => openExperiment(e)}>
-                  <strong>{e.title}</strong>
-                  <span>{e.original}</span>
-                </button>
-                <button
-                  className="icon-button"
-                  aria-label={`Remove saved ${e.title}`}
-                  onClick={() => {
-                    const next = saved.filter((s) => s.id !== e.id);
-                    setSaved(next);
-                    writeStorage("saved", next);
-                  }}
-                >
-                  <Trash2 size={15} />
-                </button>
-              </div>
-            ))}
           </div>
           <h3>
             Recent comparisons <span className="muted">{history.length}</span>
@@ -1229,7 +1066,7 @@ export default function App() {
           {!history.length && (
             <p className="muted">Run a comparison to save its results here.</p>
           )}
-          <div className="saved-list">
+          <div className="history-list">
             {history.map((r) => (
               <div key={r.id}>
                 <button onClick={() => openExperiment(r.experiment, r)}>
@@ -1237,15 +1074,15 @@ export default function App() {
                   <span>
                     {new Date(r.createdAt).toLocaleString()} ·{" "}
                     {Math.round(maxWordingSwing(r) * 100)} pp swing ·{" "}
-                    {r.responses.length} runs{r.sample ? " · recorded" : ""}
+                    {r.responses.length} runs
                   </span>
                 </button>
                 <button
-                  className="icon-button"
-                  aria-label={`Export ${r.experiment.title} comparison`}
+                  className="text-button"
+                  aria-label={`export json: ${r.experiment.title}`}
                   onClick={() => exportData(r)}
                 >
-                  <Download size={15} />
+                  export json
                 </button>
               </div>
             ))}

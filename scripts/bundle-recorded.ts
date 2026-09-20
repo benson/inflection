@@ -53,11 +53,28 @@ for (const seed of seeds) {
     assert.equal(run.status, 200, `${label}: failed response`);
     // JSON comparison also checks criterion order, which affects the request.
     assert.equal(
-      JSON.stringify(run.request),
+      JSON.stringify({
+        ...run.request,
+        questions: Object.fromEntries(
+          Object.values(run.request.questions).map((q, i) => [`w${i + 1}`, q]),
+        ),
+      }),
       JSON.stringify(request),
       `${label}: request differs from seed`,
     );
-    const response = parseResponse(run.response, conditions);
+    const raw = run.response as { answers: Record<string, unknown> };
+    const response = parseResponse(
+      {
+        ...raw,
+        answers: Object.fromEntries(
+          Object.keys(run.request.questions).map((id, i) => [
+            `w${i + 1}`,
+            raw.answers[id],
+          ]),
+        ),
+      },
+      conditions,
+    );
     assert.equal(
       response.model,
       "typesafe/jev-1.13-20260917",
@@ -73,7 +90,7 @@ for (const seed of seeds) {
   bundled[seed.id] = {
     id: `recorded-${seed.id}`,
     createdAt: repeats[0].startedAt,
-    sample: true,
+    source: "recorded",
     experiment,
     conditions,
     request,

@@ -2,28 +2,28 @@
   "reno-los-angeles": {
     "id": "recorded-reno-los-angeles",
     "createdAt": "2026-09-20T16:38:27.374Z",
-    "sample": true,
+    "source": "recorded",
     "experiment": {
       "id": "reno-los-angeles",
       "title": "Reno and Los Angeles",
       "category": "Geography",
       "mode": "binary",
-      "original": "Is Reno, Nevada farther west than Los Angeles, California?",
-      "variants": [
+      "wordings": [
         {
-          "id": "v1",
-          "text": "Is Los Angeles, California farther east than Reno, Nevada?",
-          "kind": "paraphrase"
+          "id": "w1",
+          "text": "Is Reno, Nevada farther west than Los Angeles, California?"
         },
         {
-          "id": "v2",
-          "text": "Compared with Los Angeles, California, is Reno, Nevada farther west?",
-          "kind": "paraphrase"
+          "id": "w2",
+          "text": "Is Los Angeles, California farther east than Reno, Nevada?"
         },
         {
-          "id": "v3",
-          "text": "Is it true that Reno, Nevada is farther west than Los Angeles, California?",
-          "kind": "paraphrase"
+          "id": "w3",
+          "text": "Compared with Los Angeles, California, is Reno, Nevada farther west?"
+        },
+        {
+          "id": "w4",
+          "text": "Is it true that Reno, Nevada is farther west than Los Angeles, California?"
         }
       ],
       "options": [
@@ -36,16 +36,13 @@
           "label": "No"
         }
       ],
-      "context": "",
-      "expanded": false,
-      "reversed": false
+      "context": ""
     },
     "conditions": [
       {
-        "id": "original",
+        "id": "w1",
         "text": "Is Reno, Nevada farther west than Los Angeles, California?",
-        "label": "Original",
-        "kind": "original",
+        "label": "1",
         "options": [
           {
             "id": "yes",
@@ -58,10 +55,9 @@
         ]
       },
       {
-        "id": "v1",
+        "id": "w2",
         "text": "Is Los Angeles, California farther east than Reno, Nevada?",
-        "label": "Wording 1",
-        "kind": "paraphrase",
+        "label": "2",
         "options": [
           {
             "id": "yes",
@@ -74,10 +70,9 @@
         ]
       },
       {
-        "id": "v2",
+        "id": "w3",
         "text": "Compared with Los Angeles, California, is Reno, Nevada farther west?",
-        "label": "Wording 2",
-        "kind": "paraphrase",
+        "label": "3",
         "options": [
           {
             "id": "yes",
@@ -90,10 +85,9 @@
         ]
       },
       {
-        "id": "v3",
+        "id": "w4",
         "text": "Is it true that Reno, Nevada is farther west than Los Angeles, California?",
-        "label": "Wording 3",
-        "kind": "paraphrase",
+        "label": "4",
         "options": [
           {
             "id": "yes",
@@ -110,7 +104,7 @@
       "model": "typesafe/jev-1.13",
       "state": "",
       "questions": {
-        "original": {
+        "w1": {
           "type": "choice",
           "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
           "criteria": {
@@ -118,7 +112,7 @@
             "no": "No"
           }
         },
-        "v1": {
+        "w2": {
           "type": "choice",
           "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
           "criteria": {
@@ -126,7 +120,7 @@
             "no": "No"
           }
         },
-        "v2": {
+        "w3": {
           "type": "choice",
           "instructions": "Compared with Los Angeles, California, is Reno, Nevada farther west?",
           "criteria": {
@@ -134,7 +128,7 @@
             "no": "No"
           }
         },
-        "v3": {
+        "w4": {
           "type": "choice",
           "instructions": "Is it true that Reno, Nevada is farther west than Los Angeles, California?",
           "criteria": {
@@ -149,7 +143,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.26,
@@ -158,7 +152,7 @@
               "no": 0.63
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.39,
@@ -167,7 +161,7 @@
               "no": 0.31
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.94,
@@ -176,7 +170,7 @@
               "no": 0.97
             }
           },
-          "v3": {
+          "w4": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.02,
@@ -196,7 +190,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.35,
@@ -205,7 +199,7 @@
               "no": 0.68
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.35,
@@ -214,7 +208,7 @@
               "no": 0.32
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.94,
@@ -223,7 +217,7 @@
               "no": 0.97
             }
           },
-          "v3": {
+          "w4": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.02,
@@ -243,7 +237,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.38,
@@ -252,7 +246,7 @@
               "no": 0.69
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.39,
@@ -261,7 +255,7 @@
               "no": 0.31
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.93,
@@ -270,7 +264,7 @@
               "no": 0.97
             }
           },
-          "v3": {
+          "w4": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.17,
@@ -292,28 +286,28 @@
   "cubs-ottomans": {
     "id": "recorded-cubs-ottomans",
     "createdAt": "2026-09-20T16:38:31.075Z",
-    "sample": true,
+    "source": "recorded",
     "experiment": {
       "id": "cubs-ottomans",
       "title": "Cubs and the Ottomans",
       "category": "History",
       "mode": "binary",
-      "original": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
-      "variants": [
+      "wordings": [
         {
-          "id": "v1",
-          "text": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
-          "kind": "paraphrase"
+          "id": "w1",
+          "text": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?"
         },
         {
-          "id": "v2",
-          "text": "When the Chicago Cubs last won the World Series before 2016, was the Ottoman Empire still in existence?",
-          "kind": "paraphrase"
+          "id": "w2",
+          "text": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?"
         },
         {
-          "id": "v3",
-          "text": "Do you think the Ottoman Empire still existed the last time the Chicago Cubs won the World Series before 2016?",
-          "kind": "paraphrase"
+          "id": "w3",
+          "text": "When the Chicago Cubs last won the World Series before 2016, was the Ottoman Empire still in existence?"
+        },
+        {
+          "id": "w4",
+          "text": "Do you think the Ottoman Empire still existed the last time the Chicago Cubs won the World Series before 2016?"
         }
       ],
       "options": [
@@ -326,16 +320,13 @@
           "label": "No"
         }
       ],
-      "context": "",
-      "expanded": false,
-      "reversed": false
+      "context": ""
     },
     "conditions": [
       {
-        "id": "original",
+        "id": "w1",
         "text": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
-        "label": "Original",
-        "kind": "original",
+        "label": "1",
         "options": [
           {
             "id": "yes",
@@ -348,10 +339,9 @@
         ]
       },
       {
-        "id": "v1",
+        "id": "w2",
         "text": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
-        "label": "Wording 1",
-        "kind": "paraphrase",
+        "label": "2",
         "options": [
           {
             "id": "yes",
@@ -364,10 +354,9 @@
         ]
       },
       {
-        "id": "v2",
+        "id": "w3",
         "text": "When the Chicago Cubs last won the World Series before 2016, was the Ottoman Empire still in existence?",
-        "label": "Wording 2",
-        "kind": "paraphrase",
+        "label": "3",
         "options": [
           {
             "id": "yes",
@@ -380,10 +369,9 @@
         ]
       },
       {
-        "id": "v3",
+        "id": "w4",
         "text": "Do you think the Ottoman Empire still existed the last time the Chicago Cubs won the World Series before 2016?",
-        "label": "Wording 3",
-        "kind": "paraphrase",
+        "label": "4",
         "options": [
           {
             "id": "yes",
@@ -400,7 +388,7 @@
       "model": "typesafe/jev-1.13",
       "state": "",
       "questions": {
-        "original": {
+        "w1": {
           "type": "choice",
           "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
           "criteria": {
@@ -408,7 +396,7 @@
             "no": "No"
           }
         },
-        "v1": {
+        "w2": {
           "type": "choice",
           "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
           "criteria": {
@@ -416,7 +404,7 @@
             "no": "No"
           }
         },
-        "v2": {
+        "w3": {
           "type": "choice",
           "instructions": "When the Chicago Cubs last won the World Series before 2016, was the Ottoman Empire still in existence?",
           "criteria": {
@@ -424,7 +412,7 @@
             "no": "No"
           }
         },
-        "v3": {
+        "w4": {
           "type": "choice",
           "instructions": "Do you think the Ottoman Empire still existed the last time the Chicago Cubs won the World Series before 2016?",
           "criteria": {
@@ -439,7 +427,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.76,
@@ -448,7 +436,7 @@
               "no": 0.88
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.14,
@@ -457,7 +445,7 @@
               "no": 0.43
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.5,
@@ -466,7 +454,7 @@
               "no": 0.25
             }
           },
-          "v3": {
+          "w4": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.85,
@@ -486,7 +474,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.8,
@@ -495,7 +483,7 @@
               "no": 0.9
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.22,
@@ -504,7 +492,7 @@
               "no": 0.39
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.06,
@@ -513,7 +501,7 @@
               "no": 0.47
             }
           },
-          "v3": {
+          "w4": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.81,
@@ -533,7 +521,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.83,
@@ -542,7 +530,7 @@
               "no": 0.92
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.23,
@@ -551,7 +539,7 @@
               "no": 0.38
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.35,
@@ -560,7 +548,7 @@
               "no": 0.32
             }
           },
-          "v3": {
+          "w4": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.83,
@@ -582,28 +570,28 @@
   "maine-africa": {
     "id": "recorded-maine-africa",
     "createdAt": "2026-09-20T16:38:34.601Z",
-    "sample": true,
+    "source": "recorded",
     "experiment": {
       "id": "maine-africa",
       "title": "Closest state to Africa",
       "category": "Geography",
       "mode": "binary",
-      "original": "Is Maine the US state closest to Africa?",
-      "variants": [
+      "wordings": [
         {
-          "id": "v1",
-          "text": "Is the US state closest to Africa Maine?",
-          "kind": "paraphrase"
+          "id": "w1",
+          "text": "Is Maine the US state closest to Africa?"
         },
         {
-          "id": "v2",
-          "text": "Of all US states, is Maine the closest to Africa?",
-          "kind": "paraphrase"
+          "id": "w2",
+          "text": "Is the US state closest to Africa Maine?"
         },
         {
-          "id": "v3",
-          "text": "Do you think Maine is the US state closest to Africa?",
-          "kind": "paraphrase"
+          "id": "w3",
+          "text": "Of all US states, is Maine the closest to Africa?"
+        },
+        {
+          "id": "w4",
+          "text": "Do you think Maine is the US state closest to Africa?"
         }
       ],
       "options": [
@@ -616,16 +604,13 @@
           "label": "No"
         }
       ],
-      "context": "",
-      "expanded": false,
-      "reversed": false
+      "context": ""
     },
     "conditions": [
       {
-        "id": "original",
+        "id": "w1",
         "text": "Is Maine the US state closest to Africa?",
-        "label": "Original",
-        "kind": "original",
+        "label": "1",
         "options": [
           {
             "id": "yes",
@@ -638,10 +623,9 @@
         ]
       },
       {
-        "id": "v1",
+        "id": "w2",
         "text": "Is the US state closest to Africa Maine?",
-        "label": "Wording 1",
-        "kind": "paraphrase",
+        "label": "2",
         "options": [
           {
             "id": "yes",
@@ -654,10 +638,9 @@
         ]
       },
       {
-        "id": "v2",
+        "id": "w3",
         "text": "Of all US states, is Maine the closest to Africa?",
-        "label": "Wording 2",
-        "kind": "paraphrase",
+        "label": "3",
         "options": [
           {
             "id": "yes",
@@ -670,10 +653,9 @@
         ]
       },
       {
-        "id": "v3",
+        "id": "w4",
         "text": "Do you think Maine is the US state closest to Africa?",
-        "label": "Wording 3",
-        "kind": "paraphrase",
+        "label": "4",
         "options": [
           {
             "id": "yes",
@@ -690,7 +672,7 @@
       "model": "typesafe/jev-1.13",
       "state": "",
       "questions": {
-        "original": {
+        "w1": {
           "type": "choice",
           "instructions": "Is Maine the US state closest to Africa?",
           "criteria": {
@@ -698,7 +680,7 @@
             "no": "No"
           }
         },
-        "v1": {
+        "w2": {
           "type": "choice",
           "instructions": "Is the US state closest to Africa Maine?",
           "criteria": {
@@ -706,7 +688,7 @@
             "no": "No"
           }
         },
-        "v2": {
+        "w3": {
           "type": "choice",
           "instructions": "Of all US states, is Maine the closest to Africa?",
           "criteria": {
@@ -714,7 +696,7 @@
             "no": "No"
           }
         },
-        "v3": {
+        "w4": {
           "type": "choice",
           "instructions": "Do you think Maine is the US state closest to Africa?",
           "criteria": {
@@ -729,7 +711,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.27,
@@ -738,7 +720,7 @@
               "no": 0.37
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.49,
@@ -747,7 +729,7 @@
               "no": 0.75
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.24,
@@ -756,7 +738,7 @@
               "no": 0.38
             }
           },
-          "v3": {
+          "w4": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.16,
@@ -776,7 +758,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.28,
@@ -785,7 +767,7 @@
               "no": 0.36
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.51,
@@ -794,7 +776,7 @@
               "no": 0.76
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.2,
@@ -803,7 +785,7 @@
               "no": 0.4
             }
           },
-          "v3": {
+          "w4": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.16,
@@ -823,7 +805,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.14,
@@ -832,7 +814,7 @@
               "no": 0.43
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.21,
@@ -841,7 +823,7 @@
               "no": 0.6
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.23,
@@ -850,7 +832,7 @@
               "no": 0.39
             }
           },
-          "v3": {
+          "w4": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.14,
@@ -872,28 +854,28 @@
   "self-driving-safety": {
     "id": "recorded-self-driving-safety",
     "createdAt": "2026-09-20T16:38:41.601Z",
-    "sample": true,
+    "source": "recorded",
     "experiment": {
       "id": "self-driving-safety",
       "title": "Self-driving safety",
       "category": "Technology",
       "mode": "binary",
-      "original": "Are self-driving cars safer than human drivers?",
-      "variants": [
+      "wordings": [
         {
-          "id": "v1",
-          "text": "Do you think self-driving cars are safer than human drivers?",
-          "kind": "paraphrase"
+          "id": "w1",
+          "text": "Are self-driving cars safer than human drivers?"
         },
         {
-          "id": "v2",
-          "text": "Is it true that self-driving cars are safer than human drivers?",
-          "kind": "paraphrase"
+          "id": "w2",
+          "text": "Do you think self-driving cars are safer than human drivers?"
         },
         {
-          "id": "v3",
-          "text": "Are human drivers less safe than self-driving cars?",
-          "kind": "paraphrase"
+          "id": "w3",
+          "text": "Is it true that self-driving cars are safer than human drivers?"
+        },
+        {
+          "id": "w4",
+          "text": "Are human drivers less safe than self-driving cars?"
         }
       ],
       "options": [
@@ -906,16 +888,13 @@
           "label": "No"
         }
       ],
-      "context": "",
-      "expanded": false,
-      "reversed": false
+      "context": ""
     },
     "conditions": [
       {
-        "id": "original",
+        "id": "w1",
         "text": "Are self-driving cars safer than human drivers?",
-        "label": "Original",
-        "kind": "original",
+        "label": "1",
         "options": [
           {
             "id": "yes",
@@ -928,10 +907,9 @@
         ]
       },
       {
-        "id": "v1",
+        "id": "w2",
         "text": "Do you think self-driving cars are safer than human drivers?",
-        "label": "Wording 1",
-        "kind": "paraphrase",
+        "label": "2",
         "options": [
           {
             "id": "yes",
@@ -944,10 +922,9 @@
         ]
       },
       {
-        "id": "v2",
+        "id": "w3",
         "text": "Is it true that self-driving cars are safer than human drivers?",
-        "label": "Wording 2",
-        "kind": "paraphrase",
+        "label": "3",
         "options": [
           {
             "id": "yes",
@@ -960,10 +937,9 @@
         ]
       },
       {
-        "id": "v3",
+        "id": "w4",
         "text": "Are human drivers less safe than self-driving cars?",
-        "label": "Wording 3",
-        "kind": "paraphrase",
+        "label": "4",
         "options": [
           {
             "id": "yes",
@@ -980,7 +956,7 @@
       "model": "typesafe/jev-1.13",
       "state": "",
       "questions": {
-        "original": {
+        "w1": {
           "type": "choice",
           "instructions": "Are self-driving cars safer than human drivers?",
           "criteria": {
@@ -988,7 +964,7 @@
             "no": "No"
           }
         },
-        "v1": {
+        "w2": {
           "type": "choice",
           "instructions": "Do you think self-driving cars are safer than human drivers?",
           "criteria": {
@@ -996,7 +972,7 @@
             "no": "No"
           }
         },
-        "v2": {
+        "w3": {
           "type": "choice",
           "instructions": "Is it true that self-driving cars are safer than human drivers?",
           "criteria": {
@@ -1004,7 +980,7 @@
             "no": "No"
           }
         },
-        "v3": {
+        "w4": {
           "type": "choice",
           "instructions": "Are human drivers less safe than self-driving cars?",
           "criteria": {
@@ -1019,7 +995,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.29,
@@ -1028,7 +1004,7 @@
               "no": 0.64
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.22,
@@ -1037,7 +1013,7 @@
               "no": 0.39
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.71,
@@ -1046,7 +1022,7 @@
               "no": 0.86
             }
           },
-          "v3": {
+          "w4": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.3,
@@ -1066,7 +1042,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.28,
@@ -1075,7 +1051,7 @@
               "no": 0.64
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.21,
@@ -1084,7 +1060,7 @@
               "no": 0.39
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.72,
@@ -1093,7 +1069,7 @@
               "no": 0.86
             }
           },
-          "v3": {
+          "w4": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.52,
@@ -1113,7 +1089,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.29,
@@ -1122,7 +1098,7 @@
               "no": 0.65
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.25,
@@ -1131,7 +1107,7 @@
               "no": 0.37
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.72,
@@ -1140,7 +1116,7 @@
               "no": 0.86
             }
           },
-          "v3": {
+          "w4": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.39,
@@ -1162,23 +1138,24 @@
   "religion-terrorism": {
     "id": "recorded-religion-terrorism",
     "createdAt": "2026-09-20T16:44:49.575Z",
-    "sample": true,
+    "source": "recorded",
     "experiment": {
       "id": "religion-terrorism",
       "title": "Religion & terrorism",
       "category": "Religion",
       "mode": "binary",
-      "original": "Does Islam inspire more terrorism than other monotheistic religions?",
-      "variants": [
+      "wordings": [
         {
-          "id": "v1",
-          "text": "Is more terrorism inspired by Islam than by other monotheistic religions?",
-          "kind": "paraphrase"
+          "id": "w1",
+          "text": "Does Islam inspire more terrorism than other monotheistic religions?"
         },
         {
-          "id": "v2",
-          "text": "Compared with other monotheistic religions, does Islam inspire more terrorism?",
-          "kind": "paraphrase"
+          "id": "w2",
+          "text": "Is more terrorism inspired by Islam than by other monotheistic religions?"
+        },
+        {
+          "id": "w3",
+          "text": "Compared with other monotheistic religions, does Islam inspire more terrorism?"
         }
       ],
       "options": [
@@ -1191,16 +1168,13 @@
           "label": "No"
         }
       ],
-      "context": "",
-      "expanded": false,
-      "reversed": false
+      "context": ""
     },
     "conditions": [
       {
-        "id": "original",
+        "id": "w1",
         "text": "Does Islam inspire more terrorism than other monotheistic religions?",
-        "label": "Original",
-        "kind": "original",
+        "label": "1",
         "options": [
           {
             "id": "yes",
@@ -1213,10 +1187,9 @@
         ]
       },
       {
-        "id": "v1",
+        "id": "w2",
         "text": "Is more terrorism inspired by Islam than by other monotheistic religions?",
-        "label": "Wording 1",
-        "kind": "paraphrase",
+        "label": "2",
         "options": [
           {
             "id": "yes",
@@ -1229,10 +1202,9 @@
         ]
       },
       {
-        "id": "v2",
+        "id": "w3",
         "text": "Compared with other monotheistic religions, does Islam inspire more terrorism?",
-        "label": "Wording 2",
-        "kind": "paraphrase",
+        "label": "3",
         "options": [
           {
             "id": "yes",
@@ -1249,7 +1221,7 @@
       "model": "typesafe/jev-1.13",
       "state": "",
       "questions": {
-        "original": {
+        "w1": {
           "type": "choice",
           "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
           "criteria": {
@@ -1257,7 +1229,7 @@
             "no": "No"
           }
         },
-        "v1": {
+        "w2": {
           "type": "choice",
           "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
           "criteria": {
@@ -1265,7 +1237,7 @@
             "no": "No"
           }
         },
-        "v2": {
+        "w3": {
           "type": "choice",
           "instructions": "Compared with other monotheistic religions, does Islam inspire more terrorism?",
           "criteria": {
@@ -1280,7 +1252,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.93,
@@ -1289,7 +1261,7 @@
               "no": 0.96
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.61,
@@ -1298,7 +1270,7 @@
               "no": 0.19
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.91,
@@ -1318,7 +1290,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.91,
@@ -1327,7 +1299,7 @@
               "no": 0.96
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.69,
@@ -1336,7 +1308,7 @@
               "no": 0.16
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.91,
@@ -1356,7 +1328,7 @@
       {
         "model": "typesafe/jev-1.13-20260917",
         "answers": {
-          "original": {
+          "w1": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.92,
@@ -1365,7 +1337,7 @@
               "no": 0.96
             }
           },
-          "v1": {
+          "w2": {
             "type": "choice",
             "choice": "yes",
             "confidence": 0.65,
@@ -1374,7 +1346,7 @@
               "no": 0.17
             }
           },
-          "v2": {
+          "w3": {
             "type": "choice",
             "choice": "no",
             "confidence": 0.91,

@@ -49,12 +49,12 @@ export function validateRequest(value: unknown): DecisionRequest {
   )
     throw new Error("Add a question.");
   const entries = Object.entries(input.questions);
-  if (entries.length < 1 || entries.length > 10)
-    throw new Error("Compare up to eight wordings and two controls.");
+  if (entries.length < 2 || entries.length > 8)
+    throw new Error("Compare between two and eight wordings.");
   const questions: DecisionRequest["questions"] = Object.create(null);
   let characters = input.state.length;
   for (const [id, q] of entries) {
-    if (!/^(original|expanded|reversed|v[a-z0-9_]{1,60})$/.test(id))
+    if (!/^w[1-8]$/.test(id))
       throw new Error("Invalid question identifier.");
     if (
       !q ||
@@ -72,7 +72,7 @@ export function validateRequest(value: unknown): DecisionRequest {
       throw new Error("Add answer options.");
     const options = Object.entries(q.criteria);
     if (options.length < 2 || options.length > 10)
-      throw new Error("Each question needs 2–10 options, including controls.");
+      throw new Error("Each question needs 2–10 options.");
     const criteria: Record<string, string> = Object.create(null);
     characters += q.instructions.length;
     for (const [key, label] of options) {

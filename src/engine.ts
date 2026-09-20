@@ -19,43 +19,34 @@ export const fromSeed = (seed: Seed): Experiment => ({
   title: seed.title,
   category: seed.category,
   mode: seed.options ? "multiple" : "binary",
-  original: seed.question,
-  variants: seed.variants.map((text, i) => ({
-    id: `v${i + 1}`,
-    text,
-    kind: seed.variantKinds?.[i] ?? "paraphrase",
-  })),
+  wordings: seed.wordings.map((text, i) => ({ id: `w${i + 1}`, text })),
   options: seed.options
     ? seed.options.map((label, i) => ({ id: `option_${i + 1}`, label }))
     : binaryOptions(),
   context: "",
-  expanded: false,
-  reversed: false,
 });
 export const blankExperiment = (): Experiment => ({
   id: crypto.randomUUID(),
-  title: "Untitled experiment",
+  title: "",
   category: "Your questions",
   mode: "binary",
-  original: "",
-  variants: [{ id: "v1", text: "", kind: "paraphrase" }],
+  wordings: [
+    { id: "w1", text: "" },
+    { id: "w2", text: "" },
+  ],
   options: binaryOptions(),
   context: "",
-  expanded: false,
-  reversed: false,
 });
 
 export function validateExperiment(experiment: Experiment): string | null {
-  if (!experiment.original.trim()) return "Write your original question first.";
-  if (
-    experiment.original.length > 3000 ||
-    experiment.variants.some((v) => v.text.length > 3000)
-  )
+  if (experiment.wordings.length < 2 || experiment.wordings.length > 8)
+    return "Compare between two and eight wordings.";
+  if (experiment.wordings.some((w) => w.text.length > 3000))
     return "Keep each wording under 3,000 characters.";
+  if (experiment.wordings.filter((w) => w.text.trim()).length < 2)
+    return "Write at least two wordings first.";
   if (experiment.context.length > 12000)
     return "Keep shared context under 12,000 characters.";
-  if (experiment.variants.length > 7)
-    return "Compare up to eight wordings at a time.";
   if (experiment.options.length < 2 || experiment.options.length > 8)
     return "Add between two and eight answer options.";
   if (experiment.options.some((o) => !o.label.trim() || o.label.length > 300))
@@ -74,66 +65,24 @@ export function validateExperiment(experiment: Experiment): string | null {
     experiment.options.some(
       (o) =>
         !/^[a-z][a-z0-9_]{0,60}$/.test(o.id) ||
-        [
-          "insufficient_information",
-          "false_premise",
-          "__proto__",
-          "constructor",
-          "prototype",
-        ].includes(o.id),
+        ["__proto__", "constructor", "prototype"].includes(o.id),
     )
   )
     return "Invalid answer option identifier.";
-  if (
-    experiment.variants.some((v) => !/^v[a-z0-9_]{1,60}$/.test(v.id)) ||
-    new Set(experiment.variants.map((v) => v.id)).size !==
-      experiment.variants.length
-  )
+  if (experiment.wordings.some((w, i) => w.id !== `w${i + 1}`))
     return "Invalid wording identifier.";
   return null;
 }
 
 export function conditionsFor(experiment: Experiment): Condition[] {
-  const conditions: Condition[] = [
-    {
-      id: "original",
-      text: experiment.original.trim(),
-      label: "Original",
-      kind: "original",
+  return experiment.wordings
+    .filter((w) => w.text.trim())
+    .map((w) => ({
+      id: w.id,
+      text: w.text.trim(),
+      label: w.id.slice(1),
       options: experiment.options,
-    },
-  ];
-  for (const [index, v] of experiment.variants.entries()) {
-    if (v.text.trim())
-      conditions.push({
-        id: v.id,
-        text: v.text.trim(),
-        label: `Wording ${index + 1}`,
-        kind: v.kind,
-        options: experiment.options,
-      });
-  }
-  if (experiment.expanded)
-    conditions.push({
-      id: "expanded",
-      text: experiment.original.trim(),
-      label: "More answer options",
-      kind: "expanded",
-      options: [
-        ...experiment.options,
-        { id: "insufficient_information", label: "Insufficient information" },
-        { id: "false_premise", label: "False premise" },
-      ],
-    });
-  if (experiment.reversed)
-    conditions.push({
-      id: "reversed",
-      text: experiment.original.trim(),
-      label: "Reversed option order",
-      kind: "reversed",
-      options: [...experiment.options].reverse(),
-    });
-  return conditions;
+    }));
 }
 
 export function buildRequest(experiment: Experiment): DecisionRequest {
@@ -149,14 +98,7 @@ export function buildRequest(experiment: Experiment): DecisionRequest {
           type: "choice" as const,
           instructions: c.text,
           criteria: Object.fromEntries(
-            c.options.map((o) => [
-              o.id,
-              o.id === "insufficient_information"
-                ? "The available information is insufficient to select any of the substantive answers."
-                : o.id === "false_premise"
-                  ? "The question relies on a false premise."
-                  : o.label.trim(),
-            ]),
+            c.options.map((o) => [o.id, o.label.trim()]),
           ),
         },
       ]),
@@ -165,7 +107,7 @@ export function buildRequest(experiment: Experiment): DecisionRequest {
 }
 
 // History is newest first. Match the actual request, including option order,
-// plus framing labels that affect the reported swing. Titles are not inputs.
+// and every wording. Titles are not inputs.
 export function findMatchingRun(
   experiment: Experiment,
   history: Run[],
@@ -176,13 +118,10 @@ export function findMatchingRun(
     return (
       history.find(
         (run) =>
-          !run.sample &&
+          run.source === "local" &&
           JSON.stringify(run.request) === request &&
           run.conditions.length === conditions.length &&
-          run.conditions.every(
-            (c, i) =>
-              c.id === conditions[i].id && c.kind === conditions[i].kind,
-          ),
+          run.conditions.every((c, i) => c.id === conditions[i].id),
       ) ?? null
     );
   } catch {
@@ -249,7 +188,12 @@ export function parseResponse(
   return {
     model: raw.model,
     answers,
-    requestId: typeof raw.id === "string" ? raw.id : undefined,
+    requestId:
+      typeof raw.id === "string"
+        ? raw.id
+        : typeof raw.requestId === "string"
+          ? raw.requestId
+          : undefined,
     usage: {
       input_tokens: numeric("input_tokens"),
       output_tokens: numeric("output_tokens"),
@@ -297,7 +241,7 @@ export async function evaluate(
   return {
     id: crypto.randomUUID(),
     createdAt: new Date().toISOString(),
-    sample: false,
+    source: "local",
     experiment: structuredClone(experiment),
     conditions,
     responses,
@@ -328,16 +272,49 @@ export function winners(run: Run, conditionId: string): string[] {
     .map((o) => o.id);
 }
 export function maxWordingSwing(run: Run): number {
-  const comparable = run.conditions.filter((c) =>
-    ["original", "paraphrase"].includes(c.kind),
-  );
   return Math.max(
     0,
     ...run.experiment.options.map((o) => {
-      const ps = comparable.map((c) => meanProb(run, c.id, o.id));
+      const ps = run.conditions.map((c) => meanProb(run, c.id, o.id));
       return Math.max(...ps) - Math.min(...ps);
     }),
   );
+}
+
+export function answerTally(
+  run: Run,
+): { id: string; label: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const c of run.conditions) {
+    const top = winners(run, c.id);
+    const id = top.length === 1 ? top[0] : "__tie__";
+    counts.set(id, (counts.get(id) ?? 0) + 1);
+  }
+  return [
+    ...run.experiment.options
+      .map((o) => ({ ...o, count: counts.get(o.id) ?? 0 }))
+      .filter((o) => run.experiment.options.length === 2 || o.count > 0),
+    ...(counts.has("__tie__")
+      ? [{ id: "__tie__", label: "tie", count: counts.get("__tie__")! }]
+      : []),
+  ];
+}
+
+export function tallyText(run: Run): string {
+  return answerTally(run)
+    .map(
+      (a) =>
+        `${run.experiment.mode === "binary" ? a.label.toLowerCase() : a.label} ${a.count}`,
+    )
+    .join(" · ");
+}
+
+// No majority tag when multiple answers share the largest tally.
+export function majorityWinner(run: Run): string | null {
+  const tally = answerTally(run);
+  const top = Math.max(...tally.map((a) => a.count));
+  const leaders = tally.filter((a) => a.count === top);
+  return leaders.length === 1 ? leaders[0].id : null;
 }
 
 // LCS word diff: highlight actual edits without relying on another model.

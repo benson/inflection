@@ -11,8 +11,7 @@ import type { Seed } from "../src/types";
 
 // Uses the same visible prompts, empty context, and Yes/No options as the app.
 // Example: node --import tsx scripts/probe-wordings.ts input.json output.json 3
-const [input, output, repetitions = "1", order = "normal"] =
-  process.argv.slice(2);
+const [input, output, repetitions = "1"] = process.argv.slice(2);
 const repeats = Number(repetitions);
 if (
   !input ||
@@ -21,22 +20,17 @@ if (
   repeats < 1 ||
   repeats > 5
 )
-  throw new Error(
-    "Provide input.json output.json [repeats: 1–5] [normal|reversed].",
-  );
-if (!["normal", "reversed"].includes(order))
-  throw new Error("Invalid answer order.");
+  throw new Error("Provide input.json output.json [repeats: 1–5].");
 const candidates: Seed[] = JSON.parse(await readFile(input, "utf8"));
 const experiments = candidates.map(fromSeed);
 for (const experiment of experiments) {
-  if (order === "reversed") experiment.options.reverse();
   buildRequest(experiment);
 }
 const report = {
   startedAt: new Date().toISOString(),
   endpoint: `${SHARED_API}/decisions`,
   origin: "https://bensonperry.com",
-  answerOrder: order,
+  answerOrder: "normal",
   repeats,
   runs: [] as object[],
 };
