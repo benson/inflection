@@ -265,3 +265,20 @@ The eight search and confirmation files:
 - [Final confirmation prompts](final-confirm-prompts.json)
 - [Final confirmation responses](final-confirm.json)
 - [Final reversed-order responses](final-reversed.json)
+
+## Fair coin and die · September 20, 2026
+
+A fair coin and a fair six-sided die were probed as questions with a known answer (50% for heads or tails, 1/6 for six, and 5/6 for not-six), using the same wrappers as the example search. The exact wordings are in [coin-confirm-prompts.json](coin-confirm-prompts.json); means and observed ranges below use the three Yes/No repeats in [coin-confirm.json](coin-confirm.json), and the last column uses the single No/Yes repeat in [coin-reversed.json](coin-reversed.json). Requests used the native Choice primitive, empty shared context, and model `typesafe/jev-1.13-20260917`.
+
+| Question | Mean Yes | Observed range | Reversed-order Yes |
+| --- | ---: | ---: | ---: |
+| If I flip a fair coin, will it land heads? | 59.0% | 58–60% | 53% |
+| If I flip a fair coin, will it land tails? | 45.7% | 45–47% | 44% |
+| Do you think a fair coin flip will land heads? | 41.0% | 39–42% | 39% |
+| Will a fair coin come up heads when flipped? | 57.3% | 57–58% | 49% |
+| If I roll a fair six-sided die, will it show a six? | 7.7% | 7–9% | 9% |
+| If I roll a fair six-sided die, will it show a number other than six? | 96.0% | 96–96% | 97% |
+| Do you think a fair six-sided die will show a six? | 9.7% | 9–10% | 7% |
+| Will a fair six-sided die show a six when rolled? | 10.7% | 10–12% | 10% |
+
+Heads and tails sum to about 105%, and "do you think" moves heads below 50%; the die is consistent across wordings (six about 8 to 11%, not-six 96%), so the coin is the shipped example and the die is kept as a control.

@@ -107,6 +107,11 @@ function Explainer() {
               productive moves it 40.
             </p>
             <p>
+              it even happens on a fair coin. asked if it will land heads,
+              jev says 59%. asked if it will land tails, 46%. asked "do you
+              think it will land heads", 41%.
+            </p>
+            <p>
               some of that is human. people are swayed by wording too. but two
               questions that mean the same thing to a person should get the
               same answer from one model of the world, even if not the same

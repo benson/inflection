@@ -1,7 +1,18 @@
 import type { Seed } from "./types";
 
-// Confirmed wordings from research/2026-09-20/final-confirm-prompts.json.
+// Confirmed wordings from research/2026-09-20/{coin,final}-confirm-prompts.json.
 export const seeds: Seed[] = [
+  {
+    id: "fair-coin",
+    title: "Fair coin",
+    category: "Probability",
+    question: "If I flip a fair coin, will it land heads?",
+    variants: [
+      "If I flip a fair coin, will it land tails?",
+      "Do you think a fair coin flip will land heads?",
+      "Will a fair coin come up heads when flipped?",
+    ],
+  },
   {
     id: "four-day-week",
     title: "Four-day week",

@@ -1,0 +1,555 @@
+{
+  "startedAt": "2026-09-20T15:53:20.000Z",
+  "endpoint": "https://inflection-api.bensonperry.workers.dev/decisions",
+  "origin": "https://bensonperry.com",
+  "answerOrder": "normal",
+  "repeats": 3,
+  "runs": [
+    {
+      "id": "fair-coin",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:53:20.001Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "If I flip a fair coin, will it land heads?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "If I flip a fair coin, will it land tails?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Do you think a fair coin flip will land heads?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Will a fair coin come up heads when flipped?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919600-rJl11WHyRjKevtwRavBe",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.4,
+              "yes": 0.6
+            },
+            "confidence": 0.2
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.53,
+              "yes": 0.47
+            },
+            "confidence": 0.07
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.58,
+              "yes": 0.42
+            },
+            "confidence": 0.16
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.43,
+              "yes": 0.57
+            },
+            "confidence": 0.15
+          }
+        },
+        "usage": {
+          "input_tokens": 468,
+          "output_tokens": 118,
+          "cost": 0.000019656
+        }
+      }
+    },
+    {
+      "id": "fair-die",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:53:23.694Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "If I roll a fair six-sided die, will it show a six?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "If I roll a fair six-sided die, will it show a number other than six?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Do you think a fair six-sided die will show a six?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Will a fair six-sided die show a six when rolled?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919603-WDQtabnQHP7WY1ceVlX1",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.07,
+              "no": 0.93
+            },
+            "confidence": 0.86
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.96,
+              "no": 0.04
+            },
+            "confidence": 0.92
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.1,
+              "no": 0.9
+            },
+            "confidence": 0.8
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.12,
+              "no": 0.88
+            },
+            "confidence": 0.76
+          }
+        },
+        "usage": {
+          "input_tokens": 481,
+          "output_tokens": 118,
+          "cost": 0.000020202
+        }
+      }
+    },
+    {
+      "id": "fair-coin",
+      "repeat": 2,
+      "startedAt": "2026-09-20T15:53:27.267Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "If I flip a fair coin, will it land heads?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "If I flip a fair coin, will it land tails?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Do you think a fair coin flip will land heads?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Will a fair coin come up heads when flipped?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919607-Od8eYzSpvM9FKNzjaqIQ",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.58,
+              "no": 0.42
+            },
+            "confidence": 0.16
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.45,
+              "no": 0.55
+            },
+            "confidence": 0.1
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.42,
+              "no": 0.58
+            },
+            "confidence": 0.17
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.58,
+              "no": 0.42
+            },
+            "confidence": 0.16
+          }
+        },
+        "usage": {
+          "input_tokens": 468,
+          "output_tokens": 118,
+          "cost": 0.000019656
+        }
+      }
+    },
+    {
+      "id": "fair-die",
+      "repeat": 2,
+      "startedAt": "2026-09-20T15:53:30.866Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "If I roll a fair six-sided die, will it show a six?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "If I roll a fair six-sided die, will it show a number other than six?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Do you think a fair six-sided die will show a six?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Will a fair six-sided die show a six when rolled?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919611-MCHMqreY8BLcAi0ripIx",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.09,
+              "no": 0.91
+            },
+            "confidence": 0.83
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.96,
+              "no": 0.04
+            },
+            "confidence": 0.93
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.1,
+              "no": 0.9
+            },
+            "confidence": 0.8
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.1,
+              "no": 0.9
+            },
+            "confidence": 0.79
+          }
+        },
+        "usage": {
+          "input_tokens": 481,
+          "output_tokens": 118,
+          "cost": 0.000020202
+        }
+      }
+    },
+    {
+      "id": "fair-coin",
+      "repeat": 3,
+      "startedAt": "2026-09-20T15:53:34.425Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "If I flip a fair coin, will it land heads?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "If I flip a fair coin, will it land tails?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Do you think a fair coin flip will land heads?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Will a fair coin come up heads when flipped?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919614-oJD2fWQCZuM9vsqubj51",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.59,
+              "no": 0.41
+            },
+            "confidence": 0.18
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.45,
+              "no": 0.55
+            },
+            "confidence": 0.1
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.39,
+              "no": 0.61
+            },
+            "confidence": 0.22
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.57,
+              "no": 0.43
+            },
+            "confidence": 0.13
+          }
+        },
+        "usage": {
+          "input_tokens": 468,
+          "output_tokens": 118,
+          "cost": 0.000019656
+        }
+      }
+    },
+    {
+      "id": "fair-die",
+      "repeat": 3,
+      "startedAt": "2026-09-20T15:53:37.978Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "If I roll a fair six-sided die, will it show a six?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "If I roll a fair six-sided die, will it show a number other than six?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Do you think a fair six-sided die will show a six?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Will a fair six-sided die show a six when rolled?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919618-CQXKHTPYEUlDPRxqsn85",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.93,
+              "yes": 0.07
+            },
+            "confidence": 0.86
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.96,
+              "no": 0.04
+            },
+            "confidence": 0.93
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.91,
+              "yes": 0.09
+            },
+            "confidence": 0.82
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.9,
+              "yes": 0.1
+            },
+            "confidence": 0.8
+          }
+        },
+        "usage": {
+          "input_tokens": 481,
+          "output_tokens": 118,
+          "cost": 0.000020202
+        }
+      }
+    }
+  ]
+}

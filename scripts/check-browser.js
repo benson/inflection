@@ -34,6 +34,12 @@ export default async function checkBrowser(page) {
   );
   check(
     (await page
+      .getByRole("textbox", { name: "Original question", exact: true })
+      .inputValue()) === "If I flip a fair coin, will it land heads?",
+    "First visit opens the fair coin example",
+  );
+  check(
+    (await page
       .getByRole("combobox", { name: "Track probability of" })
       .count()) === 0 && (await page.locator(".binary-figures").count()) === 4,
     "Two-answer results use compact figures and track the first option",
@@ -41,13 +47,13 @@ export default async function checkBrowser(page) {
   check(
     (await page.locator(".stat-number").allTextContents())
       .map((text) => text.trim())
-      .join(" / ") === "45 / 2 of 3",
+      .join(" / ") === "18 / 2 of 3",
     "Recorded stats show integer swing and flips out of comparable wordings",
   );
   check(
-    (await page.locator(".explainer p").count()) === 7 &&
+    (await page.locator(".explainer p").count()) === 8 &&
       (await page.locator(".explainer a").getAttribute("rel")) === "noreferrer",
-    "First visit shows all seven explainer paragraphs and the model link",
+    "First visit shows all eight explainer paragraphs and the model link",
   );
   await page.getByRole("button", { name: "hide", exact: true }).click();
   check(
@@ -76,7 +82,7 @@ export default async function checkBrowser(page) {
     .getByRole("button", { name: "how this works", exact: true })
     .click();
   check(
-    (await page.locator(".explainer p").count()) === 7,
+    (await page.locator(".explainer p").count()) === 8,
     "Explainer expands again",
   );
   await page.getByRole("button", { name: "hide", exact: true }).click();
@@ -180,10 +186,11 @@ export default async function checkBrowser(page) {
 
   const chips = page.getByRole("navigation", { name: "Example questions" });
   check(
-    (await chips.getByRole("button").count()) === 5,
-    "Four starter examples and a custom question chip are shown",
+    (await chips.getByRole("button").count()) === 6,
+    "Five starter examples and a custom question chip are shown",
   );
   for (const title of [
+    "Fair coin",
     "Four-day week",
     "Self-driving safety",
     "Remote work",

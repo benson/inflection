@@ -1,0 +1,4 @@
+[
+ {"id":"fair-coin","title":"Fair coin","category":"Probability","question":"If I flip a fair coin, will it land heads?","variants":["If I flip a fair coin, will it land tails?","Do you think a fair coin flip will land heads?","Will a fair coin come up heads when flipped?"]},
+ {"id":"fair-die","title":"Fair die","category":"Probability","question":"If I roll a fair six-sided die, will it show a six?","variants":["If I roll a fair six-sided die, will it show a number other than six?","Do you think a fair six-sided die will show a six?","Will a fair six-sided die show a six when rolled?"]}
+]

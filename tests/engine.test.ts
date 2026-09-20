@@ -16,9 +16,14 @@ import {
 } from "../src/engine";
 import { seeds } from "../src/seeds";
 import { findRecordedRun, recordedRun } from "../src/recorded";
-import prompts from "../research/2026-09-20/final-confirm-prompts.json";
+import finalPrompts from "../research/2026-09-20/final-confirm-prompts.json";
+import coinPrompts from "../research/2026-09-20/coin-confirm-prompts.json";
 import { isDraft, isExperiment } from "../src/storage";
 
+const prompts = [
+  coinPrompts.find((prompt) => prompt.id === "fair-coin")!,
+  ...finalPrompts,
+];
 const firstRecording = () => recordedRun(seeds[0].id)!;
 
 test("every seed bundles three validated responses to its exact confirmed request", () => {
@@ -124,7 +129,7 @@ test("changed experiment inputs cannot borrow results from an earlier version", 
   assert.equal(findMatchingRun(run.experiment, [run]), run);
 });
 
-test("four unique, valid examples, each with two or three different paraphrases", () => {
+test("five unique, valid examples, each with two or three different paraphrases", () => {
   assert.ok(seeds.length >= 2 && seeds.length <= 5);
   assert.equal(new Set(seeds.map((s) => s.id)).size, seeds.length);
   assert.equal(new Set(seeds.map((s) => s.question)).size, seeds.length);
@@ -140,7 +145,13 @@ test("four unique, valid examples, each with two or three different paraphrases"
   }
   assert.deepEqual(
     seeds.map((s) => s.id),
-    ["four-day-week", "self-driving-safety", "remote-work", "wealth-tax"],
+    [
+      "fair-coin",
+      "four-day-week",
+      "self-driving-safety",
+      "remote-work",
+      "wealth-tax",
+    ],
   );
 });
 test("all wordings preserve exact instructions and shared option IDs; controls vary just one factor", () => {
@@ -189,7 +200,7 @@ test("model responses reject missing, NaN, malformed, non-normalized and contrad
     conditions = run.conditions;
   assert.equal(
     parseResponse(run.responses[0], conditions).answers.original.choice,
-    "no",
+    "yes",
   );
   for (const mutate of [
     (r: any) => delete r.answers.v1,
@@ -197,7 +208,7 @@ test("model responses reject missing, NaN, malformed, non-normalized and contrad
     (r: any) => (r.answers.v1.probabilities.yes = 2),
     (r: any) => (r.answers.v1.probabilities.yes = 0.9),
     (r: any) => (r.answers.v1.probabilities.third = 0),
-    (r: any) => (r.answers.v1.choice = "no"),
+    (r: any) => (r.answers.v1.choice = "yes"),
   ]) {
     const bad = structuredClone(run.responses[0]);
     mutate(bad);
@@ -206,9 +217,9 @@ test("model responses reject missing, NaN, malformed, non-normalized and contrad
 });
 test("percentage-point swing excludes controls and changed framing, and ties stay ties", () => {
   const run = firstRecording();
-  assert.ok(Math.abs(maxWordingSwing(run) - 0.4533333333333333) < 1e-9);
+  assert.ok(Math.abs(maxWordingSwing(run) - 0.18) < 1e-9);
   run.conditions[2].kind = "framing";
-  assert.ok(Math.abs(maxWordingSwing(run) - 0.4366666666666667) < 1e-9);
+  assert.ok(Math.abs(maxWordingSwing(run) - 0.1333333333333333) < 1e-9);
   for (const response of run.responses)
     response.answers.original.probabilities = { yes: 0.5, no: 0.5 };
   assert.deepEqual(winners(run, "original"), ["yes", "no"]);
@@ -216,7 +227,7 @@ test("percentage-point swing excludes controls and changed framing, and ties sta
 test("means average probabilities across repetitions, not just winning labels", () => {
   const run = firstRecording();
   assert.ok(
-    Math.abs(meanProb(run, "original", "yes") - (0.43 + 0.44 + 0.39) / 3) <
+    Math.abs(meanProb(run, "original", "yes") - (0.6 + 0.58 + 0.59) / 3) <
       1e-9,
   );
 });

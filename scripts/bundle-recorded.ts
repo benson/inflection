@@ -10,10 +10,17 @@ import { seeds } from "../src/seeds";
 import type { DecisionRequest, Run, Seed } from "../src/types";
 
 const research = new URL("../research/2026-09-20/", import.meta.url);
-const prompts: Seed[] = JSON.parse(
-  await readFile(new URL("final-confirm-prompts.json", research), "utf8"),
-);
-const report: {
+const confirmations = ["final-confirm", "coin-confirm"];
+const prompts: Seed[] = (
+  await Promise.all(
+    confirmations.map(async (name) =>
+      JSON.parse(
+        await readFile(new URL(`${name}-prompts.json`, research), "utf8"),
+      ),
+    ),
+  )
+).flat();
+const reports: {
   repeats: number;
   answerOrder: string;
   runs: {
@@ -24,12 +31,17 @@ const report: {
     request: DecisionRequest;
     response: unknown;
   }[];
-} = JSON.parse(
-  await readFile(new URL("final-confirm.json", research), "utf8"),
+}[] = await Promise.all(
+  confirmations.map(async (name) =>
+    JSON.parse(await readFile(new URL(`${name}.json`, research), "utf8")),
+  ),
 );
 
-assert.equal(report.repeats, 3, "Expected three confirmation repeats");
-assert.equal(report.answerOrder, "normal", "Expected Yes/No answer order");
+for (const report of reports) {
+  assert.equal(report.repeats, 3, "Expected three confirmation repeats");
+  assert.equal(report.answerOrder, "normal", "Expected Yes/No answer order");
+}
+const runs = reports.flatMap((report) => report.runs);
 
 const bundled: Record<string, Run> = {};
 // Research can include additional topics; only current app seeds are bundled.
@@ -45,7 +57,7 @@ for (const seed of seeds) {
   const experiment = fromSeed(seed);
   const conditions = conditionsFor(experiment);
   const request = buildRequest(experiment);
-  const repeats = report.runs
+  const repeats = runs
     .filter((run) => run.id === seed.id)
     .sort((a, b) => a.repeat - b.repeat);
   assert.deepEqual(
