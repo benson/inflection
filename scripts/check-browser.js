@@ -22,27 +22,85 @@ export default async function checkBrowser(page) {
   });
   await page.reload();
   await page
-    .getByText("Illustrative · invented numbers, not model output", {
+    .getByText("recorded 20 sep 2026 · jev 1.13-20260917 · mean of 3 runs", {
       exact: true,
     })
     .waitFor();
   check(
     (await page.locator(".sample-note").textContent()).includes(
-      "These numbers are made up to show the interface.",
+      "recorded 20 sep 2026 · jev 1.13-20260917 · mean of 3 runs",
     ),
-    "Synthetic example is unmistakably labeled",
+    "Recorded example identifies date, model, and three repeats",
   );
   check(
     (await page
       .getByRole("combobox", { name: "Track probability of" })
-      .count()) === 0 && (await page.locator(".binary-figures").count()) === 3,
+      .count()) === 0 && (await page.locator(".binary-figures").count()) === 4,
     "Two-answer results use compact figures and track the first option",
   );
   check(
     (await page.locator(".stat-number").allTextContents())
       .map((text) => text.trim())
-      .join(" / ") === "29 / 1 of 2",
-    "Sample stats show integer swing and flips out of comparable wordings",
+      .join(" / ") === "31 / 2 of 3",
+    "Recorded stats show integer swing and flips out of comparable wordings",
+  );
+  check(
+    (await page.locator(".explainer p").count()) === 7 &&
+      (await page.locator(".explainer a").getAttribute("rel")) === "noreferrer",
+    "First visit shows all seven explainer paragraphs and the model link",
+  );
+  await page.getByRole("button", { name: "hide", exact: true }).click();
+  check(
+    await page
+      .locator(".explainer")
+      .evaluate(
+        (block) =>
+          block.getBoundingClientRect().height +
+            parseFloat(getComputedStyle(block).marginBottom) <=
+          48,
+      ),
+    "Collapsed explainer adds no more than 48px above the chips",
+  );
+  await page.reload();
+  check(
+    await page
+      .getByRole("button", { name: "how this works", exact: true })
+      .isVisible(),
+    "Explainer collapse persists after reload",
+  );
+  check(
+    await page.locator(".sample-note").isVisible(),
+    "Reload restores a seed's recorded run",
+  );
+  await page
+    .getByRole("button", { name: "how this works", exact: true })
+    .click();
+  check(
+    (await page.locator(".explainer p").count()) === 7,
+    "Explainer expands again",
+  );
+  await page.getByRole("button", { name: "hide", exact: true }).click();
+  check(
+    await page
+      .locator(".answer-question mark, .answer-question del")
+      .evaluateAll((nodes) =>
+        nodes.every(
+          (node) =>
+            node.textContent === node.textContent.trim() &&
+            (!node.nextSibling ||
+              node.nextSibling.nodeType !== Node.ELEMENT_NODE ||
+              node.nextSibling.nodeName !== node.nodeName),
+        ),
+      ),
+    "Diff changes merge adjacent edits and leave trailing whitespace outside marks",
+  );
+  check(
+    (
+      await page
+        .locator(".plot-value, .delta, .binary-figures")
+        .allTextContents()
+    ).every((text) => !/\d+\.\d/.test(text)),
+    "Displayed probabilities and deltas are integers",
   );
   for (const width of [860, 859, 700, 320]) {
     await page.setViewportSize({ width, height: 900 });
@@ -82,6 +140,32 @@ export default async function checkBrowser(page) {
         ),
       `Plot labels remain 12px at ${width}px`,
     );
+    check(
+      await page.locator(".wording-row textarea").evaluateAll((nodes) =>
+        nodes.every((node) => {
+          const style = getComputedStyle(node);
+          const height = node.getBoundingClientRect().height;
+          const contentHeight =
+            height -
+            parseFloat(style.paddingTop) -
+            parseFloat(style.paddingBottom) -
+            parseFloat(style.borderBottomWidth);
+          const lineHeight = parseFloat(style.lineHeight);
+          return (
+            style.resize === "none" &&
+            style.paddingTop === "8px" &&
+            style.paddingBottom === "8px" &&
+            Math.abs(node.scrollHeight - node.clientHeight) <= 1 &&
+            contentHeight >= lineHeight - 1 &&
+            Math.abs(
+              contentHeight / lineHeight -
+                Math.round(contentHeight / lineHeight),
+            ) < 0.06
+          );
+        }),
+      ),
+      `Wording fields fit their content after resizing to ${width}px`,
+    );
   }
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page
@@ -98,6 +182,41 @@ export default async function checkBrowser(page) {
   check(
     (await chips.getByRole("button").count()) === 5,
     "Four starter examples and a custom question chip are shown",
+  );
+  for (const title of [
+    "Self-driving safety",
+    "Wealth tax",
+    "Eating meat",
+    "Religion & terrorism",
+  ]) {
+    await chips.getByRole("button", { name: title, exact: true }).click();
+    check(
+      await page.locator(".sample-note").isVisible(),
+      `${title} opens with recorded results`,
+    );
+    const original = page.getByRole("textbox", {
+      name: "Original question",
+      exact: true,
+    });
+    const text = await original.inputValue();
+    await original.fill(text + " Really?");
+    check(
+      (await page.locator(".sample-note").count()) === 0,
+      `${title} edit clears the recording`,
+    );
+    await original.fill(text);
+    check(
+      await page.locator(".sample-note").isVisible(),
+      `${title} exact text restores the recording`,
+    );
+  }
+  check(
+    await page.evaluate(
+      () =>
+        JSON.parse(localStorage.getItem("inflection-v1-history") || "[]")
+          .length === 0,
+    ),
+    "Recorded runs never enter browser history",
   );
   await chips.getByRole("button", { name: /Self-driving safety/ }).click();
   check(
@@ -261,7 +380,7 @@ export default async function checkBrowser(page) {
     .getByRole("combobox", { name: "Track probability of" })
     .selectOption("option_2");
   check(
-    (await page.locator(".probability-plot").textContent()).includes("70.0%"),
+    (await page.locator(".probability-plot").textContent()).includes("70%"),
     "Chart follows the selected answer",
   );
   await page.getByRole("checkbox", { name: "Show edits" }).uncheck();
@@ -298,7 +417,7 @@ export default async function checkBrowser(page) {
   await page
     .getByRole("button", { name: "Save experiment", exact: true })
     .click();
-  await rail.getByRole("button", { name: /Self-driving safety/ }).click();
+  await chips.getByRole("button", { name: /Self-driving safety/ }).click();
   await page
     .getByRole("button", { name: /^Saved/ })
     .first()
@@ -324,7 +443,9 @@ export default async function checkBrowser(page) {
   const wording = page.getByRole("textbox", { name: "Wording 1", exact: true });
   await wording.fill("Which policy should come first now?");
   check(
-    await page.getByText("No comparison yet", { exact: true }).isVisible(),
+    await page
+      .getByText("Run a comparison to see probabilities", { exact: true })
+      .isVisible(),
     "A changed wording hides mismatched results",
   );
   await wording.fill("Which policy should come first?");
@@ -402,7 +523,10 @@ export default async function checkBrowser(page) {
     ),
     "Phone layout has no horizontal overflow",
   );
-  await page.getByRole("button", { name: "View the example" }).click();
+  check(
+    await page.locator(".sample-note").isVisible(),
+    "Mobile seed shows its recording",
+  );
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({
     path: "output/playwright/mobile.png",

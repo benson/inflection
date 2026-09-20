@@ -15,8 +15,48 @@ import {
   SHARED_API,
 } from "../src/engine";
 import { seeds } from "../src/seeds";
-import { sampleRun } from "../src/sample";
+import { findRecordedRun, recordedRun } from "../src/recorded";
+import prompts from "../research/2026-09-20/tiered-confirm-prompts.json";
 import { isDraft, isExperiment } from "../src/storage";
+
+const firstRecording = () => recordedRun(seeds[0].id)!;
+
+test("every seed bundles three validated responses to its exact confirmed request", () => {
+  for (const seed of seeds) {
+    const run = recordedRun(seed.id);
+    assert.ok(run, seed.id);
+    const prompt = prompts.find((p) => p.title === seed.title)!;
+    assert.equal(seed.question, prompt.question);
+    assert.deepEqual(seed.variants, prompt.variants);
+    assert.deepEqual(run.request, buildRequest(fromSeed(seed)));
+    assert.deepEqual(run.conditions, conditionsFor(fromSeed(seed)));
+    assert.equal(run.responses.length, 3);
+    assert.equal(run.sample, true);
+    for (const response of run.responses) {
+      assert.deepEqual(
+        parseResponse({ ...response, id: response.requestId }, run.conditions),
+        response,
+      );
+    }
+  }
+  assert.equal(recordedRun("unknown"), null);
+  assert.equal(recordedRun("toString"), null);
+});
+
+test("recordings restore only unchanged requests and framing, without entering history matching", () => {
+  for (const seed of seeds) {
+    const experiment = fromSeed(seed);
+    const recorded = recordedRun(seed.id)!;
+    assert.deepEqual(findRecordedRun(experiment), recorded);
+    experiment.original += " Really?";
+    assert.equal(findRecordedRun(experiment), null);
+    experiment.original = seed.question;
+    assert.deepEqual(findRecordedRun(experiment), recorded);
+    experiment.variants[0].kind = "framing";
+    assert.equal(findRecordedRun(experiment), null);
+    assert.equal(findMatchingRun(recorded.experiment, [recorded]), null);
+  }
+});
 
 test("unfinished drafts survive reload without becoming runnable experiments", () => {
   const draft = fromSeed(seeds[0]);
@@ -28,7 +68,7 @@ test("unfinished drafts survive reload without becoming runnable experiments", (
 });
 
 test("returning to unchanged inputs restores the latest real comparison, including after serialization", () => {
-  const older = { ...sampleRun(), sample: false, id: "older" };
+  const older = { ...firstRecording(), sample: false, id: "older" };
   const latest = { ...structuredClone(older), id: "latest" };
   const unrelated = structuredClone(latest);
   unrelated.experiment.original = "A different question?";
@@ -40,11 +80,11 @@ test("returning to unchanged inputs restores the latest real comparison, includi
     id: "saved-copy",
   };
   assert.equal(findMatchingRun(renamed, history)?.id, "latest");
-  assert.equal(findMatchingRun(latest.experiment, [sampleRun()]), null);
+  assert.equal(findMatchingRun(latest.experiment, [firstRecording()]), null);
 });
 
 test("changed experiment inputs cannot borrow results from an earlier version", () => {
-  const run = { ...sampleRun(), sample: false };
+  const run = { ...firstRecording(), sample: false };
   const changes: Array<(e: typeof run.experiment) => void> = [
     (e) => {
       e.original += " Really?";
@@ -78,22 +118,28 @@ test("changed experiment inputs cannot borrow results from an earlier version", 
     const changed = structuredClone(run.experiment);
     change(changed);
     assert.equal(findMatchingRun(changed, [run]), null);
+    assert.equal(findRecordedRun(changed), null);
   }
   assert.equal(findMatchingRun(run.experiment, [run]), run);
 });
 
-test("a handful of unique, valid examples, each with two different variants", () => {
+test("four unique, valid examples, each with two or three different paraphrases", () => {
   assert.ok(seeds.length >= 2 && seeds.length <= 5);
   assert.equal(new Set(seeds.map((s) => s.id)).size, seeds.length);
   assert.equal(new Set(seeds.map((s) => s.question)).size, seeds.length);
   for (const s of seeds) {
     assert.equal(validateExperiment(fromSeed(s)), null, s.title);
-    assert.equal(new Set([s.question, ...s.variants]).size, 3, s.title);
+    assert.ok(s.variants.length >= 2 && s.variants.length <= 3, s.title);
+    assert.equal(
+      new Set([s.question, ...s.variants]).size,
+      s.variants.length + 1,
+      s.title,
+    );
+    assert.ok(fromSeed(s).variants.every((v) => v.kind === "paraphrase"));
   }
-  const wealth = fromSeed(seeds.find((s) => s.id === "wealth-tax")!);
-  assert.equal(
-    conditionsFor(wealth).find((c) => c.id === "v2")!.kind,
-    "framing",
+  assert.deepEqual(
+    seeds.map((s) => s.id),
+    ["self-driving-safety", "wealth-tax", "eating-meat", "religion-terrorism"],
   );
 });
 test("all wordings preserve exact instructions and shared option IDs; controls vary just one factor", () => {
@@ -131,18 +177,18 @@ test("all wordings preserve exact instructions and shared option IDs; controls v
 test("empty variants are omitted, duplicate labels and blank answers cannot run", () => {
   const e = fromSeed(seeds[0]);
   e.variants[1].text = "  ";
-  assert.equal(conditionsFor(e).length, 2);
+  assert.equal(conditionsFor(e).length, 3);
   e.options[1].label = "YES";
   assert.match(validateExperiment(e)!, /different labels/);
   e.options[1].label = "";
   assert.match(validateExperiment(e)!, /every answer/);
 });
 test("model responses reject missing, NaN, malformed, non-normalized and contradictory answers", () => {
-  const sample = sampleRun(),
-    conditions = sample.conditions;
+  const run = firstRecording(),
+    conditions = run.conditions;
   assert.equal(
-    parseResponse(sample.responses[0], conditions).answers.original.choice,
-    "yes",
+    parseResponse(run.responses[0], conditions).answers.original.choice,
+    "no",
   );
   for (const mutate of [
     (r: any) => delete r.answers.v1,
@@ -150,26 +196,28 @@ test("model responses reject missing, NaN, malformed, non-normalized and contrad
     (r: any) => (r.answers.v1.probabilities.yes = 2),
     (r: any) => (r.answers.v1.probabilities.yes = 0.9),
     (r: any) => (r.answers.v1.probabilities.third = 0),
-    (r: any) => (r.answers.v1.choice = "yes"),
+    (r: any) => (r.answers.v1.choice = "no"),
   ]) {
-    const bad = structuredClone(sample.responses[0]);
+    const bad = structuredClone(run.responses[0]);
     mutate(bad);
     assert.throws(() => parseResponse(bad, conditions));
   }
 });
 test("percentage-point swing excludes controls and changed framing, and ties stay ties", () => {
-  const run = sampleRun();
-  assert.ok(Math.abs(maxWordingSwing(run) - 0.29) < 1e-9);
-  run.conditions[2].kind = "framing";
-  assert.ok(Math.abs(maxWordingSwing(run) - 0.15) < 1e-9);
-  run.responses[0].answers.original.probabilities = { yes: 0.5, no: 0.5 };
+  const run = firstRecording();
+  assert.ok(Math.abs(maxWordingSwing(run) - 0.3066666666666667) < 1e-9);
+  run.conditions[1].kind = "framing";
+  assert.ok(Math.abs(maxWordingSwing(run) - 0.22) < 1e-9);
+  for (const response of run.responses)
+    response.answers.original.probabilities = { yes: 0.5, no: 0.5 };
   assert.deepEqual(winners(run, "original"), ["yes", "no"]);
 });
 test("means average probabilities across repetitions, not just winning labels", () => {
-  const run = sampleRun();
-  run.responses.push(structuredClone(run.responses[0]));
-  run.responses[1].answers.original.probabilities = { yes: 0.8, no: 0.2 };
-  assert.ok(Math.abs(meanProb(run, "original", "yes") - 0.69) < 1e-9);
+  const run = firstRecording();
+  assert.ok(
+    Math.abs(meanProb(run, "original", "yes") - (0.36 + 0.39 + 0.41) / 3) <
+      1e-9,
+  );
 });
 test("word diff highlights substitutions and negation, and bounds long inputs", () => {
   const diff = wordDiff("Should this be legal?", "Should this be illegal?");
@@ -188,7 +236,7 @@ test("shared transport preserves probabilities without browser credentials", asy
     );
     return new Response(
       JSON.stringify({
-        ...sampleRun().responses[0],
+        ...firstRecording().responses[0],
         model: "typesafe/jev-1.13-20260917",
         usage: { input_tokens: 600, cost: 0.0000252 },
       }),

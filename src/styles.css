@@ -170,6 +170,24 @@ button svg {
   border-radius: 4px;
   white-space: nowrap;
 }
+.explainer {
+  max-width: 640px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.explainer-copy {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.explainer a {
+  text-underline-offset: 4px;
+}
+.explainer.collapsed {
+  margin-bottom: 16px;
+}
 .example-chips {
   display: flex;
   flex-wrap: nowrap;
@@ -285,7 +303,9 @@ button svg {
   border: 0;
   border-bottom: 1px solid var(--line);
   border-radius: 0;
-  padding: 8px 0 12px;
+  padding: 8px 0;
+  resize: none;
+  overflow: hidden;
   background: transparent;
   font-size: 15px;
   line-height: 1.4;
@@ -567,10 +587,8 @@ mark {
   padding: 0 4px;
 }
 del {
-  background: #f1ded6;
-  color: #884e3e;
-  border-radius: 4px;
-  padding: 0 4px;
+  color: var(--muted);
+  text-decoration: line-through;
 }
 .flip-pill {
   background: var(--accent-soft);
@@ -624,6 +642,7 @@ del {
 .binary-figures {
   gap: 4px 8px;
   margin-top: 0;
+  text-transform: lowercase;
 }
 .binary-figures > span + span::before {
   content: "·";

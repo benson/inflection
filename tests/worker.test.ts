@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import worker, { validateRequest, type Env } from "../worker/index";
 import { buildRequest, ENDPOINT, fromSeed } from "../src/engine";
 import { seeds } from "../src/seeds";
-import { sampleRun } from "../src/sample";
+import { recordedRun } from "../src/recorded";
 
 const origin = "https://bensonperry.com";
 const payload = () => buildRequest(fromSeed(seeds[0]));
@@ -108,7 +108,7 @@ test("proxy adds the server secret only upstream and sanitizes provider failures
           { status: errorStatus },
         )
       : Response.json({
-          ...sampleRun().responses[0],
+          ...recordedRun(seeds[0].id)!.responses[0],
           id: "fixture",
           internal: "must-not-leak",
         });
@@ -118,7 +118,7 @@ test("proxy adds the server secret only upstream and sanitizes provider failures
     assert.equal(response.status, 200);
     assert.equal(response.headers.get("Access-Control-Allow-Origin"), origin);
     const data = await response.json();
-    assert.equal(data.answers.original.choice, "yes");
+    assert.equal(data.answers.original.choice, "no");
     assert.equal(data.internal, undefined);
     for (const status of [401, 402, 403, 429, 500]) {
       errorStatus = status;

@@ -1,5 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import type { ReactNode } from "react";
+import {
+  Fragment,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import type { ComponentProps, ReactNode, RefObject } from "react";
 import {
   Bookmark,
   Check,
@@ -25,7 +32,7 @@ import {
   wordDiff,
 } from "./engine";
 import { seeds, sources } from "./seeds";
-import { sampleRun } from "./sample";
+import { findRecordedRun, recordedRun } from "./recorded";
 import {
   isDraft,
   isExperiment,
@@ -47,9 +54,123 @@ const colors = [
   "#8e8667",
   "#51514b",
 ];
-const pct = (n: number) => `${(n * 100).toFixed(1)}%`;
-const points = (n: number) =>
-  `${n > 0 ? "+" : n < 0 ? "−" : ""}${Math.abs(n * 100).toFixed(1)} pp`;
+const pct = (n: number) => `${Math.round(n * 100)}%`;
+const points = (n: number) => {
+  const rounded = Math.round(Math.abs(n * 100));
+  return `${rounded ? (n > 0 ? "+" : "−") : ""}${rounded} pp`;
+};
+
+function Explainer() {
+  const [expanded, setExpanded] = useState(
+    () => readStorage<unknown>("explainer", true) !== false,
+  );
+  function toggle() {
+    writeStorage("explainer", !expanded);
+    setExpanded(!expanded);
+  }
+  return (
+    <section
+      className={`explainer ${expanded ? "" : "collapsed"}`}
+      aria-label="How this works"
+    >
+      {expanded ? (
+        <>
+          <div id="explainer-copy" className="explainer-copy">
+            <p>
+              jev is{" "}
+              <a
+                href="https://typesafe.ai/blog/introducing-system-one-models-and-jev"
+                target="_blank"
+                rel="noreferrer"
+              >
+                a new kind of model
+              </a>
+              . instead of writing a reply, it returns probabilities over a
+              fixed set of answers you give it.
+            </p>
+            <p>
+              so it can't decline, hedge, or pile on caveats. ask it a yes/no
+              question and all it can do is say how much yes and how much no.
+            </p>
+            <p>
+              that makes it a more direct way to probe what a model "thinks"
+              about a contested question than arguing with a chatbot.
+            </p>
+            <p>
+              you'd expect a computer to read the same question the same way
+              however you phrase it. it doesn't. adding "do you think" in front
+              of a question moves the answer 20 points. a synonym flips it. a
+              swap like animals for meat moves it 45.
+            </p>
+            <p>
+              where people are swayed by wording, it is swayed like a person.
+              where they aren't, it is swayed anyway. it was trained to be
+              calibrated, not to be indifferent to phrasing, so read the numbers
+              as what this model does with the words you actually wrote.
+            </p>
+            <p>
+              this doesn't happen on every question. in a first screen of
+              fourteen topics most barely moved, and the examples here are the
+              ones that did. the point is that it can happen, on edits you
+              didn't mean anything by.
+            </p>
+            <p>
+              try the examples or write your own. it runs on my shared budget,
+              so go easy.
+            </p>
+          </div>
+          <button className="text-button" aria-expanded={true} onClick={toggle}>
+            hide
+          </button>
+        </>
+      ) : (
+        <button className="text-button" aria-expanded={false} onClick={toggle}>
+          how this works <ChevronDown size={16} />
+        </button>
+      )}
+    </section>
+  );
+}
+
+function growTextarea(element: HTMLTextAreaElement) {
+  element.style.height = "auto";
+  element.style.height = `${element.scrollHeight + element.offsetHeight - element.clientHeight}px`;
+}
+
+function WordingTextarea({
+  inputRef,
+  ...props
+}: ComponentProps<"textarea"> & {
+  inputRef?: RefObject<HTMLTextAreaElement | null>;
+}) {
+  const localRef = useRef<HTMLTextAreaElement>(null);
+  const ref = inputRef ?? localRef;
+  useLayoutEffect(() => {
+    if (ref.current) growTextarea(ref.current);
+  }, [props.value, ref]);
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    let width = element.getBoundingClientRect().width;
+    const observer = new ResizeObserver(() => {
+      const nextWidth = element.getBoundingClientRect().width;
+      if (width !== nextWidth) {
+        width = nextWidth;
+        growTextarea(element);
+      }
+    });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [ref]);
+  return (
+    <textarea
+      {...props}
+      ref={ref}
+      rows={1}
+      onInput={(e) => growTextarea(e.currentTarget)}
+    />
+  );
+}
 
 function Modal({
   title,
@@ -103,17 +224,29 @@ function Modal({
 }
 
 function Diff({ original, text }: { original: string; text: string }) {
+  const groups: ReturnType<typeof wordDiff> = [];
+  for (const part of wordDiff(original, text)) {
+    const previous = groups.at(-1);
+    if (previous?.type === part.type) previous.text += part.text;
+    else groups.push({ ...part });
+  }
   return (
     <>
-      {wordDiff(original, text).map((part, i) =>
-        part.type === "removed" ? (
-          <del key={i}>{part.text}</del>
-        ) : part.type === "added" ? (
-          <mark key={i}>{part.text}</mark>
-        ) : (
-          <span key={i}>{part.text}</span>
-        ),
-      )}
+      {groups.map((part, i) => {
+        const content = part.text.trimEnd();
+        return (
+          <Fragment key={i}>
+            {part.type === "removed" ? (
+              <del>{content}</del>
+            ) : part.type === "added" ? (
+              <mark>{content}</mark>
+            ) : (
+              content
+            )}
+            {part.text.slice(content.length)}
+          </Fragment>
+        );
+      })}
     </>
   );
 }
@@ -252,10 +385,7 @@ function Results({ run }: { run: Run }) {
       {run.sample && (
         <div className="sample-note">
           <FlaskConical size={14} aria-hidden="true" />
-          <span>Illustrative · invented numbers, not model output</span>
-          <span className="sr-only">
-            These numbers are made up to show the interface.
-          </span>
+          <span>recorded 20 sep 2026 · jev 1.13-20260917 · mean of 3 runs</span>
         </div>
       )}
       <div className="stats">
@@ -403,7 +533,10 @@ function Results({ run }: { run: Run }) {
                         />
                       )}
                       {o.label}{" "}
-                      <b>{Math.round(meanProb(run, c.id, o.id) * 100)}%</b>
+                      <b>
+                        {Math.round(meanProb(run, c.id, o.id) * 100)}
+                        {c.options.length > 2 ? "%" : ""}
+                      </b>
                     </span>
                   ))}
               </div>
@@ -421,7 +554,7 @@ function Results({ run }: { run: Run }) {
         </button>
         <span>
           {run.sample
-            ? "Illustrative · not model output"
+            ? "recorded · not run in this browser"
             : [...new Set(run.responses.map((r) => r.model))].join(", ")}
         </span>
       </div>
@@ -441,9 +574,7 @@ function Results({ run }: { run: Run }) {
             highlighted edits. Ties are not counted as flips.
           </p>
           <p>
-            {run.sample
-              ? "This example is synthetic and has no measured confidence."
-              : `Model: ${[...new Set(run.responses.map((r) => r.model))].join(", ")}. ${new Date(run.createdAt).toLocaleString()}.`}
+            {`Model: ${[...new Set(run.responses.map((r) => r.model))].join(", ")}. ${new Date(run.createdAt).toLocaleString()}.`}
           </p>
         </div>
       )}
@@ -452,7 +583,7 @@ function Results({ run }: { run: Run }) {
 }
 
 export default function App() {
-  const initial = useMemo(() => sampleRun(), []);
+  const initial = useMemo(() => recordedRun(seeds[0].id)!, []);
   const [experiment, setExperiment] = useState<Experiment>(() => {
     const saved = readStorage("draft", null);
     return isDraft(saved) ? saved : initial.experiment;
@@ -464,7 +595,10 @@ export default function App() {
   const [saved, setSaved] = useState(readSaved);
   const [history, setHistory] = useState(readHistory);
   const run = useMemo(
-    () => selectedRun ?? findMatchingRun(experiment, history),
+    () =>
+      selectedRun ??
+      findMatchingRun(experiment, history) ??
+      findRecordedRun(experiment),
     [selectedRun, experiment, history],
   );
   const [dialog, setDialog] = useState<"sources" | "saved" | "request" | null>(
@@ -565,7 +699,7 @@ export default function App() {
     );
     const link = document.createElement("a");
     link.href = url;
-    link.download = `inflection-${"sample" in value && value.sample ? "illustrative-" : ""}${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = `inflection-${"sample" in value && value.sample ? "recorded-" : ""}${new Date().toISOString().slice(0, 10)}.json`;
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
@@ -604,7 +738,7 @@ export default function App() {
         setProgress,
       );
       setRun(result);
-      const next = [result, ...history].slice(0, 20);
+      const next = [result, ...history.filter((r) => !r.sample)].slice(0, 20);
       setHistory(next);
       if (!writeStorage("history", next))
         setNotice(
@@ -649,6 +783,7 @@ export default function App() {
         </nav>
       </header>
       <main className="layout">
+        <Explainer />
         <nav className="example-chips" aria-label="Example questions">
           {seeds.map((s) => (
             <button
@@ -656,7 +791,7 @@ export default function App() {
               key={s.id}
               className="example-chip"
               aria-pressed={experiment.id === s.id}
-              onClick={() => openExperiment(fromSeed(s))}
+              onClick={() => openExperiment(fromSeed(s), recordedRun(s.id))}
             >
               {s.title}
             </button>
@@ -789,12 +924,11 @@ export default function App() {
                     <span className="wording-number">01</span> Original
                   </label>
                 </div>
-                <textarea
-                  ref={originalRef}
+                <WordingTextarea
+                  inputRef={originalRef}
                   id="original"
                   aria-label="Original question"
                   maxLength={3000}
-                  rows={2}
                   placeholder="Should…?"
                   value={experiment.original}
                   onChange={(e) => change({ original: e.target.value })}
@@ -859,11 +993,10 @@ export default function App() {
                       </button>
                     </div>
                   </div>
-                  <textarea
+                  <WordingTextarea
                     id={v.id}
                     aria-label={`Wording ${i + 1}`}
                     maxLength={3000}
-                    rows={2}
                     placeholder="Change a word, a phrase, or the whole framing…"
                     value={v.text}
                     onChange={(e) =>
@@ -978,7 +1111,7 @@ export default function App() {
                   <button
                     className="text-button sample-link"
                     onClick={() => {
-                      const r = sampleRun();
+                      const r = recordedRun(seeds[0].id)!;
                       openExperiment(r.experiment, r);
                     }}
                   >
@@ -1093,8 +1226,8 @@ export default function App() {
                   <strong>{r.experiment.title}</strong>
                   <span>
                     {new Date(r.createdAt).toLocaleString()} ·{" "}
-                    {(maxWordingSwing(r) * 100).toFixed(1)} pp swing ·{" "}
-                    {r.responses.length} runs{r.sample ? " · Illustrative" : ""}
+                    {Math.round(maxWordingSwing(r) * 100)} pp swing ·{" "}
+                    {r.responses.length} runs{r.sample ? " · recorded" : ""}
                   </span>
                 </button>
                 <button

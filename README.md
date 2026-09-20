@@ -29,7 +29,7 @@ The setup script checks the key’s cap and sends it to Wrangler over stdin. It 
 
 ## Explore
 
-- Four starting questions: self-driving car safety, religion and terrorism, eating meat, and wealth tax. Each has two editable variants.
+- Four starting questions: self-driving car safety, wealth tax, eating meat, and religion and terrorism. Each has two or three editable variants.
 - Create your own question, use two to eight shared answers, and compare up to eight wordings.
 - Word-level insertions and deletions, complete probability distributions, a common-scale dot plot, percentage-point deltas, and answer flips.
 - Repeat the entire batch 1, 3, or 5 times; show mean probabilities and observed min–max ranges.
@@ -37,7 +37,7 @@ The setup script checks the key’s cap and sends it to Wrangler over stdin. It 
 - Mark substantive changes as **Changed framing**; they are excluded from the paraphrase swing statistic.
 - Save questions, inspect 20 recent real comparisons, export full request/response metadata, and import exported experiments.
 
-The initial example has explicitly labeled, invented probabilities. It is a fixed illustration, not a result from Jev. Returning to unchanged inputs, undoing an edit, or reloading restores the latest matching real comparison from the 20-run browser history. Matching includes questions, answers and their order, context, controls, and framing labels; changing the experiment title does not invalidate a comparison. Unmeasured inputs show no results. A failed rerun preserves the previous matching comparison. There is no fake-answer fallback. Only **Run comparison** sends inference requests.
+Every example opens with a recorded three-repeat comparison from 20 September 2026, using `typesafe/jev-1.13-20260917` and the same request the app sends. Editing the inputs clears the recording; restoring the exact request restores it. Returning to unchanged inputs, undoing an edit, or reloading restores the latest matching real comparison from the 20-run browser history. Matching includes questions, answers and their order, context, controls, and framing labels; changing the experiment title does not invalidate a comparison. Unmeasured inputs show no results. A failed rerun preserves the previous matching comparison. There is no fake-answer fallback. Only **Run comparison** sends inference requests.
 
 ## Method
 
@@ -51,7 +51,7 @@ Repeated runs estimate observed variability only; min–max lines are not confid
 
 ## Question provenance
 
-Benson selected the self-driving and religion examples. The eating-meat and wealth-tax examples were selected after live wording probes; [the research notes and complete measurements](research/2026-09-20/README.md) record the search and repeat checks. The wealth-tax variant that names a specific tax starts as **Changed framing**, because it narrows the broader wording. All prompts and framing labels are editable. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
+The four examples and their variants come from the [tiered wording probe on 20 September 2026](research/2026-09-20/README.md#tiered-probe--september-20-2026), which searched surface, syntactic, synonym, and connotative edits. Each shipped variant was confirmed with three repeats. All prompts and framing labels are editable. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
 
 - [TypeSafe’s documented limitations](https://docs.typesafe.ai/model-jaggedness/jev-1.13)
 - [Choice documentation](https://docs.typesafe.ai/primitives/choice)

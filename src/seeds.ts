@@ -1,6 +1,6 @@
 import type { Seed } from "./types";
 
-// A small set of starting questions, with two editable variants each.
+// Confirmed wordings from research/2026-09-20/tiered-confirm-prompts.json.
 export const seeds: Seed[] = [
   {
     id: "self-driving-safety",
@@ -8,30 +8,9 @@ export const seeds: Seed[] = [
     category: "Technology",
     question: "Are self-driving cars safer than human drivers?",
     variants: [
-      "Are autonomous cars safer than cars driven by humans?",
+      "Do you think self-driving cars are safer than human drivers?",
       "Are human drivers less safe than self-driving cars?",
-    ],
-  },
-  {
-    id: "religion-terrorism",
-    title: "Religion & terrorism",
-    category: "Religion",
-    question:
-      "Does Islam inspire more terrorism than other monotheistic religions?",
-    variants: [
-      "Compared with other monotheistic religions, does Islam inspire more terrorism?",
-      "Is more terrorism inspired by Islam than by other monotheistic religions?",
-    ],
-  },
-  {
-    id: "eating-meat",
-    title: "Eating meat",
-    category: "Ethics",
-    question:
-      "Is it morally acceptable to eat animals when other nutritious food is available?",
-    variants: [
-      "Is it morally acceptable to eat meat when other nutritious food is available?",
-      "Is it morally acceptable to consume meat when other nutritious food is available?",
+      "Are autonomous cars safer than human drivers?",
     ],
   },
   {
@@ -41,11 +20,32 @@ export const seeds: Seed[] = [
     question:
       "Should the government tax wealth that people have already paid income tax on?",
     variants: [
-      "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
-      "Should the government levy a wealth tax on assets acquired with after-tax income?",
+      "Do you think the government should tax wealth that people have already paid income tax on?",
+      "Should wealth that people have already paid income tax on be taxed by the government?",
+      "Should the government tax assets that people have already paid income tax on?",
     ],
-    // The last wording names a specific tax rather than taxing wealth generally.
-    variantKinds: ["paraphrase", "framing"],
+  },
+  {
+    id: "eating-meat",
+    title: "Eating meat",
+    category: "Ethics",
+    question:
+      "Is it morally acceptable to eat meat when other nutritious food is available?",
+    variants: [
+      "When other nutritious food is available, is it morally acceptable to eat meat?",
+      "Is it morally acceptable to eat animals when other nutritious food is available?",
+    ],
+  },
+  {
+    id: "religion-terrorism",
+    title: "Religion & terrorism",
+    category: "Religion",
+    question:
+      "Does Islam inspire more terrorism than other monotheistic religions?",
+    variants: [
+      "Does Islam inspire more terrorist attacks than other monotheistic religions?",
+      "Is more terrorism inspired by Islam than by other monotheistic religions?",
+    ],
   },
 ];
 
