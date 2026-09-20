@@ -2,7 +2,7 @@
 // Uses an existing Playwright installation; PLAYWRIGHT_MODULE may point to its
 // entry file when it is installed outside this checkout. Never installs browsers.
 // The exported workflow can also be called with a Playwright CLI page.
-import { mkdir } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -17,10 +17,44 @@ export default async function checkBrowser(page) {
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.addInitScript(() => {
     window.__canvasText = [];
+    window.__canvasRects = [];
+    window.__canvasArcs = 0;
+    window.__canvasStrokes = 0;
+    for (const [method, counter] of [
+      ["arc", "__canvasArcs"],
+      ["stroke", "__canvasStrokes"],
+    ]) {
+      const draw = CanvasRenderingContext2D.prototype[method];
+      CanvasRenderingContext2D.prototype[method] = function (...args) {
+        window[counter]++;
+        return draw.apply(this, args);
+      };
+    }
     const fillText = CanvasRenderingContext2D.prototype.fillText;
     CanvasRenderingContext2D.prototype.fillText = function (...args) {
-      window.__canvasText.push({ text: args[0], font: this.font });
+      const metrics = this.measureText(args[0]);
+      window.__canvasText.push({
+        text: args[0],
+        font: this.font,
+        color: this.fillStyle,
+        x: args[1],
+        y: args[2],
+        left: args[1] - metrics.actualBoundingBoxLeft,
+        right: args[1] + metrics.actualBoundingBoxRight,
+        top: args[2] - metrics.actualBoundingBoxAscent,
+        bottom: args[2] + metrics.actualBoundingBoxDescent,
+      });
       return fillText.apply(this, args);
+    };
+    const fillRect = CanvasRenderingContext2D.prototype.fillRect;
+    CanvasRenderingContext2D.prototype.fillRect = function (
+      x,
+      y,
+      width,
+      height,
+    ) {
+      window.__canvasRects.push({ x, y, width, height, color: this.fillStyle });
+      return fillRect.call(this, x, y, width, height);
     };
     Object.defineProperty(navigator, "clipboard", {
       configurable: true,
@@ -607,15 +641,43 @@ export default async function checkBrowser(page) {
   const imageText = await page.evaluate(() => window.__canvasText);
   check(
     imageText.some(
-      (t) => t.text === "Browser QA fixture" && t.font.includes("44px"),
+      (t) => t.text === "Browser QA fixture" && t.font.includes("40px"),
     ) &&
       imageText.some(
-        (t) => t.text === "largest swing 55 pp · answers Housing 2 · Energy 1",
+        (t) =>
+          t.text === "largest swing 55 pp · Housing 2 · Energy 1" &&
+          t.font.includes("20px") &&
+          t.color === "#685d55",
       ) &&
       imageText.some((t) => t.text === "probability of Energy") &&
-      imageText.some((t) => t.text === "bensonperry.com/inflection"),
-    "Canvas uses the title, stats, selected answer, and site credit",
+      imageText.some((t) => t.text === "bensonperry.com/inflection") &&
+      imageText.some((t) => /^jev 1\.13 · your run · \d/.test(t.text)),
+    "Canvas uses the 40px title, muted 20px stats, selected answer, and both credits",
   );
+  check(
+    [
+      "Which policy should be prioritized?",
+      "Which policy should come first?",
+      "Which policy should receive priority?",
+    ].every((wording) =>
+      imageText.some((t) => t.text === wording && t.font.includes("22px")),
+    ) && imageText.filter((t) => t.text === "differs").length === 1,
+    "The image includes every wording and tags the minority winner",
+  );
+  const percentages = imageText.filter((t) => t.font.includes("28px"));
+  check(
+    [...new Set(percentages.map((t) => t.y))]
+      .map((y) =>
+        percentages
+          .filter((t) => t.y === y)
+          .sort((a, b) => a.x - b.x)
+          .map((t) => t.text)
+          .join(""),
+      )
+      .join() === "15%,70%,15%",
+    "Serif percentages follow the tracked option's means",
+  );
+  await checkImageLayouts(page, check);
   await page.evaluate(() => {
     window.__denyImage = true;
   });
@@ -636,14 +698,25 @@ export default async function checkBrowser(page) {
   await page.getByText("link copied", { exact: true }).waitFor();
   const sharedUrl = await page.evaluate(() => window.__sharedText);
   check(/#s=[A-Za-z0-9_-]+$/.test(sharedUrl), "Link uses a base64url hash");
+  const sharedTag = await page.evaluate(() => {
+    const run = JSON.parse(localStorage.getItem("inflection-v2-history"))[0];
+    const date = new Date(run.createdAt)
+      .toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        timeZone: "UTC",
+      })
+      .toLowerCase()
+      .replace("sept", "sep");
+    return `shared link · ${date}`;
+  });
   const recipient = await page.context().browser().newPage();
   recipient.on("pageerror", (e) => errors.push(e.message));
   await recipient.goto(sharedUrl);
   await recipient.locator(".result-source").waitFor();
   check(
-    (await recipient.locator(".result-source").textContent()).startsWith(
-      "shared link · ",
-    ) &&
+    (await recipient.locator(".result-source").textContent()) === sharedTag &&
       new URL(recipient.url()).hash === "" &&
       (await recipient.locator(".answer-tally").textContent()) ===
         "Housing 2 · Energy 1",
@@ -657,9 +730,7 @@ export default async function checkBrowser(page) {
       ?.textContent.startsWith("shared link"),
   );
   check(
-    (await page.locator(".result-source").textContent()).startsWith(
-      "shared link · ",
-    ) &&
+    (await page.locator(".result-source").textContent()) === sharedTag &&
       (await page.locator(".result-footer").textContent()).includes(
         "shared link · not run in this browser",
       ),
@@ -905,6 +976,143 @@ export default async function checkBrowser(page) {
   await page.locator(".result-source").waitFor();
   await page.screenshot({ path: "output/playwright/desktop.png" });
   return { passed: checks.length, checks };
+}
+
+async function checkImageLayouts(page, check) {
+  const layouts = await page.evaluate(async () => {
+    const { comparisonImage } = await import("/src/share.ts");
+    const { recordedRun } = await import("/src/recorded.ts");
+    const { seeds } = await import("/src/seeds.ts");
+    const { buildRequest, conditionsFor } = await import("/src/engine.ts");
+    const layouts = [];
+    for (const count of [2, 4, 6, 7, 8]) {
+      const seed = recordedRun(seeds[0].id);
+      const run = structuredClone(seed);
+      if (count !== 4) {
+        run.experiment.wordings = Array.from({ length: count }, (_, i) => ({
+          id: `w${i + 1}`,
+          text:
+            count <= 2
+              ? seed.conditions[i].text
+              : i === 0
+                ? "長い文言も画像の中で二行以内に収まります。".repeat(12)
+                : i === 1
+                  ? "W".repeat(200)
+                  : `${seed.conditions[i % 4].text} ${"Additional wording to check wrapping and ellipsis. ".repeat(6)}`,
+        }));
+        if (count > 4)
+          run.experiment.title = "Long comparison title ".repeat(5);
+        run.conditions = conditionsFor(run.experiment);
+        run.request = buildRequest(run.experiment);
+        run.responses = seed.responses
+          .slice(0, count === 2 ? 1 : 3)
+          .map((r) => ({
+            ...r,
+            answers: Object.fromEntries(
+              run.conditions.map((c, i) => [
+                c.id,
+                count === 2
+                  ? {
+                      ...r.answers.w1,
+                      choice: i === 0 ? "no" : "yes",
+                      probabilities: { yes: i, no: 1 - i },
+                    }
+                  : r.answers[`w${(i % 4) + 1}`],
+              ]),
+            ),
+          }));
+      }
+      window.__canvasText = [];
+      window.__canvasRects = [];
+      window.__canvasArcs = 0;
+      window.__canvasStrokes = 0;
+      const blob = await comparisonImage(run.experiment, run, "yes");
+      const fontSize = count > 6 ? 22 - (count - 6) * 2 : 22;
+      const text = window.__canvasText;
+      const wordingLines = text.filter(
+        (t) =>
+          t.font.startsWith(`${fontSize}px `) &&
+          t.x >= 96 &&
+          t.x < 904 &&
+          t.y > 164,
+      );
+      const rows = run.conditions.map((c, i) => {
+        const top = 164 + (378 * i) / count;
+        const bottom = 164 + (378 * (i + 1)) / count;
+        const lines = wordingLines.filter((t) => t.y >= top && t.y < bottom);
+        return (
+          lines.length >= 1 &&
+          lines.length <= 2 &&
+          c.text.startsWith(lines[0].text) &&
+          lines.every(
+            (t) => t.top >= top && t.bottom <= bottom && t.right <= 873,
+          ) &&
+          (count <= 4 || lines.at(-1).text.endsWith("…"))
+        );
+      });
+      const rects = window.__canvasRects;
+      layouts.push({
+        count,
+        rowsFit: rows.every(Boolean),
+        // Font ink can extend a fraction of a pixel beyond its advance width.
+        padding: text.every(
+          (t) =>
+            t.left >= 55 && t.right <= 1145 && t.top >= 55 && t.bottom <= 575,
+        ),
+        tracks: rects.filter(
+          (r) => r.width === 240 && r.height === 6 && r.color === "#f1eae0",
+        ).length,
+        fills: rects
+          .filter((r) => r.height === 6 && r.color === "#653d78")
+          .map((r) => r.width),
+        hairlines: rects.filter((r) => r.height === 1 && r.width === 1088)
+          .length,
+        arcs: window.__canvasArcs,
+        ranges: window.__canvasStrokes,
+        differs: text.filter((t) => t.text === "differs").length,
+        summary: text.some(
+          (t) => t.text === "largest swing 66 pp · yes 1 · no 3",
+        ),
+        footer: text.some(
+          (t) => t.text === "jev 1.13 · recorded · 20 sep 2026",
+        ),
+        png:
+          count === 4 || count === 8
+            ? Array.from(new Uint8Array(await blob.arrayBuffer()))
+            : null,
+      });
+    }
+    return layouts;
+  });
+  for (const layout of layouts) {
+    check(
+      layout.rowsFit && layout.padding,
+      `${layout.count}-row image wraps each wording within two lines and keeps text inside the padding`,
+    );
+    check(
+      layout.tracks === layout.count &&
+        layout.fills.length === layout.count &&
+        layout.hairlines === layout.count - 1 &&
+        layout.arcs === 0 &&
+        layout.ranges === (layout.count === 2 ? 0 : layout.count),
+      `${layout.count}-row image has percentage bars, hairlines, and ranges only for repeats`,
+    );
+    if (layout.count === 2)
+      check(
+        layout.fills.join() === "0,240" && layout.differs === 0,
+        "Zero and 100 percent fill the expected widths; tied tallies have no differs tag",
+      );
+    if (layout.count === 4)
+      check(
+        layout.summary && layout.footer && layout.differs === 1,
+        "Recorded image has the exact swing, tally, date, and minority tag",
+      );
+    if (layout.png)
+      await writeFile(
+        `output/playwright/share-${layout.count}-rows.png`,
+        Buffer.from(layout.png),
+      );
+  }
 }
 
 if (

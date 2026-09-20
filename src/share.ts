@@ -1,4 +1,11 @@
-import { binaryOptions, maxWordingSwing, meanProb, tallyText } from "./engine";
+import {
+  binaryOptions,
+  majorityWinner,
+  maxWordingSwing,
+  meanProb,
+  tallyText,
+  winners,
+} from "./engine";
 import { isExperiment, parseRun } from "./storage";
 import type { Experiment, Run } from "./types";
 
@@ -119,93 +126,168 @@ export async function comparisonImage(
   const color = (name: string) => theme.getPropertyValue(`--${name}`).trim();
   const body = color("body"),
     serif = color("serif");
+  const padding = 56,
+    right = canvas.width - padding,
+    width = right - padding;
   ctx.fillStyle = color("paper");
   ctx.fillRect(0, 0, 1200, 630);
-  ctx.fillStyle = color("ink");
-  ctx.font = `44px ${serif}`;
-  // Wrap long titles into two lines, keeping the requested type size.
-  const words = (experiment.title.trim() || "untitled comparison").split(/\s+/);
-  const lines = [""];
-  for (const word of words) {
-    const last = lines.length - 1;
-    const next = lines[last] ? `${lines[last]} ${word}` : word;
-    if (ctx.measureText(next).width > 1088 && lines[last] && lines.length < 2)
-      lines.push(word);
-    else lines[last] = next;
-  }
   const fit = (text: string, width: number) => {
     if (ctx.measureText(text).width <= width) return text;
-    while (text && ctx.measureText(`${text}…`).width > width)
-      text = text.slice(0, -1);
-    return `${text}…`;
+    const chars = Array.from(text);
+    while (chars.length && ctx.measureText(`${chars.join("")}…`).width > width)
+      chars.pop();
+    return `${chars.join("").trimEnd()}…`;
   };
-  lines.forEach((line, i) => ctx.fillText(fit(line, 1088), 56, 80 + i * 52));
-  const summaryY = lines.length === 1 ? 128 : 180;
-  ctx.font = `24px ${body}`;
+  const wrap = (text: string, width: number) => {
+    const words = text.trim().split(/\s+/);
+    let first = "";
+    while (words.length) {
+      const next = first ? `${first} ${words[0]}` : words[0];
+      if (ctx.measureText(next).width > width) break;
+      first = next;
+      words.shift();
+    }
+    // Split an unbroken word too, so pasted URLs and CJK text stay in bounds.
+    if (!first && words.length) {
+      const chars = Array.from(words[0]);
+      while (chars.length && ctx.measureText(first + chars[0]).width <= width)
+        first += chars.shift();
+      words[0] = chars.join("");
+    }
+    return words.length ? [first, fit(words.join(" "), width)] : [first];
+  };
+  ctx.textBaseline = "top";
+  ctx.fillStyle = color("ink");
+  ctx.font = `40px ${serif}`;
   ctx.fillText(
-    fit(
-      `largest swing ${Math.round(maxWordingSwing(run) * 100)} pp · answers ${tallyText(run)}`,
-      1088,
-    ),
-    56,
-    summaryY,
+    fit(experiment.title.trim() || "untitled comparison", width),
+    padding,
+    padding,
   );
   ctx.fillStyle = color("muted");
-  ctx.font = `18px ${body}`;
+  ctx.font = `20px ${body}`;
+  ctx.fillText(
+    fit(
+      `largest swing ${Math.round(maxWordingSwing(run) * 100)} pp · ${tallyText(run)}`,
+      width,
+    ),
+    padding,
+    108,
+  );
   const selected =
     experiment.options.find((o) => o.id === optionId) ?? experiment.options[0];
-  ctx.fillText(
-    fit(`probability of ${selected.label}`, 1088),
-    56,
-    summaryY + 36,
-  );
-  const top = summaryY + 64,
-    bottom = 516;
-  const step = Math.min(
-    48,
-    (bottom - top) / Math.max(1, run.conditions.length - 1),
-  );
-  const lastY = top + (run.conditions.length - 1) * step;
-  const x = (p: number) => 112 + p * 920;
-  ctx.lineWidth = 1;
-  for (const p of [0, 0.25, 0.5, 0.75, 1]) {
-    ctx.strokeStyle = color("line");
-    ctx.beginPath();
-    ctx.moveTo(x(p), top - 16);
-    ctx.lineTo(x(p), lastY + 16);
-    ctx.stroke();
-    ctx.textAlign = "center";
-    ctx.fillText(`${p * 100}%`, x(p), lastY + 40);
-  }
+  const barWidth = 240,
+    barX = right - barWidth,
+    top = 164,
+    bottom = 542,
+    rowHeight = (bottom - top) / run.conditions.length,
+    rowFont =
+      run.conditions.length > 6 ? 22 - (run.conditions.length - 6) * 2 : 22,
+    lineHeight = rowFont + 4;
+  const majority = majorityWinner(run);
+  const differs = run.conditions.map((c) => {
+    const leading = winners(run, c.id);
+    const winner = leading.length === 1 ? leading[0] : "__tie__";
+    return majority !== null && winner !== majority;
+  });
+  const gutter = 40,
+    tagWidth = 58,
+    textX = padding + gutter + (differs.some(Boolean) ? tagWidth + 14 : 0),
+    textWidth = barX - 32 - textX;
+  ctx.font = `18px ${body}`;
+  ctx.textAlign = "right";
+  ctx.fillText(fit(`probability of ${selected.label}`, barWidth), right, 136);
   run.conditions.forEach((c, i) => {
-    const y = top + i * step;
+    const rowTop = top + i * rowHeight,
+      centerY = rowTop + rowHeight / 2;
+    if (i > 0) {
+      ctx.fillStyle = color("line");
+      ctx.fillRect(padding, Math.round(rowTop), width, 1);
+    }
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "left";
+    ctx.font = `20px ${body}`;
+    ctx.fillStyle = color("muted");
+    ctx.fillText(c.label, padding, centerY);
+    if (differs[i]) {
+      ctx.fillStyle = color("accent-soft");
+      ctx.beginPath();
+      ctx.roundRect(padding + gutter, centerY - 12, tagWidth, 24, 5);
+      ctx.fill();
+      ctx.fillStyle = color("accent");
+      ctx.font = `14px ${body}`;
+      ctx.fillText("differs", padding + gutter + 8, centerY);
+    }
+    ctx.fillStyle = color("ink");
+    ctx.font = `${rowFont}px ${body}`;
+    const lines = wrap(c.text, textWidth);
+    lines.forEach((line, j) =>
+      ctx.fillText(
+        line,
+        textX,
+        centerY + (j - (lines.length - 1) / 2) * lineHeight,
+      ),
+    );
+
+    const mean = meanProb(run, c.id, selected.id);
     const values = run.responses.map(
       (r) => r.answers[c.id].probabilities[selected.id],
     );
-    ctx.fillStyle = color("muted");
-    ctx.textAlign = "left";
-    ctx.fillText(c.label, 56, y + 6);
-    ctx.strokeStyle = color("accent");
-    ctx.lineWidth = 8;
-    ctx.lineCap = "round";
+    const barY = Math.round(centerY + 14);
+    ctx.fillStyle = color("surface-sunken");
+    ctx.fillRect(barX, barY, barWidth, 6);
+    ctx.fillStyle = color("accent");
+    ctx.fillRect(barX, barY, mean * barWidth, 6);
     if (values.length > 1) {
+      const low = barX + Math.min(...values) * barWidth,
+        high = barX + Math.max(...values) * barWidth;
+      ctx.strokeStyle = color("ink");
+      ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.moveTo(x(Math.min(...values)), y);
-      ctx.lineTo(x(Math.max(...values)), y);
+      ctx.moveTo(low, barY + 3);
+      ctx.lineTo(high, barY + 3);
+      ctx.moveTo(low, barY - 2);
+      ctx.lineTo(low, barY + 8);
+      ctx.moveTo(high, barY - 2);
+      ctx.lineTo(high, barY + 8);
       ctx.stroke();
     }
-    const mean = meanProb(run, c.id, selected.id);
-    ctx.fillStyle = color("accent");
-    ctx.beginPath();
-    ctx.arc(x(mean), y, 7, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.fillStyle = color("ink");
+    ctx.font = `28px ${serif}`;
+    // Canvas has no font-variant-numeric setting. Fixed digit cells keep the
+    // percentages tabular even when the system serif uses proportional digits.
+    const digitWidth = Math.max(
+      ...Array.from("0123456789", (digit) => ctx.measureText(digit).width),
+    );
     ctx.textAlign = "right";
-    ctx.fillText(`${Math.round(mean * 100)}%`, 1144, y + 6);
+    ctx.fillText("%", right, centerY - 6);
+    let digitX = right - ctx.measureText("%").width - digitWidth / 2;
+    ctx.textAlign = "center";
+    for (const digit of Array.from(String(Math.round(mean * 100))).reverse()) {
+      ctx.fillText(digit, digitX, centerY - 6);
+      digitX -= digitWidth;
+    }
   });
   ctx.textAlign = "left";
+  ctx.textBaseline = "bottom";
   ctx.fillStyle = color("muted");
   ctx.font = `18px ${body}`;
-  ctx.fillText("bensonperry.com/inflection", 56, 598);
+  ctx.fillText("bensonperry.com/inflection", padding, canvas.height - padding);
+  const date = new Date(run.createdAt)
+    .toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    })
+    .toLowerCase()
+    .replace("sept", "sep");
+  ctx.textAlign = "right";
+  ctx.fillText(
+    `jev 1.13 · ${run.source === "local" ? "your run" : "recorded"} · ${date}`,
+    right,
+    canvas.height - padding,
+  );
   return new Promise((resolve, reject) =>
     canvas.toBlob(
       (blob) =>

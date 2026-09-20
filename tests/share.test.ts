@@ -8,7 +8,7 @@ import {
   readStorage,
   writeStorage,
 } from "../src/storage";
-import { recordedRun } from "../src/recorded";
+import { findRecordedRun, recordedRun } from "../src/recorded";
 import { seeds } from "../src/seeds";
 import { buildRequest, validateExperiment } from "../src/engine";
 
@@ -24,17 +24,22 @@ test("gzip links preserve Unicode inputs, repeated distributions, metadata, and 
   for (const source of ["local", "recorded", "shared"] as const) {
     const run = fixture();
     run.source = source;
+    run.experiment.context = "Compare these locations for a café in 日本語.";
+    run.request = buildRequest(run.experiment);
     const experiment = {
       ...run.experiment,
       title: "café — 日本語",
-      context: "",
     };
+    assert.equal(findRecordedRun(experiment), null);
     const encoded = await encodeShare(experiment, run);
     assert.match(encoded, /^[A-Za-z0-9_-]+$/);
     const decoded = await decodeShare(`#s=${encoded}`);
     assert.ok(decoded?.run);
     assert.equal(decoded.experiment.title, experiment.title);
     assert.deepEqual(decoded.experiment.wordings, experiment.wordings);
+    assert.deepEqual(decoded.experiment.options, experiment.options);
+    assert.equal(decoded.experiment.context, experiment.context);
+    assert.deepEqual(decoded.run.conditions, run.conditions);
     assert.deepEqual(decoded.run.responses, run.responses);
     assert.deepEqual(decoded.run.request, run.request);
     assert.equal(decoded.run.createdAt, run.createdAt);
