@@ -123,7 +123,7 @@ test("changed experiment inputs cannot borrow results from an earlier version", 
   assert.equal(findMatchingRun(run.experiment, [run]), run);
 });
 
-test("four unique, valid examples, each with two or three different paraphrases", () => {
+test("three unique, valid examples, each with two or three different paraphrases", () => {
   assert.ok(seeds.length >= 2 && seeds.length <= 5);
   assert.equal(new Set(seeds.map((s) => s.id)).size, seeds.length);
   assert.equal(new Set(seeds.map((s) => s.question)).size, seeds.length);
@@ -139,7 +139,7 @@ test("four unique, valid examples, each with two or three different paraphrases"
   }
   assert.deepEqual(
     seeds.map((s) => s.id),
-    ["self-driving-safety", "wealth-tax", "eating-meat", "religion-terrorism"],
+    ["self-driving-safety", "wealth-tax", "eating-meat"],
   );
 });
 test("all wordings preserve exact instructions and shared option IDs; controls vary just one factor", () => {

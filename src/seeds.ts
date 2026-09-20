@@ -36,17 +36,6 @@ export const seeds: Seed[] = [
       "Is it morally acceptable to eat animals when other nutritious food is available?",
     ],
   },
-  {
-    id: "religion-terrorism",
-    title: "Religion & terrorism",
-    category: "Religion",
-    question:
-      "Does Islam inspire more terrorism than other monotheistic religions?",
-    variants: [
-      "Does Islam inspire more terrorist attacks than other monotheistic religions?",
-      "Is more terrorism inspired by Islam than by other monotheistic religions?",
-    ],
-  },
 ];
 
 export const sources = [

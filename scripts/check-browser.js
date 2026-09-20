@@ -180,14 +180,13 @@ export default async function checkBrowser(page) {
 
   const chips = page.getByRole("navigation", { name: "Example questions" });
   check(
-    (await chips.getByRole("button").count()) === 5,
-    "Four starter examples and a custom question chip are shown",
+    (await chips.getByRole("button").count()) === 4,
+    "Three starter examples and a custom question chip are shown",
   );
   for (const title of [
     "Self-driving safety",
     "Wealth tax",
     "Eating meat",
-    "Religion & terrorism",
   ]) {
     await chips.getByRole("button", { name: title, exact: true }).click();
     check(
@@ -510,11 +509,11 @@ export default async function checkBrowser(page) {
     ),
     "Phone example chips form a horizontally scrolling row",
   );
-  await chips.getByRole("button", { name: /Religion & terrorism/ }).click();
+  await chips.getByRole("button", { name: /Eating meat/ }).click();
   check(
     (await page
       .getByRole("textbox", { name: "Experiment title" })
-      .inputValue()) === "Religion & terrorism",
+      .inputValue()) === "Eating meat",
     "Mobile example chip selection works",
   );
   check(

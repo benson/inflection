@@ -30,14 +30,9 @@ const report: {
 
 assert.equal(report.repeats, 3, "Expected three confirmation repeats");
 assert.equal(report.answerOrder, "normal", "Expected Yes/No answer order");
-assert.equal(prompts.length, seeds.length, "Every confirmed topic must ship");
-assert.equal(
-  report.runs.length,
-  seeds.length * 3,
-  "Unexpected recording count",
-);
 
 const bundled: Record<string, Run> = {};
+// Research can include additional topics; only current app seeds are bundled.
 for (const seed of seeds) {
   const prompt = prompts.find((p) => p.title === seed.title);
   assert.ok(prompt, `Missing confirmation prompts for ${seed.id}`);
