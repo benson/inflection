@@ -1,7 +1,297 @@
 {
+  "four-day-week": {
+    "id": "recorded-four-day-week",
+    "createdAt": "2026-09-20T15:51:23.068Z",
+    "sample": true,
+    "experiment": {
+      "id": "four-day-week",
+      "title": "Four-day week",
+      "category": "Work",
+      "mode": "binary",
+      "original": "Is a four-day work week better for companies than a five-day week?",
+      "variants": [
+        {
+          "id": "v1",
+          "text": "Do you think a four-day work week is better for companies than a five-day week?",
+          "kind": "paraphrase"
+        },
+        {
+          "id": "v2",
+          "text": "For companies, is a four-day work week better than a five-day week?",
+          "kind": "paraphrase"
+        },
+        {
+          "id": "v3",
+          "text": "Is a five-day work week worse for companies than a four-day week?",
+          "kind": "paraphrase"
+        }
+      ],
+      "options": [
+        {
+          "id": "yes",
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "label": "No"
+        }
+      ],
+      "context": "",
+      "expanded": false,
+      "reversed": false
+    },
+    "conditions": [
+      {
+        "id": "original",
+        "text": "Is a four-day work week better for companies than a five-day week?",
+        "label": "Original",
+        "kind": "original",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes"
+          },
+          {
+            "id": "no",
+            "label": "No"
+          }
+        ]
+      },
+      {
+        "id": "v1",
+        "text": "Do you think a four-day work week is better for companies than a five-day week?",
+        "label": "Wording 1",
+        "kind": "paraphrase",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes"
+          },
+          {
+            "id": "no",
+            "label": "No"
+          }
+        ]
+      },
+      {
+        "id": "v2",
+        "text": "For companies, is a four-day work week better than a five-day week?",
+        "label": "Wording 2",
+        "kind": "paraphrase",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes"
+          },
+          {
+            "id": "no",
+            "label": "No"
+          }
+        ]
+      },
+      {
+        "id": "v3",
+        "text": "Is a five-day work week worse for companies than a four-day week?",
+        "label": "Wording 3",
+        "kind": "paraphrase",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes"
+          },
+          {
+            "id": "no",
+            "label": "No"
+          }
+        ]
+      }
+    ],
+    "request": {
+      "model": "typesafe/jev-1.13",
+      "state": "",
+      "questions": {
+        "original": {
+          "type": "choice",
+          "instructions": "Is a four-day work week better for companies than a five-day week?",
+          "criteria": {
+            "yes": "Yes",
+            "no": "No"
+          }
+        },
+        "v1": {
+          "type": "choice",
+          "instructions": "Do you think a four-day work week is better for companies than a five-day week?",
+          "criteria": {
+            "yes": "Yes",
+            "no": "No"
+          }
+        },
+        "v2": {
+          "type": "choice",
+          "instructions": "For companies, is a four-day work week better than a five-day week?",
+          "criteria": {
+            "yes": "Yes",
+            "no": "No"
+          }
+        },
+        "v3": {
+          "type": "choice",
+          "instructions": "Is a five-day work week worse for companies than a four-day week?",
+          "criteria": {
+            "yes": "Yes",
+            "no": "No"
+          }
+        }
+      }
+    },
+    "durationMs": 0,
+    "responses": [
+      {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.14,
+            "probabilities": {
+              "yes": 0.43,
+              "no": 0.57
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.28,
+            "probabilities": {
+              "yes": 0.64,
+              "no": 0.36
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.3,
+            "probabilities": {
+              "yes": 0.65,
+              "no": 0.35
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.59,
+            "probabilities": {
+              "yes": 0.2,
+              "no": 0.8
+            }
+          }
+        },
+        "requestId": "gen-dec-1789919483-xVRsOotOtt8rw6dqTQWd",
+        "usage": {
+          "input_tokens": 487,
+          "output_tokens": 118,
+          "cost": 0.000020454
+        }
+      },
+      {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.12,
+            "probabilities": {
+              "yes": 0.44,
+              "no": 0.56
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.25,
+            "probabilities": {
+              "yes": 0.63,
+              "no": 0.37
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.34,
+            "probabilities": {
+              "yes": 0.67,
+              "no": 0.33
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.62,
+            "probabilities": {
+              "yes": 0.19,
+              "no": 0.81
+            }
+          }
+        },
+        "requestId": "gen-dec-1789919497-tC2dkA4KDLT5xexaSrh8",
+        "usage": {
+          "input_tokens": 487,
+          "output_tokens": 118,
+          "cost": 0.000020454
+        }
+      },
+      {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.22,
+            "probabilities": {
+              "yes": 0.39,
+              "no": 0.61
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.3,
+            "probabilities": {
+              "yes": 0.65,
+              "no": 0.35
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.31,
+            "probabilities": {
+              "yes": 0.65,
+              "no": 0.35
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.55,
+            "probabilities": {
+              "yes": 0.22,
+              "no": 0.78
+            }
+          }
+        },
+        "requestId": "gen-dec-1789919512-gCP4OQ364ZmNDY7AVI3R",
+        "usage": {
+          "input_tokens": 487,
+          "output_tokens": 118,
+          "cost": 0.000020454
+        }
+      }
+    ]
+  },
   "self-driving-safety": {
     "id": "recorded-self-driving-safety",
-    "createdAt": "2026-09-20T15:26:10.112Z",
+    "createdAt": "2026-09-20T15:51:26.798Z",
     "sample": true,
     "experiment": {
       "id": "self-driving-safety",
@@ -17,12 +307,12 @@
         },
         {
           "id": "v2",
-          "text": "Are human drivers less safe than self-driving cars?",
+          "text": "Is it true that self-driving cars are safer than human drivers?",
           "kind": "paraphrase"
         },
         {
           "id": "v3",
-          "text": "Are autonomous cars safer than human drivers?",
+          "text": "Are human drivers less safe than self-driving cars?",
           "kind": "paraphrase"
         }
       ],
@@ -75,7 +365,7 @@
       },
       {
         "id": "v2",
-        "text": "Are human drivers less safe than self-driving cars?",
+        "text": "Is it true that self-driving cars are safer than human drivers?",
         "label": "Wording 2",
         "kind": "paraphrase",
         "options": [
@@ -91,7 +381,7 @@
       },
       {
         "id": "v3",
-        "text": "Are autonomous cars safer than human drivers?",
+        "text": "Are human drivers less safe than self-driving cars?",
         "label": "Wording 3",
         "kind": "paraphrase",
         "options": [
@@ -128,7 +418,7 @@
         },
         "v2": {
           "type": "choice",
-          "instructions": "Are human drivers less safe than self-driving cars?",
+          "instructions": "Is it true that self-driving cars are safer than human drivers?",
           "criteria": {
             "yes": "Yes",
             "no": "No"
@@ -136,7 +426,7 @@
         },
         "v3": {
           "type": "choice",
-          "instructions": "Are autonomous cars safer than human drivers?",
+          "instructions": "Are human drivers less safe than self-driving cars?",
           "criteria": {
             "yes": "Yes",
             "no": "No"
@@ -152,45 +442,45 @@
           "original": {
             "type": "choice",
             "choice": "no",
-            "confidence": 0.28,
+            "confidence": 0.27,
             "probabilities": {
-              "yes": 0.36,
-              "no": 0.64
+              "yes": 0.37,
+              "no": 0.63
             }
           },
           "v1": {
             "type": "choice",
             "choice": "yes",
-            "confidence": 0.2,
+            "confidence": 0.26,
             "probabilities": {
-              "yes": 0.6,
-              "no": 0.4
+              "yes": 0.63,
+              "no": 0.37
             }
           },
           "v2": {
             "type": "choice",
             "choice": "no",
-            "confidence": 0.53,
+            "confidence": 0.72,
             "probabilities": {
-              "yes": 0.23,
-              "no": 0.77
+              "yes": 0.14,
+              "no": 0.86
             }
           },
           "v3": {
             "type": "choice",
-            "choice": "yes",
-            "confidence": 0.03,
+            "choice": "no",
+            "confidence": 0.31,
             "probabilities": {
-              "yes": 0.52,
-              "no": 0.48
+              "yes": 0.34,
+              "no": 0.66
             }
           }
         },
-        "requestId": "gen-dec-1789917970-QGVCESpIzSSGoYZ6JJNL",
+        "requestId": "gen-dec-1789919486-jgoLqKQPi2iqJ0twjRKY",
         "usage": {
-          "input_tokens": 462,
+          "input_tokens": 467,
           "output_tokens": 118,
-          "cost": 0.000019404
+          "cost": 0.000019614
         }
       },
       {
@@ -199,7 +489,7 @@
           "original": {
             "type": "choice",
             "choice": "no",
-            "confidence": 0.22,
+            "confidence": 0.23,
             "probabilities": {
               "yes": 0.39,
               "no": 0.61
@@ -208,36 +498,36 @@
           "v1": {
             "type": "choice",
             "choice": "yes",
-            "confidence": 0.2,
+            "confidence": 0.13,
             "probabilities": {
-              "yes": 0.6,
-              "no": 0.4
+              "yes": 0.56,
+              "no": 0.44
             }
           },
           "v2": {
             "type": "choice",
             "choice": "no",
-            "confidence": 0.39,
+            "confidence": 0.76,
             "probabilities": {
-              "yes": 0.31,
-              "no": 0.69
+              "yes": 0.12,
+              "no": 0.88
             }
           },
           "v3": {
             "type": "choice",
             "choice": "no",
-            "confidence": 0.02,
+            "confidence": 0.51,
             "probabilities": {
-              "yes": 0.49,
-              "no": 0.51
+              "yes": 0.25,
+              "no": 0.75
             }
           }
         },
-        "requestId": "gen-dec-1789917984-U3JnXqOBQYyuxQ4hm6EJ",
+        "requestId": "gen-dec-1789919501-tkyWinO8DOjITphl2S3j",
         "usage": {
-          "input_tokens": 462,
+          "input_tokens": 467,
           "output_tokens": 118,
-          "cost": 0.000019404
+          "cost": 0.000019614
         }
       },
       {
@@ -246,52 +536,342 @@
           "original": {
             "type": "choice",
             "choice": "no",
-            "confidence": 0.19,
+            "confidence": 0.25,
             "probabilities": {
-              "yes": 0.41,
-              "no": 0.59
+              "yes": 0.38,
+              "no": 0.62
             }
           },
           "v1": {
             "type": "choice",
             "choice": "yes",
-            "confidence": 0.17,
+            "confidence": 0.23,
             "probabilities": {
-              "yes": 0.58,
-              "no": 0.42
+              "yes": 0.62,
+              "no": 0.38
             }
           },
           "v2": {
             "type": "choice",
             "choice": "no",
-            "confidence": 0.36,
+            "confidence": 0.72,
             "probabilities": {
-              "yes": 0.32,
-              "no": 0.68
+              "yes": 0.14,
+              "no": 0.86
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.3,
+            "probabilities": {
+              "yes": 0.35,
+              "no": 0.65
+            }
+          }
+        },
+        "requestId": "gen-dec-1789919516-x40tAjn2mAVoPGS0LrvQ",
+        "usage": {
+          "input_tokens": 467,
+          "output_tokens": 118,
+          "cost": 0.000019614
+        }
+      }
+    ]
+  },
+  "remote-work": {
+    "id": "recorded-remote-work",
+    "createdAt": "2026-09-20T15:51:30.410Z",
+    "sample": true,
+    "experiment": {
+      "id": "remote-work",
+      "title": "Remote work",
+      "category": "Work",
+      "mode": "binary",
+      "original": "Are remote workers more productive than office workers?",
+      "variants": [
+        {
+          "id": "v1",
+          "text": "Is it true that remote workers are more productive than office workers?",
+          "kind": "paraphrase"
+        },
+        {
+          "id": "v2",
+          "text": "Are office workers less productive than remote workers?",
+          "kind": "paraphrase"
+        },
+        {
+          "id": "v3",
+          "text": "Compared with office workers, are remote workers more productive?",
+          "kind": "paraphrase"
+        }
+      ],
+      "options": [
+        {
+          "id": "yes",
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "label": "No"
+        }
+      ],
+      "context": "",
+      "expanded": false,
+      "reversed": false
+    },
+    "conditions": [
+      {
+        "id": "original",
+        "text": "Are remote workers more productive than office workers?",
+        "label": "Original",
+        "kind": "original",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes"
+          },
+          {
+            "id": "no",
+            "label": "No"
+          }
+        ]
+      },
+      {
+        "id": "v1",
+        "text": "Is it true that remote workers are more productive than office workers?",
+        "label": "Wording 1",
+        "kind": "paraphrase",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes"
+          },
+          {
+            "id": "no",
+            "label": "No"
+          }
+        ]
+      },
+      {
+        "id": "v2",
+        "text": "Are office workers less productive than remote workers?",
+        "label": "Wording 2",
+        "kind": "paraphrase",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes"
+          },
+          {
+            "id": "no",
+            "label": "No"
+          }
+        ]
+      },
+      {
+        "id": "v3",
+        "text": "Compared with office workers, are remote workers more productive?",
+        "label": "Wording 3",
+        "kind": "paraphrase",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes"
+          },
+          {
+            "id": "no",
+            "label": "No"
+          }
+        ]
+      }
+    ],
+    "request": {
+      "model": "typesafe/jev-1.13",
+      "state": "",
+      "questions": {
+        "original": {
+          "type": "choice",
+          "instructions": "Are remote workers more productive than office workers?",
+          "criteria": {
+            "yes": "Yes",
+            "no": "No"
+          }
+        },
+        "v1": {
+          "type": "choice",
+          "instructions": "Is it true that remote workers are more productive than office workers?",
+          "criteria": {
+            "yes": "Yes",
+            "no": "No"
+          }
+        },
+        "v2": {
+          "type": "choice",
+          "instructions": "Are office workers less productive than remote workers?",
+          "criteria": {
+            "yes": "Yes",
+            "no": "No"
+          }
+        },
+        "v3": {
+          "type": "choice",
+          "instructions": "Compared with office workers, are remote workers more productive?",
+          "criteria": {
+            "yes": "Yes",
+            "no": "No"
+          }
+        }
+      }
+    },
+    "durationMs": 0,
+    "responses": [
+      {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.17,
+            "probabilities": {
+              "yes": 0.59,
+              "no": 0.41
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.53,
+            "probabilities": {
+              "yes": 0.24,
+              "no": 0.76
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.69,
+            "probabilities": {
+              "yes": 0.15,
+              "no": 0.85
             }
           },
           "v3": {
             "type": "choice",
             "choice": "yes",
-            "confidence": 0.02,
+            "confidence": 0.53,
             "probabilities": {
-              "yes": 0.51,
-              "no": 0.49
+              "yes": 0.76,
+              "no": 0.24
             }
           }
         },
-        "requestId": "gen-dec-1789917998-1WT0Pvit93eux16m0sst",
+        "requestId": "gen-dec-1789919490-clqzy2D8rgRxPjcXhDWx",
         "usage": {
-          "input_tokens": 462,
+          "input_tokens": 466,
           "output_tokens": 118,
-          "cost": 0.000019404
+          "cost": 0.000019572
+        }
+      },
+      {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.12,
+            "probabilities": {
+              "yes": 0.56,
+              "no": 0.44
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.5,
+            "probabilities": {
+              "yes": 0.25,
+              "no": 0.75
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.66,
+            "probabilities": {
+              "yes": 0.17,
+              "no": 0.83
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.61,
+            "probabilities": {
+              "yes": 0.81,
+              "no": 0.19
+            }
+          }
+        },
+        "requestId": "gen-dec-1789919505-MFCTzdw2pGbweQzhJdWs",
+        "usage": {
+          "input_tokens": 466,
+          "output_tokens": 118,
+          "cost": 0.000019572
+        }
+      },
+      {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.2,
+            "probabilities": {
+              "yes": 0.6,
+              "no": 0.4
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.46,
+            "probabilities": {
+              "yes": 0.27,
+              "no": 0.73
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.7,
+            "probabilities": {
+              "yes": 0.15,
+              "no": 0.85
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.56,
+            "probabilities": {
+              "yes": 0.78,
+              "no": 0.22
+            }
+          }
+        },
+        "requestId": "gen-dec-1789919519-IZkl7fwnXZBMszXgutLR",
+        "usage": {
+          "input_tokens": 466,
+          "output_tokens": 118,
+          "cost": 0.000019572
         }
       }
     ]
   },
   "wealth-tax": {
     "id": "recorded-wealth-tax",
-    "createdAt": "2026-09-20T15:26:13.868Z",
+    "createdAt": "2026-09-20T15:51:34.073Z",
     "sample": true,
     "experiment": {
       "id": "wealth-tax",
@@ -308,11 +888,6 @@
         {
           "id": "v2",
           "text": "Should wealth that people have already paid income tax on be taxed by the government?",
-          "kind": "paraphrase"
-        },
-        {
-          "id": "v3",
-          "text": "Should the government tax assets that people have already paid income tax on?",
           "kind": "paraphrase"
         }
       ],
@@ -378,22 +953,6 @@
             "label": "No"
           }
         ]
-      },
-      {
-        "id": "v3",
-        "text": "Should the government tax assets that people have already paid income tax on?",
-        "label": "Wording 3",
-        "kind": "paraphrase",
-        "options": [
-          {
-            "id": "yes",
-            "label": "Yes"
-          },
-          {
-            "id": "no",
-            "label": "No"
-          }
-        ]
       }
     ],
     "request": {
@@ -423,14 +982,6 @@
             "yes": "Yes",
             "no": "No"
           }
-        },
-        "v3": {
-          "type": "choice",
-          "instructions": "Should the government tax assets that people have already paid income tax on?",
-          "criteria": {
-            "yes": "Yes",
-            "no": "No"
-          }
         }
       }
     },
@@ -444,14 +995,52 @@
             "choice": "yes",
             "confidence": 0.25,
             "probabilities": {
-              "yes": 0.63,
-              "no": 0.37
+              "yes": 0.62,
+              "no": 0.38
             }
           },
           "v1": {
             "type": "choice",
             "choice": "no",
-            "confidence": 0.07,
+            "confidence": 0.13,
+            "probabilities": {
+              "yes": 0.44,
+              "no": 0.56
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.16,
+            "probabilities": {
+              "yes": 0.42,
+              "no": 0.58
+            }
+          }
+        },
+        "requestId": "gen-dec-1789919494-V4G76RYkjimwGdSqOhpp",
+        "usage": {
+          "input_tokens": 429,
+          "output_tokens": 89,
+          "cost": 0.000018018
+        }
+      },
+      {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.2,
+            "probabilities": {
+              "yes": 0.6,
+              "no": 0.4
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.09,
             "probabilities": {
               "yes": 0.46,
               "no": 0.54
@@ -460,27 +1049,18 @@
           "v2": {
             "type": "choice",
             "choice": "no",
-            "confidence": 0.05,
+            "confidence": 0.14,
             "probabilities": {
-              "yes": 0.48,
-              "no": 0.52
-            }
-          },
-          "v3": {
-            "type": "choice",
-            "choice": "no",
-            "confidence": 0.27,
-            "probabilities": {
-              "yes": 0.36,
-              "no": 0.64
+              "yes": 0.43,
+              "no": 0.57
             }
           }
         },
-        "requestId": "gen-dec-1789917973-sCWfGjcSG6Gre4uYypBV",
+        "requestId": "gen-dec-1789919508-imK8V2j5oCxY3WbL56Fl",
         "usage": {
-          "input_tokens": 484,
-          "output_tokens": 118,
-          "cost": 0.000020328
+          "input_tokens": 429,
+          "output_tokens": 89,
+          "cost": 0.000018018
         }
       },
       {
@@ -498,53 +1078,6 @@
           "v1": {
             "type": "choice",
             "choice": "no",
-            "confidence": 0.12,
-            "probabilities": {
-              "yes": 0.44,
-              "no": 0.56
-            }
-          },
-          "v2": {
-            "type": "choice",
-            "choice": "no",
-            "confidence": 0.07,
-            "probabilities": {
-              "yes": 0.47,
-              "no": 0.53
-            }
-          },
-          "v3": {
-            "type": "choice",
-            "choice": "no",
-            "confidence": 0.27,
-            "probabilities": {
-              "yes": 0.36,
-              "no": 0.64
-            }
-          }
-        },
-        "requestId": "gen-dec-1789917988-WRuRV34ydeL9IMydP5Rg",
-        "usage": {
-          "input_tokens": 484,
-          "output_tokens": 118,
-          "cost": 0.000020328
-        }
-      },
-      {
-        "model": "typesafe/jev-1.13-20260917",
-        "answers": {
-          "original": {
-            "type": "choice",
-            "choice": "yes",
-            "confidence": 0.22,
-            "probabilities": {
-              "yes": 0.61,
-              "no": 0.39
-            }
-          },
-          "v1": {
-            "type": "choice",
-            "choice": "no",
             "confidence": 0.1,
             "probabilities": {
               "yes": 0.45,
@@ -554,261 +1087,18 @@
           "v2": {
             "type": "choice",
             "choice": "no",
-            "confidence": 0.14,
+            "confidence": 0.08,
             "probabilities": {
-              "yes": 0.43,
-              "no": 0.57
-            }
-          },
-          "v3": {
-            "type": "choice",
-            "choice": "no",
-            "confidence": 0.33,
-            "probabilities": {
-              "yes": 0.33,
-              "no": 0.67
+              "yes": 0.46,
+              "no": 0.54
             }
           }
         },
-        "requestId": "gen-dec-1789918002-QpQhwpaNJM2yF0V16G5A",
+        "requestId": "gen-dec-1789919523-0iDCuRmb6xLN6qDl0tBJ",
         "usage": {
-          "input_tokens": 484,
-          "output_tokens": 118,
-          "cost": 0.000020328
-        }
-      }
-    ]
-  },
-  "eating-meat": {
-    "id": "recorded-eating-meat",
-    "createdAt": "2026-09-20T15:26:21.169Z",
-    "sample": true,
-    "experiment": {
-      "id": "eating-meat",
-      "title": "Eating meat",
-      "category": "Ethics",
-      "mode": "binary",
-      "original": "Is it morally acceptable to eat meat when other nutritious food is available?",
-      "variants": [
-        {
-          "id": "v1",
-          "text": "When other nutritious food is available, is it morally acceptable to eat meat?",
-          "kind": "paraphrase"
-        },
-        {
-          "id": "v2",
-          "text": "Is it morally acceptable to eat animals when other nutritious food is available?",
-          "kind": "paraphrase"
-        }
-      ],
-      "options": [
-        {
-          "id": "yes",
-          "label": "Yes"
-        },
-        {
-          "id": "no",
-          "label": "No"
-        }
-      ],
-      "context": "",
-      "expanded": false,
-      "reversed": false
-    },
-    "conditions": [
-      {
-        "id": "original",
-        "text": "Is it morally acceptable to eat meat when other nutritious food is available?",
-        "label": "Original",
-        "kind": "original",
-        "options": [
-          {
-            "id": "yes",
-            "label": "Yes"
-          },
-          {
-            "id": "no",
-            "label": "No"
-          }
-        ]
-      },
-      {
-        "id": "v1",
-        "text": "When other nutritious food is available, is it morally acceptable to eat meat?",
-        "label": "Wording 1",
-        "kind": "paraphrase",
-        "options": [
-          {
-            "id": "yes",
-            "label": "Yes"
-          },
-          {
-            "id": "no",
-            "label": "No"
-          }
-        ]
-      },
-      {
-        "id": "v2",
-        "text": "Is it morally acceptable to eat animals when other nutritious food is available?",
-        "label": "Wording 2",
-        "kind": "paraphrase",
-        "options": [
-          {
-            "id": "yes",
-            "label": "Yes"
-          },
-          {
-            "id": "no",
-            "label": "No"
-          }
-        ]
-      }
-    ],
-    "request": {
-      "model": "typesafe/jev-1.13",
-      "state": "",
-      "questions": {
-        "original": {
-          "type": "choice",
-          "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
-          "criteria": {
-            "yes": "Yes",
-            "no": "No"
-          }
-        },
-        "v1": {
-          "type": "choice",
-          "instructions": "When other nutritious food is available, is it morally acceptable to eat meat?",
-          "criteria": {
-            "yes": "Yes",
-            "no": "No"
-          }
-        },
-        "v2": {
-          "type": "choice",
-          "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
-          "criteria": {
-            "yes": "Yes",
-            "no": "No"
-          }
-        }
-      }
-    },
-    "durationMs": 0,
-    "responses": [
-      {
-        "model": "typesafe/jev-1.13-20260917",
-        "answers": {
-          "original": {
-            "type": "choice",
-            "choice": "yes",
-            "confidence": 0.53,
-            "probabilities": {
-              "yes": 0.76,
-              "no": 0.24
-            }
-          },
-          "v1": {
-            "type": "choice",
-            "choice": "yes",
-            "confidence": 0.19,
-            "probabilities": {
-              "yes": 0.6,
-              "no": 0.4
-            }
-          },
-          "v2": {
-            "type": "choice",
-            "choice": "no",
-            "confidence": 0.27,
-            "probabilities": {
-              "yes": 0.37,
-              "no": 0.63
-            }
-          }
-        },
-        "requestId": "gen-dec-1789917981-wT27u6txfp9S3WSuvkPu",
-        "usage": {
-          "input_tokens": 425,
+          "input_tokens": 429,
           "output_tokens": 89,
-          "cost": 0.00001785
-        }
-      },
-      {
-        "model": "typesafe/jev-1.13-20260917",
-        "answers": {
-          "original": {
-            "type": "choice",
-            "choice": "yes",
-            "confidence": 0.51,
-            "probabilities": {
-              "yes": 0.76,
-              "no": 0.24
-            }
-          },
-          "v1": {
-            "type": "choice",
-            "choice": "yes",
-            "confidence": 0.24,
-            "probabilities": {
-              "yes": 0.62,
-              "no": 0.38
-            }
-          },
-          "v2": {
-            "type": "choice",
-            "choice": "no",
-            "confidence": 0.45,
-            "probabilities": {
-              "yes": 0.27,
-              "no": 0.73
-            }
-          }
-        },
-        "requestId": "gen-dec-1789917995-5eoFtvOB3WIIvGfAtPKZ",
-        "usage": {
-          "input_tokens": 425,
-          "output_tokens": 89,
-          "cost": 0.00001785
-        }
-      },
-      {
-        "model": "typesafe/jev-1.13-20260917",
-        "answers": {
-          "original": {
-            "type": "choice",
-            "choice": "yes",
-            "confidence": 0.64,
-            "probabilities": {
-              "yes": 0.82,
-              "no": 0.18
-            }
-          },
-          "v1": {
-            "type": "choice",
-            "choice": "yes",
-            "confidence": 0.1,
-            "probabilities": {
-              "yes": 0.55,
-              "no": 0.45
-            }
-          },
-          "v2": {
-            "type": "choice",
-            "choice": "no",
-            "confidence": 0.36,
-            "probabilities": {
-              "yes": 0.32,
-              "no": 0.68
-            }
-          }
-        },
-        "requestId": "gen-dec-1789918009-dBLwKUiyFH4Dzq55Elve",
-        "usage": {
-          "input_tokens": 425,
-          "output_tokens": 89,
-          "cost": 0.00001785
+          "cost": 0.000018018
         }
       }
     ]

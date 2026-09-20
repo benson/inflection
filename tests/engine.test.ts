@@ -16,16 +16,17 @@ import {
 } from "../src/engine";
 import { seeds } from "../src/seeds";
 import { findRecordedRun, recordedRun } from "../src/recorded";
-import prompts from "../research/2026-09-20/tiered-confirm-prompts.json";
+import prompts from "../research/2026-09-20/final-confirm-prompts.json";
 import { isDraft, isExperiment } from "../src/storage";
 
 const firstRecording = () => recordedRun(seeds[0].id)!;
 
 test("every seed bundles three validated responses to its exact confirmed request", () => {
+  assert.deepEqual(seeds, prompts);
   for (const seed of seeds) {
     const run = recordedRun(seed.id);
     assert.ok(run, seed.id);
-    const prompt = prompts.find((p) => p.title === seed.title)!;
+    const prompt = prompts.find((p) => p.id === seed.id)!;
     assert.equal(seed.question, prompt.question);
     assert.deepEqual(seed.variants, prompt.variants);
     assert.deepEqual(run.request, buildRequest(fromSeed(seed)));
@@ -123,7 +124,7 @@ test("changed experiment inputs cannot borrow results from an earlier version", 
   assert.equal(findMatchingRun(run.experiment, [run]), run);
 });
 
-test("three unique, valid examples, each with two or three different paraphrases", () => {
+test("four unique, valid examples, each with two or three different paraphrases", () => {
   assert.ok(seeds.length >= 2 && seeds.length <= 5);
   assert.equal(new Set(seeds.map((s) => s.id)).size, seeds.length);
   assert.equal(new Set(seeds.map((s) => s.question)).size, seeds.length);
@@ -139,7 +140,7 @@ test("three unique, valid examples, each with two or three different paraphrases
   }
   assert.deepEqual(
     seeds.map((s) => s.id),
-    ["self-driving-safety", "wealth-tax", "eating-meat"],
+    ["four-day-week", "self-driving-safety", "remote-work", "wealth-tax"],
   );
 });
 test("all wordings preserve exact instructions and shared option IDs; controls vary just one factor", () => {
@@ -205,9 +206,9 @@ test("model responses reject missing, NaN, malformed, non-normalized and contrad
 });
 test("percentage-point swing excludes controls and changed framing, and ties stay ties", () => {
   const run = firstRecording();
-  assert.ok(Math.abs(maxWordingSwing(run) - 0.3066666666666667) < 1e-9);
-  run.conditions[1].kind = "framing";
-  assert.ok(Math.abs(maxWordingSwing(run) - 0.22) < 1e-9);
+  assert.ok(Math.abs(maxWordingSwing(run) - 0.4533333333333333) < 1e-9);
+  run.conditions[2].kind = "framing";
+  assert.ok(Math.abs(maxWordingSwing(run) - 0.4366666666666667) < 1e-9);
   for (const response of run.responses)
     response.answers.original.probabilities = { yes: 0.5, no: 0.5 };
   assert.deepEqual(winners(run, "original"), ["yes", "no"]);
@@ -215,7 +216,7 @@ test("percentage-point swing excludes controls and changed framing, and ties sta
 test("means average probabilities across repetitions, not just winning labels", () => {
   const run = firstRecording();
   assert.ok(
-    Math.abs(meanProb(run, "original", "yes") - (0.36 + 0.39 + 0.41) / 3) <
+    Math.abs(meanProb(run, "original", "yes") - (0.43 + 0.44 + 0.39) / 3) <
       1e-9,
   );
 });

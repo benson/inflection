@@ -11,7 +11,7 @@ import type { DecisionRequest, Run, Seed } from "../src/types";
 
 const research = new URL("../research/2026-09-20/", import.meta.url);
 const prompts: Seed[] = JSON.parse(
-  await readFile(new URL("tiered-confirm-prompts.json", research), "utf8"),
+  await readFile(new URL("final-confirm-prompts.json", research), "utf8"),
 );
 const report: {
   repeats: number;
@@ -25,7 +25,7 @@ const report: {
     response: unknown;
   }[];
 } = JSON.parse(
-  await readFile(new URL("tiered-confirm.json", research), "utf8"),
+  await readFile(new URL("final-confirm.json", research), "utf8"),
 );
 
 assert.equal(report.repeats, 3, "Expected three confirmation repeats");
@@ -34,7 +34,7 @@ assert.equal(report.answerOrder, "normal", "Expected Yes/No answer order");
 const bundled: Record<string, Run> = {};
 // Research can include additional topics; only current app seeds are bundled.
 for (const seed of seeds) {
-  const prompt = prompts.find((p) => p.title === seed.title);
+  const prompt = prompts.find((p) => p.id === seed.id);
   assert.ok(prompt, `Missing confirmation prompts for ${seed.id}`);
   assert.equal(seed.question, prompt.question, `${seed.id}: original changed`);
   assert.deepEqual(
@@ -46,7 +46,7 @@ for (const seed of seeds) {
   const conditions = conditionsFor(experiment);
   const request = buildRequest(experiment);
   const repeats = report.runs
-    .filter((run) => run.id === prompt.id)
+    .filter((run) => run.id === seed.id)
     .sort((a, b) => a.repeat - b.repeat);
   assert.deepEqual(
     repeats.map((run) => run.repeat),

@@ -29,7 +29,7 @@ The setup script checks the key’s cap and sends it to Wrangler over stdin. It 
 
 ## Explore
 
-- Three starting questions: self-driving car safety, wealth tax, and eating meat. Each has two or three editable variants.
+- Four starting questions: four-day week, self-driving safety, remote work, and wealth tax. Each has two or three editable variants.
 - Create your own question, use two to eight shared answers, and compare up to eight wordings.
 - Word-level insertions and deletions, complete probability distributions, a common-scale dot plot, percentage-point deltas, and answer flips.
 - Repeat the entire batch 1, 3, or 5 times; show mean probabilities and observed min–max ranges.
@@ -51,7 +51,7 @@ Repeated runs estimate observed variability only; min–max lines are not confid
 
 ## Question provenance
 
-The three examples and their variants come from the [tiered wording probe on 20 September 2026](research/2026-09-20/README.md#tiered-probe--september-20-2026), which searched surface, syntactic, synonym, and connotative edits. Each shipped variant was confirmed with three repeats. All prompts and framing labels are editable. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
+The four examples and their variants come from the [final example search on 20 September 2026](research/2026-09-20/README.md#final-example-search--september-20-2026). Selection required wrapper or syntactic edits only (no synonyms or connotative swaps in shipped variants), a flip or a move of at least 15 points confirmed in all three repeats, the same direction under reversed answer order, and contested topics that are not about a religion or an ethnic group. Each shipped variant set was confirmed with three repeats and a reversed-order control. All prompts and framing labels are editable. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
 
 - [TypeSafe’s documented limitations](https://docs.typesafe.ai/model-jaggedness/jev-1.13)
 - [Choice documentation](https://docs.typesafe.ai/primitives/choice)

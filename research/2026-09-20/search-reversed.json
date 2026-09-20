@@ -1,0 +1,606 @@
+{
+  "startedAt": "2026-09-20T15:50:22.543Z",
+  "endpoint": "https://inflection-api.bensonperry.workers.dev/decisions",
+  "origin": "https://bensonperry.com",
+  "answerOrder": "reversed",
+  "repeats": 1,
+  "runs": [
+    {
+      "id": "remote",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:50:22.544Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Are remote workers more productive than office workers?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think remote workers are more productive than office workers?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that remote workers are more productive than office workers?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Are office workers less productive than remote workers?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Compared with office workers, are remote workers more productive?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919422-6Y94iLeP0KNqf6OxWFsu",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.47,
+              "no": 0.53
+            },
+            "confidence": 0.06
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.56,
+              "no": 0.44
+            },
+            "confidence": 0.13
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.18,
+              "no": 0.82
+            },
+            "confidence": 0.65
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.09,
+              "no": 0.91
+            },
+            "confidence": 0.81
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.71,
+              "no": 0.29
+            },
+            "confidence": 0.43
+          }
+        },
+        "usage": {
+          "input_tokens": 519,
+          "output_tokens": 147,
+          "cost": 0.000021798
+        }
+      }
+    },
+    {
+      "id": "fourday",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:50:26.268Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is a four-day work week better for companies than a five-day week?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think a four-day work week is better for companies than a five-day week?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is a four-day work week better for companies than a five-day week, yes or no?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "For companies, is a four-day work week better than a five-day week?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Is a five-day work week worse for companies than a four-day week?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919426-kfymqaJlGp1qJCIhFd59",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.41,
+              "no": 0.59
+            },
+            "confidence": 0.17
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.58,
+              "no": 0.42
+            },
+            "confidence": 0.16
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.54,
+              "no": 0.46
+            },
+            "confidence": 0.08
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.58,
+              "no": 0.42
+            },
+            "confidence": 0.17
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.2,
+              "no": 0.8
+            },
+            "confidence": 0.6
+          }
+        },
+        "usage": {
+          "input_tokens": 547,
+          "output_tokens": 147,
+          "cost": 0.000022974
+        }
+      }
+    },
+    {
+      "id": "zoos",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:50:29.870Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is it ethical to keep animals in zoos?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think it is ethical to keep animals in zoos?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that keeping animals in zoos is ethical?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is keeping animals in zoos ethical?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919430-sfUQLNrG8nbAWxwZqsM9",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.56,
+              "yes": 0.44
+            },
+            "confidence": 0.11
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.46,
+              "yes": 0.54
+            },
+            "confidence": 0.08
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.85,
+              "yes": 0.15
+            },
+            "confidence": 0.71
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.66,
+              "yes": 0.34
+            },
+            "confidence": 0.33
+          }
+        },
+        "usage": {
+          "input_tokens": 466,
+          "output_tokens": 118,
+          "cost": 0.000019572
+        }
+      }
+    },
+    {
+      "id": "homework",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:50:33.415Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should elementary schools stop assigning homework?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think elementary schools should stop assigning homework?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it right for elementary schools to stop assigning homework?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Should homework no longer be assigned by elementary schools?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919433-wi5QZjcavSHmcAFd1oJc",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.38,
+              "no": 0.62
+            },
+            "confidence": 0.23
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.48,
+              "no": 0.52
+            },
+            "confidence": 0.05
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.59,
+              "no": 0.41
+            },
+            "confidence": 0.18
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.34,
+              "no": 0.66
+            },
+            "confidence": 0.31
+          }
+        },
+        "usage": {
+          "input_tokens": 461,
+          "output_tokens": 118,
+          "cost": 0.000019362
+        }
+      }
+    },
+    {
+      "id": "cars",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:50:36.893Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Are self-driving cars safer than human drivers?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think self-driving cars are safer than human drivers?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that self-driving cars are safer than human drivers?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Are human drivers less safe than self-driving cars?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Are autonomous cars safer than human drivers?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919437-sjPfTH3FqCQaZy8J3vBQ",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.33,
+              "no": 0.67
+            },
+            "confidence": 0.34
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.58,
+              "no": 0.42
+            },
+            "confidence": 0.15
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.11,
+              "no": 0.89
+            },
+            "confidence": 0.79
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.19,
+              "no": 0.81
+            },
+            "confidence": 0.63
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.45,
+              "no": 0.55
+            },
+            "confidence": 0.1
+          }
+        },
+        "usage": {
+          "input_tokens": 516,
+          "output_tokens": 147,
+          "cost": 0.000021672
+        }
+      }
+    },
+    {
+      "id": "wealth",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:50:40.381Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should the government tax wealth that people have already paid income tax on?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think the government should tax wealth that people have already paid income tax on?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Should wealth that people have already paid income tax on be taxed by the government?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is it right for the government to tax wealth that people have already paid income tax on?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919440-v9N2QSFKcBjX7NOAULgA",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.54,
+              "no": 0.46
+            },
+            "confidence": 0.08
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.45,
+              "no": 0.55
+            },
+            "confidence": 0.11
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.44,
+              "no": 0.56
+            },
+            "confidence": 0.12
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.53,
+              "no": 0.47
+            },
+            "confidence": 0.06
+          }
+        },
+        "usage": {
+          "input_tokens": 488,
+          "output_tokens": 118,
+          "cost": 0.000020496
+        }
+      }
+    }
+  ]
+}

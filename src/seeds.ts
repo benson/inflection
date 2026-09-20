@@ -1,7 +1,19 @@
 import type { Seed } from "./types";
 
-// Confirmed wordings from research/2026-09-20/tiered-confirm-prompts.json.
+// Confirmed wordings from research/2026-09-20/final-confirm-prompts.json.
 export const seeds: Seed[] = [
+  {
+    id: "four-day-week",
+    title: "Four-day week",
+    category: "Work",
+    question:
+      "Is a four-day work week better for companies than a five-day week?",
+    variants: [
+      "Do you think a four-day work week is better for companies than a five-day week?",
+      "For companies, is a four-day work week better than a five-day week?",
+      "Is a five-day work week worse for companies than a four-day week?",
+    ],
+  },
   {
     id: "self-driving-safety",
     title: "Self-driving safety",
@@ -9,8 +21,19 @@ export const seeds: Seed[] = [
     question: "Are self-driving cars safer than human drivers?",
     variants: [
       "Do you think self-driving cars are safer than human drivers?",
+      "Is it true that self-driving cars are safer than human drivers?",
       "Are human drivers less safe than self-driving cars?",
-      "Are autonomous cars safer than human drivers?",
+    ],
+  },
+  {
+    id: "remote-work",
+    title: "Remote work",
+    category: "Work",
+    question: "Are remote workers more productive than office workers?",
+    variants: [
+      "Is it true that remote workers are more productive than office workers?",
+      "Are office workers less productive than remote workers?",
+      "Compared with office workers, are remote workers more productive?",
     ],
   },
   {
@@ -22,18 +45,6 @@ export const seeds: Seed[] = [
     variants: [
       "Do you think the government should tax wealth that people have already paid income tax on?",
       "Should wealth that people have already paid income tax on be taxed by the government?",
-      "Should the government tax assets that people have already paid income tax on?",
-    ],
-  },
-  {
-    id: "eating-meat",
-    title: "Eating meat",
-    category: "Ethics",
-    question:
-      "Is it morally acceptable to eat meat when other nutritious food is available?",
-    variants: [
-      "When other nutritious food is available, is it morally acceptable to eat meat?",
-      "Is it morally acceptable to eat animals when other nutritious food is available?",
     ],
   },
 ];

@@ -93,20 +93,26 @@ function Explainer() {
               question and all it can do is say how much yes and how much no.
             </p>
             <p>
-              that makes it a more direct way to probe what a model "thinks"
-              about a contested question than arguing with a chatbot.
+              that's what makes it fun. ask a chat model a spicy question and
+              you get a careful essay, or a refusal, and you'd need a second
+              model to turn the essay back into a number. jev just gives you
+              the number.
             </p>
             <p>
               you'd expect a computer to read the same question the same way
-              however you phrase it. it doesn't. adding "do you think" in front
-              of a question moves the answer 20 points. a synonym flips it. a
-              swap like animals for meat moves it 45.
+              however you phrase it. it doesn't. putting "do you think" in
+              front of a question moves the answer 20 points. "is it true
+              that" moves it 30 the other way. asking whether office workers
+              are less productive instead of whether remote workers are more
+              productive moves it 40.
             </p>
             <p>
-              where people are swayed by wording, it is swayed like a person.
-              where they aren't, it is swayed anyway. it was trained to be
-              calibrated, not to be indifferent to phrasing, so read the numbers
-              as what this model does with the words you actually wrote.
+              some of that is human. people are swayed by wording too. but two
+              questions that mean the same thing to a person should get the
+              same answer from one model of the world, even if not the same
+              digits. typesafe's docs say not to expect arithmetic consistency
+              between separately asked questions. this site is what that looks
+              like in practice.
             </p>
             <p>
               this doesn't happen on every question. in a first screen of
@@ -115,8 +121,9 @@ function Explainer() {
               didn't mean anything by.
             </p>
             <p>
-              try the examples or write your own. it runs on my shared budget,
-              so go easy.
+              none of this is a knock on jev. it's a genuinely useful tool, and
+              being able to see this at all is the point. try the examples or
+              write your own. it runs on my shared budget, so go easy.
             </p>
           </div>
           <button className="text-button" aria-expanded={true} onClick={toggle}>
@@ -1149,6 +1156,19 @@ export default function App() {
             exclude it from wording swing.
           </p>
           <h3>What the experiment measures</h3>
+          <p>
+            <a
+              href="https://docs.typesafe.ai/model-jaggedness/jev-1.13"
+              target="_blank"
+              rel="noreferrer"
+            >
+              TypeSafe documents
+            </a>{" "}
+            that Jev reads instructions literally and that answers to separately
+            asked questions are not held to arithmetic identities. The wording
+            swing here is exactly such an identity. The numbers measure how
+            large that gap gets on questions a person would call the same.
+          </p>
           <p>
             Jev assigns probabilities to your answer options. Both yes/no and
             multiple-choice questions use its Choice primitive. Each wording is

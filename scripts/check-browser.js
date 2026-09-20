@@ -41,7 +41,7 @@ export default async function checkBrowser(page) {
   check(
     (await page.locator(".stat-number").allTextContents())
       .map((text) => text.trim())
-      .join(" / ") === "31 / 2 of 3",
+      .join(" / ") === "45 / 2 of 3",
     "Recorded stats show integer swing and flips out of comparable wordings",
   );
   check(
@@ -180,13 +180,14 @@ export default async function checkBrowser(page) {
 
   const chips = page.getByRole("navigation", { name: "Example questions" });
   check(
-    (await chips.getByRole("button").count()) === 4,
-    "Three starter examples and a custom question chip are shown",
+    (await chips.getByRole("button").count()) === 5,
+    "Four starter examples and a custom question chip are shown",
   );
   for (const title of [
+    "Four-day week",
     "Self-driving safety",
+    "Remote work",
     "Wealth tax",
-    "Eating meat",
   ]) {
     await chips.getByRole("button", { name: title, exact: true }).click();
     check(
@@ -509,11 +510,11 @@ export default async function checkBrowser(page) {
     ),
     "Phone example chips form a horizontally scrolling row",
   );
-  await chips.getByRole("button", { name: /Eating meat/ }).click();
+  await chips.getByRole("button", { name: /Remote work/ }).click();
   check(
     (await page
       .getByRole("textbox", { name: "Experiment title" })
-      .inputValue()) === "Eating meat",
+      .inputValue()) === "Remote work",
     "Mobile example chip selection works",
   );
   check(

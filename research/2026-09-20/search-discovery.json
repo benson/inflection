@@ -1,0 +1,1759 @@
+{
+  "startedAt": "2026-09-20T15:48:02.048Z",
+  "endpoint": "https://inflection-api.bensonperry.workers.dev/decisions",
+  "origin": "https://bensonperry.com",
+  "answerOrder": "normal",
+  "repeats": 1,
+  "runs": [
+    {
+      "id": "minwage",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:02.050Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should the federal minimum wage be raised to $20 an hour?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think the federal minimum wage should be raised to $20 an hour?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Should the federal minimum wage be raised to $20 an hour, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Would you say the federal minimum wage should be raised to $20 an hour?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Is raising the federal minimum wage to $20 an hour the right thing to do?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Should $20 an hour be the new federal minimum wage?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919282-tZqVrCZuvwBFS5VJId3d",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.26,
+              "no": 0.74
+            },
+            "confidence": 0.47
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.25,
+              "no": 0.75
+            },
+            "confidence": 0.51
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.29,
+              "no": 0.71
+            },
+            "confidence": 0.42
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.21,
+              "no": 0.79
+            },
+            "confidence": 0.58
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.19,
+              "no": 0.81
+            },
+            "confidence": 0.62
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.51,
+              "no": 0.49
+            },
+            "confidence": 0.01
+          }
+        },
+        "usage": {
+          "input_tokens": 602,
+          "output_tokens": 176,
+          "cost": 0.000025284
+        }
+      }
+    },
+    {
+      "id": "remote",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:05.785Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Are remote workers more productive than office workers?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think remote workers are more productive than office workers?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Are remote workers more productive than office workers, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is it true that remote workers are more productive than office workers?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Are office workers less productive than remote workers?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Compared with office workers, are remote workers more productive?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919285-8C0YzYoUsX1R1UN7eeCa",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.41,
+              "yes": 0.59
+            },
+            "confidence": 0.18
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.43,
+              "yes": 0.57
+            },
+            "confidence": 0.14
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.74,
+              "no": 0.26
+            },
+            "confidence": 0.47
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.26,
+              "no": 0.74
+            },
+            "confidence": 0.49
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.14,
+              "no": 0.86
+            },
+            "confidence": 0.72
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.79,
+              "no": 0.21
+            },
+            "confidence": 0.57
+          }
+        },
+        "usage": {
+          "input_tokens": 573,
+          "output_tokens": 176,
+          "cost": 0.000024066
+        }
+      }
+    },
+    {
+      "id": "college",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:09.372Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should public college be free for everyone?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think public college should be free for everyone?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Should public college be free for everyone, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Would you say public college should be free for everyone?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Should everyone be able to attend public college for free?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Is it right for public college to be free for everyone?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919289-KI1RniIl51r9gn0Ut5QF",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.33,
+              "no": 0.67
+            },
+            "confidence": 0.33
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.27,
+              "no": 0.73
+            },
+            "confidence": 0.45
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.35,
+              "no": 0.65
+            },
+            "confidence": 0.3
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.28,
+              "no": 0.72
+            },
+            "confidence": 0.43
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.26,
+              "no": 0.74
+            },
+            "confidence": 0.47
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.25,
+              "no": 0.75
+            },
+            "confidence": 0.5
+          }
+        },
+        "usage": {
+          "input_tokens": 570,
+          "output_tokens": 176,
+          "cost": 0.00002394
+        }
+      }
+    },
+    {
+      "id": "nuclear",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:12.938Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is nuclear power the best way to cut carbon emissions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think nuclear power is the best way to cut carbon emissions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is nuclear power the best way to cut carbon emissions, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is it true that nuclear power is the best way to cut carbon emissions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Is the best way to cut carbon emissions nuclear power?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Would you say nuclear power is the best way to cut carbon emissions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919293-7ZdOysQLHpfzACqxaXuc",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.05,
+              "no": 0.95
+            },
+            "confidence": 0.89
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.26,
+              "no": 0.74
+            },
+            "confidence": 0.48
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.09,
+              "no": 0.91
+            },
+            "confidence": 0.83
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            },
+            "confidence": 0.92
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.12,
+              "no": 0.88
+            },
+            "confidence": 0.76
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.15,
+              "no": 0.85
+            },
+            "confidence": 0.7
+          }
+        },
+        "usage": {
+          "input_tokens": 585,
+          "output_tokens": 176,
+          "cost": 0.00002457
+        }
+      }
+    },
+    {
+      "id": "fourday",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:16.529Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is a four-day work week better for companies than a five-day week?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think a four-day work week is better for companies than a five-day week?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is a four-day work week better for companies than a five-day week, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is a five-day work week worse for companies than a four-day week?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Would you say a four-day work week is better for companies than a five-day week?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "For companies, is a four-day work week better than a five-day week?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919296-UPNOxUei7zFSzatK8DFF",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.43,
+              "no": 0.57
+            },
+            "confidence": 0.15
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.63,
+              "no": 0.37
+            },
+            "confidence": 0.26
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.58,
+              "no": 0.42
+            },
+            "confidence": 0.16
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.2,
+              "no": 0.8
+            },
+            "confidence": 0.6
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.56,
+              "no": 0.44
+            },
+            "confidence": 0.12
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.64,
+              "no": 0.36
+            },
+            "confidence": 0.28
+          }
+        },
+        "usage": {
+          "input_tokens": 606,
+          "output_tokens": 176,
+          "cost": 0.000025452
+        }
+      }
+    },
+    {
+      "id": "carfree",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:20.027Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should cities ban private cars from their downtown areas?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think cities should ban private cars from their downtown areas?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Should cities ban private cars from their downtown areas, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Should private cars be banned from downtown areas by cities?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Would you say cities should ban private cars from their downtown areas?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Is it right for cities to ban private cars from their downtown areas?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919300-5UUXxzTDK1Tu2Q9K60qu",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.61,
+              "no": 0.39
+            },
+            "confidence": 0.22
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.66,
+              "no": 0.34
+            },
+            "confidence": 0.32
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.59,
+              "no": 0.41
+            },
+            "confidence": 0.18
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.6,
+              "no": 0.4
+            },
+            "confidence": 0.19
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.6,
+              "no": 0.4
+            },
+            "confidence": 0.21
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.83,
+              "no": 0.17
+            },
+            "confidence": 0.66
+          }
+        },
+        "usage": {
+          "input_tokens": 580,
+          "output_tokens": 176,
+          "cost": 0.00002436
+        }
+      }
+    },
+    {
+      "id": "homework",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:23.548Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should elementary schools stop assigning homework?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think elementary schools should stop assigning homework?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Should elementary schools stop assigning homework, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Should homework no longer be assigned by elementary schools?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Would you say elementary schools should stop assigning homework?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Is it right for elementary schools to stop assigning homework?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919303-iOmfMDKOoLsiWD1mHs3N",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.58,
+              "yes": 0.42
+            },
+            "confidence": 0.16
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.52,
+              "yes": 0.48
+            },
+            "confidence": 0.05
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.53,
+              "yes": 0.47
+            },
+            "confidence": 0.06
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.63,
+              "yes": 0.37
+            },
+            "confidence": 0.26
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.62,
+              "yes": 0.38
+            },
+            "confidence": 0.24
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.42,
+              "yes": 0.58
+            },
+            "confidence": 0.17
+          }
+        },
+        "usage": {
+          "input_tokens": 564,
+          "output_tokens": 176,
+          "cost": 0.000023688
+        }
+      }
+    },
+    {
+      "id": "rent",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:27.151Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is renting a home a better financial decision than buying one?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think renting a home is a better financial decision than buying one?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is renting a home a better financial decision than buying one, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is buying a home a worse financial decision than renting one?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Would you say renting a home is a better financial decision than buying one?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Financially, is renting a home a better decision than buying one?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919307-2so4YtywJDGChHr3VRzo",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.7,
+              "yes": 0.3
+            },
+            "confidence": 0.39
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.6,
+              "yes": 0.4
+            },
+            "confidence": 0.21
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.7,
+              "yes": 0.3
+            },
+            "confidence": 0.4
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.94,
+              "yes": 0.06
+            },
+            "confidence": 0.89
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.66,
+              "yes": 0.34
+            },
+            "confidence": 0.32
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.7,
+              "yes": 0.3
+            },
+            "confidence": 0.4
+          }
+        },
+        "usage": {
+          "input_tokens": 591,
+          "output_tokens": 176,
+          "cost": 0.000024822
+        }
+      }
+    },
+    {
+      "id": "tipping",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:30.646Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should restaurants replace tipping with higher wages?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think restaurants should replace tipping with higher wages?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Should restaurants replace tipping with higher wages, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Should tipping be replaced with higher wages by restaurants?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Would you say restaurants should replace tipping with higher wages?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Is it right for restaurants to replace tipping with higher wages?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919310-XCQDPzcT8iXiIYynFnAO",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.92,
+              "no": 0.08
+            },
+            "confidence": 0.85
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.92,
+              "no": 0.08
+            },
+            "confidence": 0.84
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.91,
+              "no": 0.09
+            },
+            "confidence": 0.83
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.91,
+              "no": 0.09
+            },
+            "confidence": 0.83
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.89,
+              "no": 0.11
+            },
+            "confidence": 0.78
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.93,
+              "no": 0.07
+            },
+            "confidence": 0.87
+          }
+        },
+        "usage": {
+          "input_tokens": 569,
+          "output_tokens": 176,
+          "cost": 0.000023898
+        }
+      }
+    },
+    {
+      "id": "zoos",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:34.170Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is it ethical to keep animals in zoos?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think it is ethical to keep animals in zoos?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it ethical to keep animals in zoos, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is keeping animals in zoos ethical?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Would you say it is ethical to keep animals in zoos?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Is it true that keeping animals in zoos is ethical?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919314-H2B0pnkexSyDpsRSP5N2",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.45,
+              "no": 0.55
+            },
+            "confidence": 0.1
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.57,
+              "no": 0.43
+            },
+            "confidence": 0.14
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.41,
+              "no": 0.59
+            },
+            "confidence": 0.19
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.38,
+              "no": 0.62
+            },
+            "confidence": 0.25
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.51,
+              "no": 0.49
+            },
+            "confidence": 0.02
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.17,
+              "no": 0.83
+            },
+            "confidence": 0.66
+          }
+        },
+        "usage": {
+          "input_tokens": 575,
+          "output_tokens": 176,
+          "cost": 0.00002415
+        }
+      }
+    },
+    {
+      "id": "deterrent",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:37.692Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Does the death penalty deter murder?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think the death penalty deters murder?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Does the death penalty deter murder, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is murder deterred by the death penalty?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Would you say the death penalty deters murder?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Is it true that the death penalty deters murder?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919317-yiD8BiooeiBa1PFieMu9",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.98,
+              "yes": 0.02
+            },
+            "confidence": 0.95
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.97,
+              "yes": 0.03
+            },
+            "confidence": 0.95
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.97,
+              "yes": 0.03
+            },
+            "confidence": 0.94
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.98,
+              "yes": 0.02
+            },
+            "confidence": 0.97
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.98,
+              "yes": 0.02
+            },
+            "confidence": 0.95
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.98,
+              "yes": 0.02
+            },
+            "confidence": 0.97
+          }
+        },
+        "usage": {
+          "input_tokens": 564,
+          "output_tokens": 176,
+          "cost": 0.000023688
+        }
+      }
+    },
+    {
+      "id": "voting",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:41.242Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should voting be mandatory?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think voting should be mandatory?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Should voting be mandatory, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Should citizens be required to vote?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Would you say voting should be mandatory?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Is it right for voting to be mandatory?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919321-ZefGCCVmMN9MQpJLToOV",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.77,
+              "yes": 0.23
+            },
+            "confidence": 0.54
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.71,
+              "yes": 0.29
+            },
+            "confidence": 0.43
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.71,
+              "yes": 0.29
+            },
+            "confidence": 0.43
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.7,
+              "yes": 0.3
+            },
+            "confidence": 0.39
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.24,
+              "no": 0.76
+            },
+            "confidence": 0.51
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.68,
+              "yes": 0.32
+            },
+            "confidence": 0.37
+          }
+        },
+        "usage": {
+          "input_tokens": 551,
+          "output_tokens": 176,
+          "cost": 0.000023142
+        }
+      }
+    },
+    {
+      "id": "dst",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:44.752Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should daylight saving time be abolished?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think daylight saving time should be abolished?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Should daylight saving time be abolished, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Should we abolish daylight saving time?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Would you say daylight saving time should be abolished?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Is it right to abolish daylight saving time?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919324-i7el3LrANdhebDNTtlRP",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.19,
+              "yes": 0.81
+            },
+            "confidence": 0.63
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.14,
+              "yes": 0.86
+            },
+            "confidence": 0.72
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.11,
+              "yes": 0.89
+            },
+            "confidence": 0.77
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.22,
+              "yes": 0.78
+            },
+            "confidence": 0.56
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.16,
+              "yes": 0.84
+            },
+            "confidence": 0.68
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.22,
+              "yes": 0.78
+            },
+            "confidence": 0.56
+          }
+        },
+        "usage": {
+          "input_tokens": 563,
+          "output_tokens": 176,
+          "cost": 0.000023646
+        }
+      }
+    },
+    {
+      "id": "fastfashion",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:48:48.280Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is it ethical to buy fast fashion?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think it is ethical to buy fast fashion?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it ethical to buy fast fashion, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is buying fast fashion ethical?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Would you say it is ethical to buy fast fashion?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Is it true that buying fast fashion is ethical?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789919328-WfTvltRoZKsWjts8VMLq",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.99,
+              "yes": 0.01
+            },
+            "confidence": 0.97
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.99,
+              "yes": 0.01
+            },
+            "confidence": 0.99
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.99,
+              "yes": 0.01
+            },
+            "confidence": 0.98
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 0.99
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.99,
+              "yes": 0.01
+            },
+            "confidence": 0.99
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 563,
+          "output_tokens": 176,
+          "cost": 0.000023646
+        }
+      }
+    }
+  ]
+}
