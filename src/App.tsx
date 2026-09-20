@@ -23,6 +23,7 @@ import {
   blankExperiment,
   buildRequest,
   evaluate,
+  findMatchingRun,
   fromSeed,
   maxWordingSwing,
   meanProb,
@@ -431,12 +432,16 @@ export default function App() {
     const saved = readStorage("draft", null);
     return isDraft(saved) ? saved : initial.experiment;
   });
-  const [run, setRun] = useState<Run | null>(() => {
+  const [selectedRun, setRun] = useState<Run | null>(() => {
     const saved = readStorage("draft", null);
     return isDraft(saved) ? null : initial;
   });
   const [saved, setSaved] = useState(readSaved);
   const [history, setHistory] = useState(readHistory);
+  const run = useMemo(
+    () => selectedRun ?? findMatchingRun(experiment, history),
+    [selectedRun, experiment, history],
+  );
   const [dialog, setDialog] = useState<
     "connection" | "sources" | "saved" | "request" | null
   >(null);

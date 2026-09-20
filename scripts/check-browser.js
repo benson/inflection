@@ -222,6 +222,53 @@ async (page) => {
     "Comparison export produces a JSON download",
   );
 
+  const measured = await page
+    .getByRole("region", { name: "Comparison results" })
+    .textContent();
+  await page
+    .getByRole("button", { name: "Save experiment", exact: true })
+    .click();
+  await rail.getByRole("button", { name: /Self-driving safety/ }).click();
+  await page
+    .getByRole("button", { name: /^Saved/ })
+    .first()
+    .click();
+  await page
+    .getByRole("dialog", { name: "Your experiments" })
+    .getByRole("button", {
+      name: "Browser QA fixture Which policy should be prioritized?",
+      exact: true,
+    })
+    .click();
+  // Tracking defaults to the first answer when a result is remounted.
+  await page
+    .getByRole("combobox", { name: "Track probability of" })
+    .selectOption("option_2");
+  await page.getByRole("checkbox", { name: "Show edits" }).uncheck();
+  check(
+    (await page
+      .getByRole("region", { name: "Comparison results" })
+      .textContent()) === measured,
+    "Reopening a saved question restores the same comparison without inference",
+  );
+  const wording = page.getByRole("textbox", { name: "Wording 1", exact: true });
+  await wording.fill("Which policy should come first now?");
+  check(
+    await page.getByText("No comparison yet", { exact: true }).isVisible(),
+    "A changed wording hides mismatched results",
+  );
+  await wording.fill("Which policy should come first?");
+  check(
+    await page.getByRole("region", { name: "Comparison results" }).isVisible(),
+    "Undoing a wording edit restores its measured results",
+  );
+  await page.reload();
+  await page.getByRole("region", { name: "Comparison results" }).waitFor();
+  check(
+    captured.length === 3,
+    "Reload and navigation never issue another Decisions request",
+  );
+
   await page.unroute(
     "https://inflection-api.bensonperry.workers.dev/decisions",
   );
@@ -246,8 +293,8 @@ async (page) => {
   );
   check(
     (await page.getByRole("region", { name: "Comparison results" }).count()) ===
-      0,
-    "Failed requests have no fabricated comparison",
+      1,
+    "A failed rerun preserves the previous matching comparison",
   );
   await page.unroute(
     "https://inflection-api.bensonperry.workers.dev/decisions",

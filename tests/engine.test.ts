@@ -4,6 +4,7 @@ import {
   buildRequest,
   conditionsFor,
   evaluate,
+  findMatchingRun,
   fromSeed,
   maxWordingSwing,
   meanProb,
@@ -24,6 +25,61 @@ test("unfinished drafts survive reload without becoming runnable experiments", (
   assert.equal(isDraft(draft), true);
   assert.equal(isExperiment(draft), false);
   assert.equal(isDraft({ original: "missing structure" }), false);
+});
+
+test("returning to unchanged inputs restores the latest real comparison, including after serialization", () => {
+  const older = { ...sampleRun(), sample: false, id: "older" };
+  const latest = { ...structuredClone(older), id: "latest" };
+  const unrelated = structuredClone(latest);
+  unrelated.experiment.original = "A different question?";
+  unrelated.request = buildRequest(unrelated.experiment);
+  const history = JSON.parse(JSON.stringify([unrelated, latest, older]));
+  const renamed = {
+    ...latest.experiment,
+    title: "A new title",
+    id: "saved-copy",
+  };
+  assert.equal(findMatchingRun(renamed, history)?.id, "latest");
+  assert.equal(findMatchingRun(latest.experiment, [sampleRun()]), null);
+});
+
+test("changed experiment inputs cannot borrow results from an earlier version", () => {
+  const run = { ...sampleRun(), sample: false };
+  const changes: Array<(e: typeof run.experiment) => void> = [
+    (e) => {
+      e.original += " Really?";
+    },
+    (e) => {
+      e.variants[0].text += " Really?";
+    },
+    (e) => {
+      e.options[0].label = "Probably yes";
+    },
+    (e) => {
+      e.options.reverse();
+    },
+    (e) => {
+      e.context = "Consider only one country.";
+    },
+    (e) => {
+      e.expanded = true;
+    },
+    (e) => {
+      e.reversed = true;
+    },
+    (e) => {
+      e.variants[0].kind = "framing";
+    },
+    (e) => {
+      e.original = "";
+    },
+  ];
+  for (const change of changes) {
+    const changed = structuredClone(run.experiment);
+    change(changed);
+    assert.equal(findMatchingRun(changed, [run]), null);
+  }
+  assert.equal(findMatchingRun(run.experiment, [run]), run);
 });
 
 test("a handful of unique, valid examples, each with two different variants", () => {

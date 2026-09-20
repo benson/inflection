@@ -164,6 +164,33 @@ export function buildRequest(experiment: Experiment): DecisionRequest {
   };
 }
 
+// History is newest first. Match the actual request, including option order,
+// plus framing labels that affect the reported swing. Titles are not inputs.
+export function findMatchingRun(
+  experiment: Experiment,
+  history: Run[],
+): Run | null {
+  try {
+    const request = JSON.stringify(buildRequest(experiment));
+    const conditions = conditionsFor(experiment);
+    return (
+      history.find(
+        (run) =>
+          !run.sample &&
+          JSON.stringify(run.request) === request &&
+          run.conditions.length === conditions.length &&
+          run.conditions.every(
+            (c, i) =>
+              c.id === conditions[i].id && c.kind === conditions[i].kind,
+          ),
+      ) ?? null
+    );
+  } catch {
+    // Incomplete drafts cannot have a matching comparison.
+    return null;
+  }
+}
+
 export function parseResponse(
   data: unknown,
   conditions: Condition[],

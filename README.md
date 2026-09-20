@@ -37,7 +37,7 @@ The setup script checks the key’s cap and sends it to Wrangler over stdin. It 
 - Mark substantive changes as **Changed framing**; they are excluded from the paraphrase swing statistic.
 - Save questions, inspect 20 recent real comparisons, export full request/response metadata, and import exported experiments.
 
-The initial example has explicitly labeled, invented probabilities. It is a fixed illustration, not a result from Jev. Editing or selecting any other question clears its results. There is no fake-answer fallback. Only **Run comparison** sends inference requests.
+The initial example has explicitly labeled, invented probabilities. It is a fixed illustration, not a result from Jev. Returning to unchanged inputs, undoing an edit, or reloading restores the latest matching real comparison from the 20-run browser history. Matching includes questions, answers and their order, context, controls, and framing labels; changing the experiment title does not invalidate a comparison. Unmeasured inputs show no results. A failed rerun preserves the previous matching comparison. There is no fake-answer fallback. Only **Run comparison** sends inference requests.
 
 ## Method
 
