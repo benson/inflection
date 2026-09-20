@@ -29,11 +29,11 @@ The setup script checks the key’s cap and sends it to Wrangler over stdin. It 
 
 ## Explore
 
-- Five starting questions: Reno and Los Angeles, Cubs and the Ottomans, Closest state to Africa, Self-driving safety, and Religion & terrorism. Each has three or four editable wordings.
+- Four starting questions: Reno and Los Angeles, Cubs and the Ottomans, Closest state to Africa, and Self-driving safety. Each has four editable wordings.
 - Compare two to eight wordings, numbered 1 to N, with two to eight shared answers and optional shared context.
 - See complete distributions, a common-scale dot plot, the largest swing in percentage points, and an answer tally. Optionally show word edits against wording 1.
 - Repeat the entire batch 1, 3, or 5 times; show mean probabilities and observed min–max ranges.
-- Copy a gzip-compressed share link with the title, inputs, and any displayed results. Opening it validates and restores the comparison, then clears the hash; shared results are labeled separately from this browser’s runs.
+- Copy a gzip-compressed share link with the title, inputs, and any displayed results. Opening it restores the comparison under an active **shared question** chip, then clears the hash. Switch to another chip and back to restore the shared inputs and results without a request. The shared chip lasts until reload; shared results have their own source label above the results.
 - Copy a 1200 × 630 PNG of the title, stats, and selected answer’s dot plot; browsers that cannot copy images download the PNG instead.
 - Inspect this browser’s 20 recent runs in history, export each as JSON, and import experiments there. Drafts and history use `inflection-v2-` storage keys; v1 data is ignored, without migration.
 
@@ -46,14 +46,14 @@ Both binary and multiple-choice questions use Jev’s `choice` primitive. This a
 The API contract was checked against [OpenRouter’s official OpenAPI specification](https://openrouter.ai/openapi.json): `POST https://openrouter.ai/api/alpha/decisions`, model `typesafe/jev-1.13`. This alpha route is distinct from chat completions. The full resolved model ID is preserved in each response. Requests timeout after 45 seconds; canceled or failed batches are not replaced with fabricated results or silently retried.
 
 - **Largest swing, pp** is the maximum over answer options of (highest mean probability − lowest mean probability) across all wordings 1 to N, multiplied by 100.
-- **Answers** tallies how many wordings have each winning answer. Tied probabilities count once as a tie. The `differs` tag marks rows that differ from the most frequent winner; if the tally has no unique leader, no row is tagged.
+- **Answers** tallies how many wordings have each winning answer. Tied probabilities count once as a tie.
 - The dot plot follows a selected shared answer, with one numbered dot per wording and thick lines for the observed range when repeated. There is no reference line.
 
 Repeated runs estimate observed variability only; min–max lines are not confidence intervals. A paraphrase is an editorial attempt, not a certified meaning-preserving transformation. Results measure this model under these questions and options; they do not establish political or moral truth. TypeSafe’s confidence scalar is retained in JSON; the interface emphasizes the full distribution.
 
 ## Question provenance
 
-The first four examples come from the [fact search on 20 September 2026](research/2026-09-20/README.md#fact-search--september-20-2026), which selected questions with a correct answer and wrapper or syntactic edits only; each shipped wording set was confirmed with three repeats. The [religion example](research/2026-09-20/README.md#religion-example-reinstated--september-20-2026) is the largest confirmed swing on a syntactic edit and is included last. All wordings are editable. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
+The four examples come from the [fact search on 20 September 2026](research/2026-09-20/README.md#fact-search--september-20-2026), which selected questions with a correct answer and wrapper or syntactic edits only; each shipped wording set was confirmed with three repeats. All wordings are editable. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
 
 - [TypeSafe’s documented limitations](https://docs.typesafe.ai/model-jaggedness/jev-1.13)
 - [Choice documentation](https://docs.typesafe.ai/primitives/choice)

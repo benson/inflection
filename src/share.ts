@@ -1,11 +1,4 @@
-import {
-  binaryOptions,
-  majorityWinner,
-  maxWordingSwing,
-  meanProb,
-  tallyText,
-  winners,
-} from "./engine";
+import { binaryOptions, maxWordingSwing, meanProb, tallyText } from "./engine";
 import { isExperiment, parseRun } from "./storage";
 import type { Experiment, Run } from "./types";
 
@@ -184,15 +177,8 @@ export async function comparisonImage(
     rowFont =
       run.conditions.length > 6 ? 22 - (run.conditions.length - 6) * 2 : 22,
     lineHeight = rowFont + 4;
-  const majority = majorityWinner(run);
-  const differs = run.conditions.map((c) => {
-    const leading = winners(run, c.id);
-    const winner = leading.length === 1 ? leading[0] : "__tie__";
-    return majority !== null && winner !== majority;
-  });
   const gutter = 40,
-    tagWidth = 58,
-    textX = padding + gutter + (differs.some(Boolean) ? tagWidth + 14 : 0),
+    textX = padding + gutter,
     textWidth = barX - 32 - textX;
   ctx.font = `18px ${body}`;
   ctx.textAlign = "right";
@@ -209,15 +195,6 @@ export async function comparisonImage(
     ctx.font = `20px ${body}`;
     ctx.fillStyle = color("muted");
     ctx.fillText(c.label, padding, centerY);
-    if (differs[i]) {
-      ctx.fillStyle = color("accent-soft");
-      ctx.beginPath();
-      ctx.roundRect(padding + gutter, centerY - 12, tagWidth, 24, 5);
-      ctx.fill();
-      ctx.fillStyle = color("accent");
-      ctx.font = `14px ${body}`;
-      ctx.fillText("differs", padding + gutter + 8, centerY);
-    }
     ctx.fillStyle = color("ink");
     ctx.font = `${rowFont}px ${body}`;
     const lines = wrap(c.text, textWidth);
@@ -284,7 +261,7 @@ export async function comparisonImage(
     .replace("sept", "sep");
   ctx.textAlign = "right";
   ctx.fillText(
-    `jev 1.13 · ${run.source === "local" ? "your run" : "recorded"} · ${date}`,
+    `jev 1.13 · ${run.source === "local" ? "your run" : run.source === "shared" ? "shared link" : "recorded"} · ${date}`,
     right,
     canvas.height - padding,
   );

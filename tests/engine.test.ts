@@ -8,7 +8,6 @@ import {
   fromSeed,
   maxWordingSwing,
   answerTally,
-  majorityWinner,
   tallyText,
   meanProb,
   parseResponse,
@@ -21,15 +20,10 @@ import { seeds } from "../src/seeds";
 import { findRecordedRun, recordedRun } from "../src/recorded";
 import factPrompts from "../research/2026-09-20/facts-confirm-prompts.json";
 import factConfirm from "../research/2026-09-20/facts-confirm.json";
-import religionPrompts from "../research/2026-09-20/religion-confirm-prompts.json";
-import religionConfirm from "../research/2026-09-20/religion-confirm.json";
 import { isDraft, isExperiment } from "../src/storage";
 
-const prompts = [
-  ...factPrompts.filter((prompt) => prompt.id !== "sharks-trees"),
-  ...religionPrompts,
-];
-const confirmedRuns = [...factConfirm.runs, ...religionConfirm.runs];
+const prompts = factPrompts.filter((prompt) => prompt.id !== "sharks-trees");
+const confirmedRuns = factConfirm.runs;
 const firstRecording = () => recordedRun(seeds[0].id)!;
 
 test("every seed bundles three validated responses to its exact confirmed request", () => {
@@ -157,13 +151,13 @@ test("changed experiment inputs cannot borrow results from an earlier version", 
   assert.equal(findMatchingRun(run.experiment, [run]), run);
 });
 
-test("five unique, valid examples, each with three or four different wordings", () => {
-  assert.ok(seeds.length >= 2 && seeds.length <= 5);
+test("four unique, valid examples, each with four different wordings", () => {
+  assert.equal(seeds.length, 4);
   assert.equal(new Set(seeds.map((s) => s.id)).size, seeds.length);
   assert.equal(new Set(seeds.map((s) => s.wordings[0])).size, seeds.length);
   for (const s of seeds) {
     assert.equal(validateExperiment(fromSeed(s)), null, s.title);
-    assert.ok(s.wordings.length >= 3 && s.wordings.length <= 4, s.title);
+    assert.equal(s.wordings.length, 4, s.title);
     assert.equal(new Set(s.wordings).size, s.wordings.length, s.title);
     assert.ok(fromSeed(s).wordings.every((w, i) => w.id === `w${i + 1}`));
   }
@@ -174,7 +168,6 @@ test("five unique, valid examples, each with three or four different wordings", 
       "cubs-ottomans",
       "maine-africa",
       "self-driving-safety",
-      "religion-terrorism",
     ],
   );
 });
@@ -235,7 +228,6 @@ test("swing uses every wording and answer tallies count ties once", () => {
   const run = firstRecording();
   assert.ok(Math.abs(maxWordingSwing(run) - 0.6566666666666666) < 1e-9);
   assert.equal(tallyText(run), "yes 1 · no 3");
-  assert.equal(majorityWinner(run), "no");
   for (const response of run.responses)
     response.answers.w1.probabilities = { yes: 0.5, no: 0.5 };
   assert.deepEqual(winners(run, "w1"), ["yes", "no"]);
@@ -247,9 +239,6 @@ test("swing uses every wording and answer tallies count ties once", () => {
   for (const response of run.responses)
     response.answers.w2.probabilities = { yes: 0.1, no: 0.9 };
   assert.equal(tallyText(run), "yes 0 · no 3 · tie 1");
-  for (const response of run.responses)
-    response.answers.w3.probabilities = { yes: 0.5, no: 0.5 };
-  assert.equal(majorityWinner(run), null);
 });
 test("means average probabilities across repetitions, not just winning labels", () => {
   const run = firstRecording();

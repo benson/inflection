@@ -309,14 +309,6 @@ export function tallyText(run: Run): string {
     .join(" · ");
 }
 
-// No majority tag when multiple answers share the largest tally.
-export function majorityWinner(run: Run): string | null {
-  const tally = answerTally(run);
-  const top = Math.max(...tally.map((a) => a.count));
-  const leaders = tally.filter((a) => a.count === top);
-  return leaders.length === 1 ? leaders[0].id : null;
-}
-
 // LCS word diff: highlight actual edits without relying on another model.
 export function wordDiff(
   before: string,

@@ -23,16 +23,12 @@ type ConfirmationReport = {
   }[];
 };
 
-const reports: ConfirmationReport[] = await Promise.all(
-  ["facts-confirm.json", "religion-confirm.json"].map(async (filename) =>
-    JSON.parse(await readFile(new URL(filename, research), "utf8")),
-  ),
+const report: ConfirmationReport = JSON.parse(
+  await readFile(new URL("facts-confirm.json", research), "utf8"),
 );
-for (const report of reports) {
-  assert.equal(report.repeats, 3, "Expected three confirmation repeats");
-  assert.equal(report.answerOrder, "normal", "Expected Yes/No answer order");
-}
-const runs = reports.flatMap((report) => report.runs);
+assert.equal(report.repeats, 3, "Expected three confirmation repeats");
+assert.equal(report.answerOrder, "normal", "Expected Yes/No answer order");
+const runs = report.runs;
 
 const bundled: Record<string, Run> = {};
 // Research can include additional topics; only current app seeds are bundled.
@@ -60,7 +56,7 @@ for (const seed of seeds) {
         ),
       }),
       JSON.stringify(request),
-      `${label}: request differs from seed`,
+      `${label}: request does not match seed`,
     );
     const raw = run.response as { answers: Record<string, unknown> };
     const response = parseResponse(

@@ -525,13 +525,6 @@ details[open] > summary svg {
   color: var(--muted);
   text-transform: lowercase;
 }
-.answer-tags {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-  white-space: nowrap;
-}
 .answer-question {
   font: 400 15px / 1.4 var(--serif);
   color: var(--ink);
@@ -547,14 +540,6 @@ mark {
 del {
   color: var(--muted);
   text-decoration: line-through;
-}
-.flip-pill {
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: 12px;
-  border-radius: 4px;
-  padding: 0 4px;
-  text-transform: lowercase;
 }
 .distribution-legend {
   display: flex;

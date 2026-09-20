@@ -106,6 +106,12 @@ export default async function checkBrowser(page) {
     "Recorded example identifies date and three repeats",
   );
   check(
+    (await page.locator(".result-footer").textContent())
+      .replace(/\s+/g, " ")
+      .trim() === "details typesafe/jev-1.13-20260917",
+    "Recorded details footer contains only the toggle and resolved model",
+  );
+  check(
     (await page
       .getByRole("textbox", { name: "Wording 1", exact: true })
       .inputValue()) ===
@@ -148,25 +154,24 @@ export default async function checkBrowser(page) {
     "How this works opens a dialog containing none of this is a knock on jev",
   );
   check(
-    (await about.locator(".about-intro p").count()) === 9 &&
+    (await about.locator(".about-intro p").count()) === 8 &&
       (await about.locator(".about-intro a").getAttribute("rel")) ===
         "noreferrer",
-    "The dialog contains all nine introductory paragraphs and the model link",
+    "The dialog contains all eight introductory paragraphs and the model link",
   );
   check(
     JSON.stringify(
       (await about.locator(".about-intro p").allTextContents())
-        .slice(3, 8)
+        .slice(3, 7)
         .map((text) => text.replace(/\s+/g, " ").trim()),
     ) ===
       JSON.stringify([
         `you'd expect a computer to read the same question the same way however you phrase it. it doesn't. reno is west of los angeles. ask "is reno farther west than los angeles" and jev says 33% yes. ask "is los angeles farther east than reno" and it says 69%. same fact, same words, different order.`,
         `this isn't noise on questions with no answer. on settled facts, monty hall, the birthday problem, nuclear versus coal, jev doesn't move a point however you phrase it. the flips happen where the model is unsure of a fact, and it doesn't tell you it's unsure. the number just moves.`,
-        `and it isn't only trivia. "does islam inspire more terrorism than other monotheistic religions" gets 4% yes. "is more terrorism inspired by islam than by other monotheistic religions" gets 83%. active voice, passive voice, same words. you can argue those are different questions. most people don't read them that way.`,
         `two questions that mean the same thing to a person should get the same answer from one model of the world, even if not the same digits. typesafe's docs say not to expect arithmetic consistency between separately asked questions. this site is what that looks like in practice.`,
         `this doesn't happen on every question. in a screen of about forty questions, most didn't move at all, and the examples here are the ones that did. the point is that it can happen, on edits you didn't mean anything by.`,
       ]),
-    "The dialog uses the exact fact-based and religion explainer copy",
+    "The dialog uses the exact fact-based explainer copy",
   );
   check(
     await about.evaluate((dialog) => {
@@ -374,15 +379,14 @@ export default async function checkBrowser(page) {
 
   const chips = page.getByRole("navigation", { name: "Example questions" });
   check(
-    (await chips.getByRole("button").count()) === 6,
-    "Five starter examples and a custom question chip are shown",
+    (await chips.getByRole("button").count()) === 5,
+    "Four starter examples and a custom question chip are shown",
   );
   for (const title of [
     "Reno and Los Angeles",
     "Cubs and the Ottomans",
     "Closest state to Africa",
     "Self-driving safety",
-    "Religion & terrorism",
   ]) {
     await chips.getByRole("button", { name: title, exact: true }).click();
     check(
@@ -423,7 +427,7 @@ export default async function checkBrowser(page) {
   await page.getByRole("button", { name: /^history/i }).click();
   check(
     (await page.locator(".history-list > div").count()) === 0,
-    "History contains only runs made in this browser",
+    "History contains only local runs",
   );
   await page.keyboard.press("Escape");
 
@@ -559,17 +563,15 @@ export default async function checkBrowser(page) {
     "Multiple-choice answers tally winning options only",
   );
   check(
-    (await page.locator(".flip-pill").allTextContents()).join() === "differs",
-    "The minority winner is tagged differs",
-  );
-  check(
     (await page.locator(".result-source").textContent()) ===
       "your run · 3 repeats",
     "Repeated browser runs identify their source",
   );
   check(
-    (await page.locator(".result-footer").textContent()).includes("your run"),
-    "Details identify your run",
+    (await page.locator(".result-footer").textContent())
+      .replace(/\s+/g, " ")
+      .trim() === "details typesafe/jev-1.13-browser-fixture",
+    "Local details footer contains only the toggle and resolved model",
   );
   await page
     .getByRole("combobox", { name: "Track probability of" })
@@ -661,8 +663,8 @@ export default async function checkBrowser(page) {
       "Which policy should receive priority?",
     ].every((wording) =>
       imageText.some((t) => t.text === wording && t.font.includes("22px")),
-    ) && imageText.filter((t) => t.text === "differs").length === 1,
-    "The image includes every wording and tags the minority winner",
+    ),
+    "The image includes every wording",
   );
   const percentages = imageText.filter((t) => t.font.includes("28px"));
   check(
@@ -713,6 +715,14 @@ export default async function checkBrowser(page) {
   });
   const recipient = await page.context().browser().newPage();
   recipient.on("pageerror", (e) => errors.push(e.message));
+  let recipientRequests = 0;
+  await recipient.route(
+    "https://inflection-api.bensonperry.workers.dev/decisions",
+    (route) => {
+      recipientRequests++;
+      return route.abort();
+    },
+  );
   await recipient.goto(sharedUrl);
   await recipient.locator(".result-source").waitFor();
   check(
@@ -721,6 +731,71 @@ export default async function checkBrowser(page) {
       (await recipient.locator(".answer-tally").textContent()) ===
         "Housing 2 · Energy 1",
     "Loading a share in another tab restores results and clears the hash",
+  );
+  const recipientChips = recipient.getByRole("navigation", {
+    name: "Example questions",
+  });
+  const sharedChip = recipientChips.getByRole("button", {
+    name: "shared question",
+    exact: true,
+  });
+  check(
+    (await recipientChips.getByRole("button").count()) === 6 &&
+      (await recipientChips.getByRole("button").nth(4).textContent()) ===
+        "shared question" &&
+      (await recipientChips.locator('[aria-pressed="true"]').textContent()) ===
+        "shared question" &&
+      (await recipientChips
+        .getByRole("button", { name: "Your own question" })
+        .getAttribute("aria-pressed")) === "false",
+    "Shared question is the only active chip, after examples and before the custom chip",
+  );
+  const sharedSnapshot = async () => ({
+    inputs: await recipient
+      .locator(".editor input, .editor textarea")
+      .evaluateAll((nodes) => nodes.map((node) => node.value)),
+    results: await recipient.locator(".results").textContent(),
+  });
+  const originalSnapshot = await sharedSnapshot();
+  for (const title of ["Reno and Los Angeles", "Your own question"]) {
+    await recipientChips
+      .getByRole("button", { name: title, exact: true })
+      .click();
+    check(
+      (await sharedChip.getAttribute("aria-pressed")) === "false" &&
+        (await recipientChips
+          .getByRole("button", { name: title, exact: true })
+          .getAttribute("aria-pressed")) === "true",
+      `${title} deactivates the shared chip while keeping it available`,
+    );
+    await sharedChip.click();
+    check(
+      JSON.stringify(await sharedSnapshot()) ===
+        JSON.stringify(originalSnapshot) &&
+        (await recipientChips
+          .locator('[aria-pressed="true"]')
+          .textContent()) === "shared question",
+      `Returning from ${title} restores all shared inputs and results`,
+    );
+  }
+  await recipient
+    .getByRole("textbox", { name: "Wording 1", exact: true })
+    .fill("An edited shared wording?");
+  await sharedChip.click();
+  check(
+    JSON.stringify(await sharedSnapshot()) === JSON.stringify(originalSnapshot),
+    "Editing a shared question leaves its original snapshot available",
+  );
+  await recipient.reload();
+  await recipient.getByRole("textbox", { name: "Experiment title" }).waitFor();
+  check(
+    (await sharedChip.count()) === 0 &&
+      (await recipient.locator(".result-source").count()) === 0 &&
+      (await recipientChips
+        .getByRole("button", { name: "Your own question" })
+        .getAttribute("aria-pressed")) === "true" &&
+      recipientRequests === 0,
+    "Reload without a hash drops the shared chip and results without inference",
   );
   await recipient.close();
   await page.goto(sharedUrl);
@@ -731,10 +806,12 @@ export default async function checkBrowser(page) {
   );
   check(
     (await page.locator(".result-source").textContent()) === sharedTag &&
-      (await page.locator(".result-footer").textContent()).includes(
-        "shared link · not run in this browser",
-      ),
-    "Shared results keep a separate source label",
+      (await page.locator(".result-footer").textContent())
+        .replace(/\s+/g, " ")
+        .trim() === "details typesafe/jev-1.13-browser-fixture" &&
+      (await chips.locator('[aria-pressed="true"]').textContent()) ===
+        "shared question",
+    "A same-page share activates its chip and labels its source only above results",
   );
   check(
     (await page
@@ -750,6 +827,20 @@ export default async function checkBrowser(page) {
         () => JSON.parse(localStorage.getItem("inflection-v2-history")).length,
       )) === 1,
     "Shared averages are preserved without adding to browser history",
+  );
+  await page.evaluate(() => {
+    window.__canvasText = [];
+    window.__denyImage = false;
+  });
+  await page.getByRole("button", { name: "copy image", exact: true }).click();
+  await page.getByText("image copied", { exact: true }).waitFor();
+  check(
+    await page.evaluate(() =>
+      window.__canvasText.some((t) =>
+        /^jev 1\.13 · shared link · \d/.test(t.text),
+      ),
+    ),
+    "The shared image stamp identifies a shared link",
   );
   await page.getByRole("button", { name: /^history/i }).click();
   await historyDialog
@@ -783,8 +874,23 @@ export default async function checkBrowser(page) {
     .waitFor();
   check(
     new URL(page.url()).hash === "" &&
-      (await wording.inputValue()) === "Which policy should come first now?",
+      (await wording.inputValue()) === "Which policy should come first now?" &&
+      (await chips.getByRole("button", { name: "shared question" }).count()) ===
+        1 &&
+      (await chips.locator('[aria-pressed="true"]').textContent()) ===
+        "shared question",
     "Input-only links restore without results or inference",
+  );
+  await chips
+    .getByRole("button", { name: "Reno and Los Angeles", exact: true })
+    .click();
+  await chips
+    .getByRole("button", { name: "shared question", exact: true })
+    .click();
+  check(
+    (await wording.inputValue()) === "Which policy should come first now?" &&
+      (await page.locator(".result-source").count()) === 0,
+    "A new share replaces the session snapshot and returns without stale results",
   );
   await wording.fill("Which policy should come first?");
   check(
@@ -794,7 +900,9 @@ export default async function checkBrowser(page) {
   await page.reload();
   await page.getByRole("region", { name: "Comparison results" }).waitFor();
   check(
-    captured.length === 3,
+    captured.length === 3 &&
+      (await chips.getByRole("button", { name: "shared question" }).count()) ===
+        0,
     "Reload and navigation never issue another Decisions request",
   );
 
@@ -1069,7 +1177,6 @@ async function checkImageLayouts(page, check) {
           .length,
         arcs: window.__canvasArcs,
         ranges: window.__canvasStrokes,
-        differs: text.filter((t) => t.text === "differs").length,
         summary: text.some(
           (t) => t.text === "largest swing 66 pp · yes 1 · no 3",
         ),
@@ -1099,13 +1206,13 @@ async function checkImageLayouts(page, check) {
     );
     if (layout.count === 2)
       check(
-        layout.fills.join() === "0,240" && layout.differs === 0,
-        "Zero and 100 percent fill the expected widths; tied tallies have no differs tag",
+        layout.fills.join() === "0,240",
+        "Zero and 100 percent fill the expected widths",
       );
     if (layout.count === 4)
       check(
-        layout.summary && layout.footer && layout.differs === 1,
-        "Recorded image has the exact swing, tally, date, and minority tag",
+        layout.summary && layout.footer,
+        "Recorded image has the exact swing, tally, and date",
       );
     if (layout.png)
       await writeFile(

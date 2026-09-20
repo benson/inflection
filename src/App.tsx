@@ -17,7 +17,6 @@ import {
   findMatchingRun,
   fromSeed,
   maxWordingSwing,
-  majorityWinner,
   tallyText,
   meanProb,
   validateExperiment,
@@ -266,7 +265,6 @@ function Results({
   const selected =
     run.experiment.options.find((o) => o.id === tracked) ??
     run.experiment.options[0];
-  const majority = majorityWinner(run);
   const date = new Date(run.createdAt)
     .toLocaleDateString("en-GB", {
       day: "numeric",
@@ -338,17 +336,11 @@ function Results({
       <div className="answer-list">
         {run.conditions.map((c) => {
           const leading = winners(run, c.id);
-          const winner = leading.length === 1 ? leading[0] : "__tie__";
           return (
             <article className="answer" key={c.id}>
               <div className="answer-top">
                 <span>{c.label}</span>
-                <div className="answer-tags">
-                  {leading.length > 1 && <span>tie</span>}
-                  {majority !== null && winner !== majority && (
-                    <span className="flip-pill">differs</span>
-                  )}
-                </div>
+                {leading.length > 1 && <span>tie</span>}
               </div>
               <p className="answer-question">
                 {showDiff && c.id !== "w1" ? (
@@ -385,11 +377,7 @@ function Results({
           <span className="text-button">
             details <ChevronDown size={16} />
           </span>
-          <span>
-            {run.source === "local"
-              ? "your run"
-              : `${run.source === "recorded" ? "recorded" : "shared link"} · not run in this browser`}
-          </span>
+          <span>{run.responses[0].model}</span>
         </summary>
         <div className="technical-details">
           {run.source === "local" && (
@@ -419,6 +407,8 @@ export default function App({
   shared: { experiment: Experiment; run: Run | null } | null;
 }) {
   const initial = useMemo(() => recordedRun(seeds[0].id)!, []);
+  const [sharedQuestion, setSharedQuestion] = useState(shared);
+  const [sharedSelected, setSharedSelected] = useState(!!shared);
   const [experiment, setExperiment] = useState<Experiment>(() => {
     const draft = readStorage("draft", null);
     return shared?.experiment ?? (isDraft(draft) ? draft : initial.experiment);
@@ -469,6 +459,8 @@ export default function App({
       const hash = window.location.hash;
       const result = await decodeShare(hash);
       if (!active || !result || window.location.hash !== hash) return;
+      setSharedQuestion(result);
+      setSharedSelected(true);
       setExperiment(result.experiment);
       setRun(result.run);
       setTracked("");
@@ -492,8 +484,13 @@ export default function App({
     if (Object.keys(patch).some((key) => key !== "title")) setRun(null);
     setError("");
   }
-  function openExperiment(e: Experiment, result: Run | null = null) {
+  function openExperiment(
+    e: Experiment,
+    result: Run | null = null,
+    isShared = false,
+  ) {
     if (busy) return;
+    setSharedSelected(isShared);
     setExperiment(structuredClone(e));
     setRun(result);
     setTracked("");
@@ -656,16 +653,34 @@ export default function App({
               disabled={busy}
               key={s.id}
               className="example-chip"
-              aria-pressed={experiment.id === s.id}
+              aria-pressed={!sharedSelected && experiment.id === s.id}
               onClick={() => openExperiment(fromSeed(s))}
             >
               {s.title}
             </button>
           ))}
+          {sharedQuestion && (
+            <button
+              className="example-chip"
+              disabled={busy}
+              aria-pressed={sharedSelected}
+              onClick={() =>
+                openExperiment(
+                  sharedQuestion.experiment,
+                  sharedQuestion.run,
+                  true,
+                )
+              }
+            >
+              shared question
+            </button>
+          )}
           <button
             className="example-chip"
             disabled={busy}
-            aria-pressed={!seeds.some((s) => s.id === experiment.id)}
+            aria-pressed={
+              !sharedSelected && !seeds.some((s) => s.id === experiment.id)
+            }
             onClick={newQuestion}
           >
             <Plus size={16} /> Your own question
@@ -968,13 +983,6 @@ export default function App({
               move a point however you phrase it. the flips happen where the
               model is unsure of a fact, and it doesn't tell you it's unsure.
               the number just moves.
-            </p>
-            <p>
-              and it isn't only trivia. "does islam inspire more terrorism than
-              other monotheistic religions" gets 4% yes. "is more terrorism
-              inspired by islam than by other monotheistic religions" gets 83%.
-              active voice, passive voice, same words. you can argue those are
-              different questions. most people don't read them that way.
             </p>
             <p>
               two questions that mean the same thing to a person should get the
