@@ -29,7 +29,7 @@ The setup script checks the key’s cap and sends it to Wrangler over stdin. It 
 
 ## Explore
 
-- Three starting questions: self-driving car safety, U.S. political progressivism, and religion and terrorism. Each has two editable rewordings.
+- Four starting questions: self-driving car safety, religion and terrorism, eating meat, and wealth tax. Each has two editable variants.
 - Create your own question, use two to eight shared answers, and compare up to eight wordings.
 - Word-level insertions and deletions, complete probability distributions, a common-scale dot plot, percentage-point deltas, and answer flips.
 - Repeat the entire batch 1, 3, or 5 times; show mean probabilities and observed min–max ranges.
@@ -51,7 +51,7 @@ Repeated runs estimate observed variability only; min–max lines are not confid
 
 ## Question provenance
 
-Benson selected the three starting questions. The rewordings preserve their intended comparisons and are editable; users can mark meaning changes as Changed framing. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
+Benson selected the self-driving and religion examples. The eating-meat and wealth-tax examples were selected after live wording probes; [the research notes and complete measurements](research/2026-09-20/README.md) record the search and repeat checks. The wealth-tax variant that names a specific tax starts as **Changed framing**, because it narrows the broader wording. All prompts and framing labels are editable. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
 
 - [TypeSafe’s documented limitations](https://docs.typesafe.ai/model-jaggedness/jev-1.13)
 - [Choice documentation](https://docs.typesafe.ai/primitives/choice)

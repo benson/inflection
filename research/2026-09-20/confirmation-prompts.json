@@ -1,0 +1,32 @@
+[
+  {
+    "id": "religion-terrorism",
+    "title": "Religion & terrorism",
+    "category": "Religion",
+    "question": "Does Islam inspire more terrorism than other monotheistic religions?",
+    "variants": [
+      "Compared with other monotheistic religions, does Islam inspire more terrorism?",
+      "Is more terrorism inspired by Islam than by other monotheistic religions?"
+    ]
+  },
+  {
+    "id": "wealth-tax",
+    "title": "Wealth tax",
+    "category": "Economics",
+    "question": "Should the government tax wealth that people have already paid income tax on?",
+    "variants": [
+      "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+      "Should the government levy a wealth tax on assets acquired with after-tax income?"
+    ]
+  },
+  {
+    "id": "meat-minimal",
+    "title": "Eating meat",
+    "category": "Ethics",
+    "question": "Is it morally acceptable to eat animals when other nutritious food is available?",
+    "variants": [
+      "Is it morally acceptable to eat meat when other nutritious food is available?",
+      "Is it morally acceptable to consume meat when other nutritious food is available?"
+    ]
+  }
+]

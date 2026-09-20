@@ -1,0 +1,142 @@
+[
+  {
+    "id": "religion-terrorism",
+    "title": "Religion & terrorism",
+    "category": "Religion",
+    "question": "Does Islam inspire more terrorism than other monotheistic religions?",
+    "variants": [
+      "Compared with other monotheistic religions, does Islam inspire more terrorism?",
+      "Is more terrorism inspired by Islam than by other monotheistic religions?"
+    ]
+  },
+  {
+    "id": "assisted-dying",
+    "title": "Assisted dying",
+    "category": "Ethics",
+    "question": "Should doctors be allowed to help terminally ill adults end their lives at their request?",
+    "variants": [
+      "Should doctors be allowed to assist the suicide of terminally ill adults who request it?",
+      "Should terminally ill adults who request help ending their lives be allowed to receive it from a doctor?"
+    ]
+  },
+  {
+    "id": "sex-work",
+    "title": "Sex work",
+    "category": "Politics",
+    "question": "Should it be legal for consenting adults to sell sexual services?",
+    "variants": [
+      "Should prostitution between consenting adults be legal?",
+      "Should consenting adults be legally permitted to sell sex?"
+    ]
+  },
+  {
+    "id": "death-penalty",
+    "title": "Death penalty",
+    "category": "Justice",
+    "question": "Is it morally acceptable for the state to execute convicted murderers?",
+    "variants": [
+      "Is it morally acceptable for the state to kill people convicted of murder?",
+      "Is capital punishment for convicted murderers morally acceptable?"
+    ]
+  },
+  {
+    "id": "animal-testing",
+    "title": "Animal testing",
+    "category": "Ethics",
+    "question": "Is it morally acceptable to experiment on animals to develop medicines for humans?",
+    "variants": [
+      "Is experimenting on animals to develop human medicines morally acceptable?",
+      "Is animal experimentation for the development of human medicines morally acceptable?"
+    ]
+  },
+  {
+    "id": "immigration-crime",
+    "title": "Immigration & crime",
+    "category": "Politics",
+    "question": "Do immigrants commit more crime than people born in the United States, per person?",
+    "variants": [
+      "In the United States, is the per-person crime rate higher among immigrants than among native-born people?",
+      "In the United States, do native-born people have a lower per-person crime rate than immigrants?"
+    ]
+  },
+  {
+    "id": "nuclear-safety",
+    "title": "Nuclear safety",
+    "category": "Energy",
+    "question": "Is nuclear power safer than fossil fuels per unit of electricity generated?",
+    "variants": [
+      "Per unit of electricity generated, are fossil fuels more dangerous than nuclear power?",
+      "For each unit of electricity produced, is nuclear energy safer than fossil fuel energy?"
+    ]
+  },
+  {
+    "id": "free-speech",
+    "title": "Offensive speech",
+    "category": "Politics",
+    "question": "Should people have the right to publicly express opinions that others find deeply offensive?",
+    "variants": [
+      "Should publicly expressing opinions that others find deeply offensive be a right?",
+      "Should people be entitled to express deeply offensive opinions in public?"
+    ]
+  },
+  {
+    "id": "wealth-tax",
+    "title": "Wealth tax",
+    "category": "Economics",
+    "question": "Should the government tax wealth that people have already paid income tax on?",
+    "variants": [
+      "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+      "Should the government levy a wealth tax on assets acquired with after-tax income?"
+    ]
+  },
+  {
+    "id": "abortion",
+    "title": "Abortion",
+    "category": "Politics",
+    "question": "Should abortion be legal during the first twelve weeks of pregnancy?",
+    "variants": [
+      "Should it be legal to terminate a pregnancy during its first twelve weeks?",
+      "During the first twelve weeks of pregnancy, should abortion be legal?"
+    ]
+  },
+  {
+    "id": "meat",
+    "title": "Eating meat",
+    "category": "Ethics",
+    "question": "Is it morally acceptable to eat animals when other nutritious food is available?",
+    "variants": [
+      "When other nutritious food is available, is eating animals morally acceptable?",
+      "Is eating meat morally acceptable if other nutritious food is available?"
+    ]
+  },
+  {
+    "id": "surveillance",
+    "title": "Government surveillance",
+    "category": "Politics",
+    "question": "Should the government monitor everyone's private messages to prevent terrorism?",
+    "variants": [
+      "To prevent terrorism, should the government monitor everyone's private messages?",
+      "Should everyone's private messages be monitored by the government to prevent terrorism?"
+    ]
+  },
+  {
+    "id": "religion-morality",
+    "title": "Religion & morality",
+    "category": "Religion",
+    "question": "Are religious people more moral than nonreligious people?",
+    "variants": [
+      "Compared with nonreligious people, are religious people more moral?",
+      "Are nonreligious people less moral than religious people?"
+    ]
+  },
+  {
+    "id": "self-driving-safety",
+    "title": "Self-driving safety",
+    "category": "Technology",
+    "question": "Are self-driving cars safer than human drivers?",
+    "variants": [
+      "Are autonomous cars safer than cars driven by humans?",
+      "Are human drivers less safe than self-driving cars?"
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "meat-minimal",
+    "title": "Eating meat",
+    "category": "Ethics",
+    "question": "Is it morally acceptable to eat animals when other nutritious food is available?",
+    "variants": [
+      "Is it morally acceptable to eat meat when other nutritious food is available?",
+      "Is it morally acceptable to consume meat when other nutritious food is available?"
+    ]
+  },
+  {
+    "id": "wealth-tax-minimal",
+    "title": "Wealth tax",
+    "category": "Economics",
+    "question": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+    "variants": [
+      "Should the government levy a wealth tax on assets acquired with income that has already been taxed?",
+      "Should the government tax wealth acquired with after-tax income?"
+    ]
+  }
+]

@@ -30,8 +30,8 @@ async (page) => {
 
   const rail = page.getByRole("complementary");
   check(
-    (await rail.getByRole("button").count()) === 3,
-    "Only three starter examples are shown",
+    (await rail.getByRole("button").count()) === 4,
+    "Only four starter examples are shown",
   );
   await rail.getByRole("button", { name: /Self-driving safety/ }).click();
   check(

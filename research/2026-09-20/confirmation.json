@@ -1,0 +1,675 @@
+{
+  "startedAt": "2026-09-20T15:02:40.461Z",
+  "endpoint": "https://inflection-api.bensonperry.workers.dev/decisions",
+  "origin": "https://bensonperry.com",
+  "answerOrder": "normal",
+  "repeats": 3,
+  "runs": [
+    {
+      "id": "religion-terrorism",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:02:40.462Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Compared with other monotheistic religions, does Islam inspire more terrorism?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789916560-C0rITx84JGpP8rr0uBND",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.97,
+              "yes": 0.03
+            },
+            "confidence": 0.93
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.96,
+              "yes": 0.04
+            },
+            "confidence": 0.92
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.19,
+              "yes": 0.81
+            },
+            "confidence": 0.62
+          }
+        },
+        "usage": {
+          "input_tokens": 423,
+          "output_tokens": 89,
+          "cost": 0.000017766
+        }
+      }
+    },
+    {
+      "id": "wealth-tax",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:02:44.051Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should the government tax wealth that people have already paid income tax on?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789916564-dGHFfzD4tmwfUWreQNr9",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.61,
+              "no": 0.39
+            },
+            "confidence": 0.21
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.85,
+              "no": 0.15
+            },
+            "confidence": 0.69
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.08,
+              "no": 0.92
+            },
+            "confidence": 0.83
+          }
+        },
+        "usage": {
+          "input_tokens": 430,
+          "output_tokens": 89,
+          "cost": 0.00001806
+        }
+      }
+    },
+    {
+      "id": "meat-minimal",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:02:47.570Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to consume meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789916567-DQldC37WfO8qIQ3u2BTb",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.67,
+              "yes": 0.33
+            },
+            "confidence": 0.34
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.18,
+              "yes": 0.82
+            },
+            "confidence": 0.65
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.18,
+              "yes": 0.82
+            },
+            "confidence": 0.64
+          }
+        },
+        "usage": {
+          "input_tokens": 424,
+          "output_tokens": 89,
+          "cost": 0.000017808
+        }
+      }
+    },
+    {
+      "id": "religion-terrorism",
+      "repeat": 2,
+      "startedAt": "2026-09-20T15:02:51.063Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Compared with other monotheistic religions, does Islam inspire more terrorism?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789916571-4kABietZIJaPwGTPRqol",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            },
+            "confidence": 0.92
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.05,
+              "no": 0.95
+            },
+            "confidence": 0.9
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.78,
+              "no": 0.22
+            },
+            "confidence": 0.56
+          }
+        },
+        "usage": {
+          "input_tokens": 423,
+          "output_tokens": 89,
+          "cost": 0.000017766
+        }
+      }
+    },
+    {
+      "id": "wealth-tax",
+      "repeat": 2,
+      "startedAt": "2026-09-20T15:02:54.618Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should the government tax wealth that people have already paid income tax on?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789916574-mDO97WYo4qJm2gsHFW4r",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.61,
+              "no": 0.39
+            },
+            "confidence": 0.22
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.83,
+              "no": 0.17
+            },
+            "confidence": 0.67
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.07,
+              "no": 0.93
+            },
+            "confidence": 0.85
+          }
+        },
+        "usage": {
+          "input_tokens": 430,
+          "output_tokens": 89,
+          "cost": 0.00001806
+        }
+      }
+    },
+    {
+      "id": "meat-minimal",
+      "repeat": 2,
+      "startedAt": "2026-09-20T15:02:58.096Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to consume meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789916578-TwOQ0Wkbuxaj9y1CKgOv",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.34,
+              "no": 0.66
+            },
+            "confidence": 0.31
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.79,
+              "no": 0.21
+            },
+            "confidence": 0.57
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.83,
+              "no": 0.17
+            },
+            "confidence": 0.66
+          }
+        },
+        "usage": {
+          "input_tokens": 424,
+          "output_tokens": 89,
+          "cost": 0.000017808
+        }
+      }
+    },
+    {
+      "id": "religion-terrorism",
+      "repeat": 3,
+      "startedAt": "2026-09-20T15:03:01.576Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Compared with other monotheistic religions, does Islam inspire more terrorism?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789916581-FidHiuv3AAIrFJwGg7y4",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            },
+            "confidence": 0.92
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.05,
+              "no": 0.95
+            },
+            "confidence": 0.89
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.77,
+              "no": 0.23
+            },
+            "confidence": 0.54
+          }
+        },
+        "usage": {
+          "input_tokens": 423,
+          "output_tokens": 89,
+          "cost": 0.000017766
+        }
+      }
+    },
+    {
+      "id": "wealth-tax",
+      "repeat": 3,
+      "startedAt": "2026-09-20T15:03:05.192Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should the government tax wealth that people have already paid income tax on?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789916585-vDsF0dU9xdyCyCYeJFit",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.61,
+              "no": 0.39
+            },
+            "confidence": 0.23
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.84,
+              "no": 0.16
+            },
+            "confidence": 0.67
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.08,
+              "no": 0.92
+            },
+            "confidence": 0.83
+          }
+        },
+        "usage": {
+          "input_tokens": 430,
+          "output_tokens": 89,
+          "cost": 0.00001806
+        }
+      }
+    },
+    {
+      "id": "meat-minimal",
+      "repeat": 3,
+      "startedAt": "2026-09-20T15:03:08.716Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to consume meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789916588-BzB3z1RTEmS7IB10eYiF",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.29,
+              "no": 0.71
+            },
+            "confidence": 0.42
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.77,
+              "no": 0.23
+            },
+            "confidence": 0.54
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.81,
+              "no": 0.19
+            },
+            "confidence": 0.61
+          }
+        },
+        "usage": {
+          "input_tokens": 424,
+          "output_tokens": 89,
+          "cost": 0.000017808
+        }
+      }
+    }
+  ]
+}

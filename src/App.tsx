@@ -1095,10 +1095,6 @@ export default function App() {
       {dialog === "sources" && (
         <Modal title="Questions & method" close={() => setDialog(null)} wide>
           <p>
-            Three starting questions with two rewordings each. Edit them or
-            write your own.
-          </p>
-          <p>
             If a version changes the meaning, tag it “Changed framing” to
             exclude it from wording swing.
           </p>

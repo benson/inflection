@@ -26,14 +26,19 @@ test("unfinished drafts survive reload without becoming runnable experiments", (
   assert.equal(isDraft({ original: "missing structure" }), false);
 });
 
-test("three unique, valid examples, each with two different rewordings", () => {
-  assert.equal(seeds.length, 3);
-  assert.equal(new Set(seeds.map((s) => s.id)).size, 3);
-  assert.equal(new Set(seeds.map((s) => s.question)).size, 3);
+test("a handful of unique, valid examples, each with two different variants", () => {
+  assert.ok(seeds.length >= 2 && seeds.length <= 5);
+  assert.equal(new Set(seeds.map((s) => s.id)).size, seeds.length);
+  assert.equal(new Set(seeds.map((s) => s.question)).size, seeds.length);
   for (const s of seeds) {
     assert.equal(validateExperiment(fromSeed(s)), null, s.title);
     assert.equal(new Set([s.question, ...s.variants]).size, 3, s.title);
   }
+  const wealth = fromSeed(seeds.find((s) => s.id === "wealth-tax")!);
+  assert.equal(
+    conditionsFor(wealth).find((c) => c.id === "v2")!.kind,
+    "framing",
+  );
 });
 test("all wordings preserve exact instructions and shared option IDs; controls vary just one factor", () => {
   const e = fromSeed({

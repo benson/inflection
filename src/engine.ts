@@ -23,7 +23,7 @@ export const fromSeed = (seed: Seed): Experiment => ({
   variants: seed.variants.map((text, i) => ({
     id: `v${i + 1}`,
     text,
-    kind: "paraphrase",
+    kind: seed.variantKinds?.[i] ?? "paraphrase",
   })),
   options: seed.options
     ? seed.options.map((label, i) => ({ id: `option_${i + 1}`, label }))

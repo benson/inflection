@@ -22,6 +22,7 @@ export type Seed = {
   category: string;
   question: string;
   variants: [string, string];
+  variantKinds?: [Variant["kind"], Variant["kind"]];
   options?: string[];
 };
 export type Condition = {

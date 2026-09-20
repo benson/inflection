@@ -1,6 +1,6 @@
 import type { Seed } from "./types";
 
-// Benson's three starting questions, with two editable rewordings each.
+// A small set of starting questions, with two editable variants each.
 export const seeds: Seed[] = [
   {
     id: "self-driving-safety",
@@ -13,17 +13,6 @@ export const seeds: Seed[] = [
     ],
   },
   {
-    id: "us-progressivism",
-    title: "U.S. progressivism",
-    category: "Politics",
-    question:
-      "Is the United States more politically progressive than other Western countries?",
-    variants: [
-      "Compared with other Western countries, is the United States more politically progressive?",
-      "Are other Western countries less politically progressive than the United States?",
-    ],
-  },
-  {
     id: "religion-terrorism",
     title: "Religion & terrorism",
     category: "Religion",
@@ -33,6 +22,30 @@ export const seeds: Seed[] = [
       "Compared with other monotheistic religions, does Islam inspire more terrorism?",
       "Is more terrorism inspired by Islam than by other monotheistic religions?",
     ],
+  },
+  {
+    id: "eating-meat",
+    title: "Eating meat",
+    category: "Ethics",
+    question:
+      "Is it morally acceptable to eat animals when other nutritious food is available?",
+    variants: [
+      "Is it morally acceptable to eat meat when other nutritious food is available?",
+      "Is it morally acceptable to consume meat when other nutritious food is available?",
+    ],
+  },
+  {
+    id: "wealth-tax",
+    title: "Wealth tax",
+    category: "Economics",
+    question:
+      "Should the government tax wealth that people have already paid income tax on?",
+    variants: [
+      "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+      "Should the government levy a wealth tax on assets acquired with after-tax income?",
+    ],
+    // The last wording names a specific tax rather than taxing wealth generally.
+    variantKinds: ["paraphrase", "framing"],
   },
 ];
 
