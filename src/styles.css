@@ -127,6 +127,10 @@ button svg {
   color: var(--muted);
 }
 .topbar nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
   margin-left: auto;
 }
 .text-button,
@@ -145,10 +149,16 @@ button svg {
   font-size: 12px;
   padding: 4px 0;
 }
+.about-nav,
 .saved-nav {
-  color: var(--muted);
   font-size: 13px;
   white-space: nowrap;
+}
+.about-nav {
+  color: var(--accent);
+}
+.saved-nav {
+  color: var(--muted);
 }
 .count-badge {
   font-size: 12px;
@@ -169,24 +179,6 @@ button svg {
   color: var(--surface);
   border-radius: 4px;
   white-space: nowrap;
-}
-.explainer {
-  max-width: 640px;
-  margin-bottom: 24px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--ink);
-}
-.explainer-copy {
-  display: grid;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-.explainer a {
-  text-underline-offset: 4px;
-}
-.explainer.collapsed {
-  margin-bottom: 16px;
 }
 .example-chips {
   display: flex;
@@ -744,6 +736,18 @@ body:has(dialog[open]) {
   margin: 24px 0 8px;
   text-transform: lowercase;
 }
+.about-intro {
+  display: grid;
+  gap: 12px;
+}
+.about-intro a {
+  text-underline-offset: 4px;
+}
+.about-divider {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 24px 0;
+}
 .connection-info {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -892,9 +896,14 @@ body:has(dialog[open]) {
     padding: 0 16px 24px;
   }
   .topbar {
+    flex-wrap: wrap;
     align-items: flex-start;
     gap: 16px;
     padding: 24px 0;
+  }
+  .topbar nav {
+    width: 100%;
+    margin-left: 0;
   }
   .brand-lockup {
     display: block;
@@ -917,6 +926,7 @@ body:has(dialog[open]) {
   .example-chip,
   .add-wording,
   .advanced-toggle,
+  .about-nav,
   .saved-nav {
     min-height: 42px;
   }

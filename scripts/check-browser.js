@@ -51,41 +51,87 @@ export default async function checkBrowser(page) {
     "Recorded stats show integer swing and flips out of comparable wordings",
   );
   check(
-    (await page.locator(".explainer p").count()) === 8 &&
-      (await page.locator(".explainer a").getAttribute("rel")) === "noreferrer",
-    "First visit shows all eight explainer paragraphs and the model link",
+    (await page.getByRole("dialog").count()) === 0 &&
+      (await page.locator(".about-intro").count()) === 0 &&
+      (await page.locator(".layout > :first-child").getAttribute("class")) ===
+        "example-chips",
+    "First visit opens directly on the chips and tool with no dialog",
   );
-  await page.getByRole("button", { name: "hide", exact: true }).click();
+  const howThisWorks = page.getByRole("button", {
+    name: "how this works",
+    exact: true,
+  });
+  const about = page.getByRole("dialog", {
+    name: "how this works",
+    exact: true,
+  });
+  const storageBeforeAbout = await page.evaluate(() =>
+    JSON.stringify(Object.entries(localStorage).sort()),
+  );
+  await howThisWorks.click();
   check(
-    await page
-      .locator(".explainer")
-      .evaluate(
-        (block) =>
-          block.getBoundingClientRect().height +
-            parseFloat(getComputedStyle(block).marginBottom) <=
-          48,
-      ),
-    "Collapsed explainer adds no more than 48px above the chips",
+    (await about.isVisible()) &&
+      (await about.textContent()).includes("none of this is a knock on jev"),
+    "How this works opens a dialog containing none of this is a knock on jev",
+  );
+  check(
+    (await about.locator(".about-intro p").count()) === 8 &&
+      (await about.locator(".about-intro a").getAttribute("rel")) ===
+        "noreferrer",
+    "The dialog contains all eight introductory paragraphs and the model link",
+  );
+  check(
+    await about.evaluate((dialog) => {
+      const intro = dialog.querySelector(".about-intro");
+      const rule = getComputedStyle(dialog.querySelector(".about-divider"));
+      return (
+        dialog.getBoundingClientRect().width === 640 &&
+        getComputedStyle(intro).rowGap === "12px" &&
+        [...intro.querySelectorAll("p")].every((p) => {
+          const style = getComputedStyle(p);
+          return (
+            style.fontSize === "13px" &&
+            style.lineHeight === "19.5px" &&
+            style.color === getComputedStyle(dialog).color
+          );
+        }) &&
+        rule.borderTopWidth === "1px" &&
+        rule.marginTop === "24px" &&
+        rule.marginBottom === "24px"
+      );
+    }),
+    "The wide dialog preserves introductory typography and divider spacing",
+  );
+  const aboutCopy = await about.textContent();
+  await page.keyboard.press("Escape");
+  check(
+    (await page.getByRole("dialog").count()) === 0 &&
+      (await howThisWorks.evaluate(
+        (button) => button === document.activeElement,
+      )) &&
+      (await page.evaluate(() =>
+        JSON.stringify(Object.entries(localStorage).sort()),
+      )) === storageBeforeAbout,
+    "Closing the dialog restores focus without writing browser storage",
   );
   await page.reload();
   check(
-    await page
-      .getByRole("button", { name: "how this works", exact: true })
-      .isVisible(),
-    "Explainer collapse persists after reload",
+    (await howThisWorks.isVisible()) &&
+      (await page.getByRole("dialog").count()) === 0,
+    "How this works remains available after reload without opening automatically",
   );
   check(
     await page.locator(".sample-note").isVisible(),
     "Reload restores a seed's recorded run",
   );
-  await page
-    .getByRole("button", { name: "how this works", exact: true })
-    .click();
+  await howThisWorks.click();
   check(
-    (await page.locator(".explainer p").count()) === 8,
-    "Explainer expands again",
+    (await about.textContent()) === aboutCopy,
+    "How this works reopens with the same content",
   );
-  await page.getByRole("button", { name: "hide", exact: true }).click();
+  await about
+    .getByRole("button", { name: "Close dialog", exact: true })
+    .click();
   check(
     await page
       .locator(".answer-question mark, .answer-question del")
@@ -108,7 +154,7 @@ export default async function checkBrowser(page) {
     ).every((text) => !/\d+\.\d/.test(text)),
     "Displayed probabilities and deltas are integers",
   );
-  for (const width of [860, 859, 700, 320]) {
+  for (const width of [860, 859, 701, 700, 320]) {
     await page.setViewportSize({ width, height: 900 });
     await page.waitForFunction(() => {
       const plot = document.querySelector(".probability-plot");
@@ -131,6 +177,30 @@ export default async function checkBrowser(page) {
     check(
       layout.stacked === width < 860 && !layout.overflow,
       `Columns and page overflow are correct at ${width}px`,
+    );
+    check(
+      await page.locator(".topbar").evaluate((bar) => {
+        const brand = bar
+          .querySelector(".brand-lockup")
+          .getBoundingClientRect();
+        const nav = bar.querySelector("nav").getBoundingClientRect();
+        const buttons = [...bar.querySelectorAll("nav button")];
+        const [about, saved] = buttons.map((button) =>
+          button.getBoundingClientRect(),
+        );
+        return (
+          nav.top >= brand.bottom === window.innerWidth <= 700 &&
+          about.top === saved.top &&
+          about.right < saved.left &&
+          buttons.every(
+            (button) => getComputedStyle(button).fontSize === "13px",
+          ) &&
+          getComputedStyle(buttons[0]).color ===
+            getComputedStyle(document.querySelector(".primary-button"))
+              .backgroundColor
+        );
+      }),
+      `Header actions have the right order, styling, and wrapping at ${width}px`,
     );
     check(
       await page
@@ -172,6 +242,29 @@ export default async function checkBrowser(page) {
       ),
       `Wording fields fit their content after resizing to ${width}px`,
     );
+    if (width <= 700) {
+      await howThisWorks.click();
+      check(
+        await about.evaluate((dialog) => {
+          const bounds = dialog.getBoundingClientRect();
+          dialog.scrollTop = dialog.scrollHeight;
+          return (
+            bounds.height <= window.innerHeight - 48 &&
+            bounds.top >= 24 &&
+            bounds.bottom <= window.innerHeight - 24 &&
+            dialog.scrollTop > 0 &&
+            dialog.scrollWidth <= dialog.clientWidth
+          );
+        }),
+        `The about dialog scrolls within the viewport at ${width}px`,
+      );
+      await about.locator(".sources-list a").last().scrollIntoViewIfNeeded();
+      check(
+        await about.locator(".sources-list a").last().isVisible(),
+        `The last source is reachable in the mobile dialog at ${width}px`,
+      );
+      await page.keyboard.press("Escape");
+    }
   }
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page
@@ -299,6 +392,10 @@ export default async function checkBrowser(page) {
   await page
     .getByRole("button", { name: "Questions & method", exact: true })
     .click();
+  check(
+    (await about.isVisible()) && (await about.textContent()) === aboutCopy,
+    "Questions and method opens the same how this works dialog",
+  );
   check(
     (await page.locator(".connection-info").textContent()).includes(
       "Comparisons use a shared, capped budget",

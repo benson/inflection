@@ -60,90 +60,6 @@ const points = (n: number) => {
   return `${rounded ? (n > 0 ? "+" : "−") : ""}${rounded} pp`;
 };
 
-function Explainer() {
-  const [expanded, setExpanded] = useState(
-    () => readStorage<unknown>("explainer", true) !== false,
-  );
-  function toggle() {
-    writeStorage("explainer", !expanded);
-    setExpanded(!expanded);
-  }
-  return (
-    <section
-      className={`explainer ${expanded ? "" : "collapsed"}`}
-      aria-label="How this works"
-    >
-      {expanded ? (
-        <>
-          <div id="explainer-copy" className="explainer-copy">
-            <p>
-              jev is{" "}
-              <a
-                href="https://typesafe.ai/blog/introducing-system-one-models-and-jev"
-                target="_blank"
-                rel="noreferrer"
-              >
-                a new kind of model
-              </a>
-              . instead of writing a reply, it returns probabilities over a
-              fixed set of answers you give it.
-            </p>
-            <p>
-              so it can't decline, hedge, or pile on caveats. ask it a yes/no
-              question and all it can do is say how much yes and how much no.
-            </p>
-            <p>
-              that's what makes it fun. ask a chat model a spicy question and
-              you get a careful essay, or a refusal, and you'd need a second
-              model to turn the essay back into a number. jev just gives you
-              the number.
-            </p>
-            <p>
-              you'd expect a computer to read the same question the same way
-              however you phrase it. it doesn't. putting "do you think" in
-              front of a question moves the answer 20 points. "is it true
-              that" moves it 30 the other way. asking whether office workers
-              are less productive instead of whether remote workers are more
-              productive moves it 40.
-            </p>
-            <p>
-              it even happens on a fair coin. asked if it will land heads,
-              jev says 59%. asked if it will land tails, 46%. asked "do you
-              think it will land heads", 41%.
-            </p>
-            <p>
-              some of that is human. people are swayed by wording too. but two
-              questions that mean the same thing to a person should get the
-              same answer from one model of the world, even if not the same
-              digits. typesafe's docs say not to expect arithmetic consistency
-              between separately asked questions. this site is what that looks
-              like in practice.
-            </p>
-            <p>
-              this doesn't happen on every question. in a first screen of
-              fourteen topics most barely moved, and the examples here are the
-              ones that did. the point is that it can happen, on edits you
-              didn't mean anything by.
-            </p>
-            <p>
-              none of this is a knock on jev. it's a genuinely useful tool, and
-              being able to see this at all is the point. try the examples or
-              write your own. it runs on my shared budget, so go easy.
-            </p>
-          </div>
-          <button className="text-button" aria-expanded={true} onClick={toggle}>
-            hide
-          </button>
-        </>
-      ) : (
-        <button className="text-button" aria-expanded={false} onClick={toggle}>
-          how this works <ChevronDown size={16} />
-        </button>
-      )}
-    </section>
-  );
-}
-
 function growTextarea(element: HTMLTextAreaElement) {
   element.style.height = "auto";
   element.style.height = `${element.scrollHeight + element.offsetHeight - element.clientHeight}px`;
@@ -196,7 +112,7 @@ function Modal({
   wide?: boolean;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = ref.current;
     el?.showModal();
     return () => el?.close();
@@ -613,7 +529,7 @@ export default function App() {
       findRecordedRun(experiment),
     [selectedRun, experiment, history],
   );
-  const [dialog, setDialog] = useState<"sources" | "saved" | "request" | null>(
+  const [dialog, setDialog] = useState<"about" | "saved" | "request" | null>(
     null,
   );
   const [advanced, setAdvanced] = useState(false);
@@ -783,6 +699,12 @@ export default function App() {
         </div>
         <nav>
           <button
+            className="text-button about-nav"
+            onClick={() => setDialog("about")}
+          >
+            how this works
+          </button>
+          <button
             className="text-button saved-nav"
             disabled={busy}
             onClick={() => setDialog("saved")}
@@ -795,7 +717,6 @@ export default function App() {
         </nav>
       </header>
       <main className="layout">
-        <Explainer />
         <nav className="example-chips" aria-label="Example questions">
           {seeds.map((s) => (
             <button
@@ -1137,30 +1058,71 @@ export default function App() {
         <footer className="page-footer">
           <a href="https://bensonperry.com/">bensonperry.com</a>
           {" · "}
-          <button className="text-button" onClick={() => setDialog("sources")}>
+          <button className="text-button" onClick={() => setDialog("about")}>
             Questions & method
           </button>
           {" · Jev 1.13 via OpenRouter · shared budget, 20 runs per minute"}
         </footer>
       </main>
-      {dialog === "sources" && (
-        <Modal title="Questions & method" close={() => setDialog(null)} wide>
-          <div className="connection-info">
-            <span>Model</span>
-            <strong>TypeSafe / Jev 1.13</strong>
-            <span>Access</span>
-            <strong>20 runs per minute</strong>
+      {dialog === "about" && (
+        <Modal title="how this works" close={() => setDialog(null)} wide>
+          <div className="about-intro">
             <p>
-              Comparisons use a shared, capped budget; questions go through
-              Inflection’s server to OpenRouter and TypeSafe; saved experiments
-              stay in your browser.
+              jev is{" "}
+              <a
+                href="https://typesafe.ai/blog/introducing-system-one-models-and-jev"
+                target="_blank"
+                rel="noreferrer"
+              >
+                a new kind of model
+              </a>
+              . instead of writing a reply, it returns probabilities over a
+              fixed set of answers you give it.
+            </p>
+            <p>
+              so it can't decline, hedge, or pile on caveats. ask it a yes/no
+              question and all it can do is say how much yes and how much no.
+            </p>
+            <p>
+              that's what makes it fun. ask a chat model a spicy question and
+              you get a careful essay, or a refusal, and you'd need a second
+              model to turn the essay back into a number. jev just gives you
+              the number.
+            </p>
+            <p>
+              you'd expect a computer to read the same question the same way
+              however you phrase it. it doesn't. putting "do you think" in
+              front of a question moves the answer 20 points. "is it true
+              that" moves it 30 the other way. asking whether office workers
+              are less productive instead of whether remote workers are more
+              productive moves it 40.
+            </p>
+            <p>
+              it even happens on a fair coin. asked if it will land heads,
+              jev says 59%. asked if it will land tails, 46%. asked "do you
+              think it will land heads", 41%.
+            </p>
+            <p>
+              some of that is human. people are swayed by wording too. but two
+              questions that mean the same thing to a person should get the
+              same answer from one model of the world, even if not the same
+              digits. typesafe's docs say not to expect arithmetic consistency
+              between separately asked questions. this site is what that looks
+              like in practice.
+            </p>
+            <p>
+              this doesn't happen on every question. in a first screen of
+              fourteen topics most barely moved, and the examples here are the
+              ones that did. the point is that it can happen, on edits you
+              didn't mean anything by.
+            </p>
+            <p>
+              none of this is a knock on jev. it's a genuinely useful tool, and
+              being able to see this at all is the point. try the examples or
+              write your own. it runs on my shared budget, so go easy.
             </p>
           </div>
-          <p>
-            If a version changes the meaning, tag it “Changed framing” to
-            exclude it from wording swing.
-          </p>
-          <h3>What the experiment measures</h3>
+          <hr className="about-divider" />
           <p>
             <a
               href="https://docs.typesafe.ai/model-jaggedness/jev-1.13"
@@ -1174,16 +1136,32 @@ export default function App() {
             swing here is exactly such an identity. The numbers measure how
             large that gap gets on questions a person would call the same.
           </p>
+          <h3>What the experiment measures</h3>
           <p>
             Jev assigns probabilities to your answer options. Both yes/no and
             multiple-choice questions use its Choice primitive. Each wording is
             evaluated independently against the same context.
           </p>
           <p>
+            If a version changes the meaning, tag it “Changed framing” to
+            exclude it from wording swing.
+          </p>
+          <p>
             Repeat runs show observed variability, not statistical confidence
             intervals. Controls use the original question and are excluded from
             wording swing.
           </p>
+          <div className="connection-info">
+            <span>Model</span>
+            <strong>TypeSafe / Jev 1.13</strong>
+            <span>Access</span>
+            <strong>20 runs per minute</strong>
+            <p>
+              Comparisons use a shared, capped budget; questions go through
+              Inflection’s server to OpenRouter and TypeSafe; saved experiments
+              stay in your browser.
+            </p>
+          </div>
           <h3>Reading & sources</h3>
           <div className="sources-list">
             {sources.map((s) => (
