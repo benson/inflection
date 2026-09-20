@@ -1,0 +1,1521 @@
+{
+  "startedAt": "2026-09-20T16:37:06.508Z",
+  "endpoint": "https://inflection-api.bensonperry.workers.dev/decisions",
+  "origin": "https://bensonperry.com",
+  "answerOrder": "normal",
+  "repeats": 1,
+  "runs": [
+    {
+      "id": "reno",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:06.510Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think Reno, Nevada is farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that Reno, Nevada is farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Compared with Los Angeles, California, is Reno, Nevada farther west?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922226-idYrD7D0xpxxpUj5O2Ce",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.64,
+              "yes": 0.36
+            },
+            "confidence": 0.29
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.65,
+              "yes": 0.35
+            },
+            "confidence": 0.29
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.5,
+              "yes": 0.5
+            },
+            "confidence": 0.01
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.31,
+              "yes": 0.69
+            },
+            "confidence": 0.37
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.97,
+              "yes": 0.03
+            },
+            "confidence": 0.95
+          }
+        },
+        "usage": {
+          "input_tokens": 534,
+          "output_tokens": 147,
+          "cost": 0.000022428
+        }
+      }
+    },
+    {
+      "id": "maine",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:10.187Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is Maine the US state closest to Africa?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think Maine is the US state closest to Africa?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that Maine is the US state closest to Africa?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Of all US states, is Maine the closest to Africa?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Is the US state closest to Africa Maine?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922230-T8No28YggQfxdkq0LUXv",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.35,
+              "yes": 0.65
+            },
+            "confidence": 0.3
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.44,
+              "yes": 0.56
+            },
+            "confidence": 0.12
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.69,
+              "no": 0.31
+            },
+            "confidence": 0.37
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.34,
+              "yes": 0.66
+            },
+            "confidence": 0.32
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.67,
+              "yes": 0.33
+            },
+            "confidence": 0.35
+          }
+        },
+        "usage": {
+          "input_tokens": 519,
+          "output_tokens": 147,
+          "cost": 0.000021798
+        }
+      }
+    },
+    {
+      "id": "trees",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:13.700Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Are there more trees on Earth than stars in the Milky Way?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think there are more trees on Earth than stars in the Milky Way?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that there are more trees on Earth than stars in the Milky Way?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Are there fewer stars in the Milky Way than trees on Earth?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Does the number of trees on Earth exceed the number of stars in the Milky Way?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922233-FNqEnFaMmvueHEGYb6Bp",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.16,
+              "no": 0.84
+            },
+            "confidence": 0.68
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.11,
+              "no": 0.89
+            },
+            "confidence": 0.77
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.16,
+              "no": 0.84
+            },
+            "confidence": 0.67
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.09,
+              "no": 0.91
+            },
+            "confidence": 0.82
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.15,
+              "no": 0.85
+            },
+            "confidence": 0.7
+          }
+        },
+        "usage": {
+          "input_tokens": 545,
+          "output_tokens": 147,
+          "cost": 0.00002289
+        }
+      }
+    },
+    {
+      "id": "hippos",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:17.208Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Do hippos kill more people each year than sharks do?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think hippos kill more people each year than sharks do?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that hippos kill more people each year than sharks do?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Do sharks kill fewer people each year than hippos do?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Each year, do hippos kill more people than sharks?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922237-5h677eGTCb4cJU3g8FFH",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 0.99
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.01,
+              "yes": 0.99
+            },
+            "confidence": 0.99
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.01,
+              "yes": 0.99
+            },
+            "confidence": 0.98
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.07,
+              "yes": 0.93
+            },
+            "confidence": 0.86
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.01,
+              "yes": 0.99
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 529,
+          "output_tokens": 147,
+          "cost": 0.000022218
+        }
+      }
+    },
+    {
+      "id": "cubs",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:20.803Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think the Ottoman Empire still existed the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that the Ottoman Empire still existed the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "When the Chicago Cubs last won the World Series before 2016, was the Ottoman Empire still in existence?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922241-pFyvdR3b23S070BDfyfq",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.07,
+              "no": 0.93
+            },
+            "confidence": 0.85
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.08,
+              "no": 0.92
+            },
+            "confidence": 0.85
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.11,
+              "no": 0.89
+            },
+            "confidence": 0.79
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.59,
+              "no": 0.41
+            },
+            "confidence": 0.18
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.63,
+              "no": 0.37
+            },
+            "confidence": 0.26
+          }
+        },
+        "usage": {
+          "input_tokens": 586,
+          "output_tokens": 147,
+          "cost": 0.000024612
+        }
+      }
+    },
+    {
+      "id": "alcohol",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:24.306Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is moderate alcohol consumption better for heart health than not drinking at all?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think moderate alcohol consumption is better for heart health than not drinking at all?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that moderate alcohol consumption is better for heart health than not drinking at all?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is not drinking at all worse for heart health than moderate alcohol consumption?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "For heart health, is moderate alcohol consumption better than not drinking at all?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922244-FtRRt45yZybGkTZ9T8hg",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.08,
+              "no": 0.92
+            },
+            "confidence": 0.83
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.05,
+              "no": 0.95
+            },
+            "confidence": 0.89
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.06,
+              "no": 0.94
+            },
+            "confidence": 0.89
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.14,
+              "no": 0.86
+            },
+            "confidence": 0.72
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.03,
+              "no": 0.97
+            },
+            "confidence": 0.94
+          }
+        },
+        "usage": {
+          "input_tokens": 542,
+          "output_tokens": 147,
+          "cost": 0.000022764
+        }
+      }
+    },
+    {
+      "id": "evs",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:27.811Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Over their full lifetime, do electric cars produce less greenhouse gas than gasoline cars?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think electric cars produce less greenhouse gas than gasoline cars over their full lifetime?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that over their full lifetime, electric cars produce less greenhouse gas than gasoline cars?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Do gasoline cars produce more greenhouse gas than electric cars over their full lifetime?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Compared with gasoline cars, do electric cars produce less greenhouse gas over their full lifetime?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922248-XXZDNhOxZvkHPjpPKA9O",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.99,
+              "no": 0.01
+            },
+            "confidence": 0.99
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 0.99
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.99,
+              "no": 0.01
+            },
+            "confidence": 0.98
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.99,
+              "no": 0.01
+            },
+            "confidence": 0.99
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 0.99
+          }
+        },
+        "usage": {
+          "input_tokens": 549,
+          "output_tokens": 147,
+          "cost": 0.000023058
+        }
+      }
+    },
+    {
+      "id": "minwage",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:31.362Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Do moderate increases in the minimum wage reduce employment?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think moderate increases in the minimum wage reduce employment?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that moderate increases in the minimum wage reduce employment?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is employment reduced by moderate increases in the minimum wage?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "When the minimum wage is moderately increased, does employment fall?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922251-0G7ZRbbqqgipQOXLPEQw",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.68,
+              "yes": 0.32
+            },
+            "confidence": 0.37
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.88,
+              "yes": 0.12
+            },
+            "confidence": 0.76
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.58,
+              "yes": 0.42
+            },
+            "confidence": 0.17
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.77,
+              "yes": 0.23
+            },
+            "confidence": 0.54
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.47,
+              "yes": 0.53
+            },
+            "confidence": 0.06
+          }
+        },
+        "usage": {
+          "input_tokens": 522,
+          "output_tokens": 147,
+          "cost": 0.000021924
+        }
+      }
+    },
+    {
+      "id": "homicide",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:35.175Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is the US homicide rate higher today than it was in 1960?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think the US homicide rate is higher today than it was in 1960?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that the US homicide rate is higher today than it was in 1960?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Was the US homicide rate lower in 1960 than it is today?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Compared with 1960, is the US homicide rate higher today?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922255-mh034yEYUxdKmP77kkRP",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.69,
+              "no": 0.31
+            },
+            "confidence": 0.37
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.67,
+              "no": 0.33
+            },
+            "confidence": 0.35
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.68,
+              "no": 0.32
+            },
+            "confidence": 0.36
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.54,
+              "no": 0.46
+            },
+            "confidence": 0.08
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.34,
+              "no": 0.66
+            },
+            "confidence": 0.31
+          }
+        },
+        "usage": {
+          "input_tokens": 556,
+          "output_tokens": 147,
+          "cost": 0.000023352
+        }
+      }
+    },
+    {
+      "id": "cuba",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:38.709Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is life expectancy in Cuba higher than in the United States?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think life expectancy in Cuba is higher than in the United States?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that life expectancy in Cuba is higher than in the United States?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is life expectancy in the United States lower than in Cuba?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Compared with the United States, is life expectancy in Cuba higher?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922258-l8rlE91m3RMLdYGu2TN7",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.61,
+              "no": 0.39
+            },
+            "confidence": 0.23
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.54,
+              "no": 0.46
+            },
+            "confidence": 0.07
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.5,
+              "no": 0.5
+            },
+            "confidence": 0.01
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.49,
+              "no": 0.51
+            },
+            "confidence": 0.02
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.49,
+              "no": 0.51
+            },
+            "confidence": 0.02
+          }
+        },
+        "usage": {
+          "input_tokens": 533,
+          "output_tokens": 147,
+          "cost": 0.000022386
+        }
+      }
+    },
+    {
+      "id": "solar",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:42.273Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is new utility-scale solar power cheaper per megawatt-hour than new nuclear power?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think new utility-scale solar power is cheaper per megawatt-hour than new nuclear power?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that new utility-scale solar power is cheaper per megawatt-hour than new nuclear power?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is new nuclear power more expensive per megawatt-hour than new utility-scale solar power?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Per megawatt-hour, is new utility-scale solar power cheaper than new nuclear power?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922262-1D6flphGZQNPEBULkZtQ",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 0.99
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 0.99
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 0.99
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.96,
+              "no": 0.04
+            },
+            "confidence": 0.91
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.01,
+              "yes": 0.99
+            },
+            "confidence": 0.97
+          }
+        },
+        "usage": {
+          "input_tokens": 558,
+          "output_tokens": 147,
+          "cost": 0.000023436
+        }
+      }
+    },
+    {
+      "id": "cleopatra",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:45.794Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Did Cleopatra live closer in time to the Moon landing than to the building of the Great Pyramid?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think Cleopatra lived closer in time to the Moon landing than to the building of the Great Pyramid?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that Cleopatra lived closer in time to the Moon landing than to the building of the Great Pyramid?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Was Cleopatra's lifetime closer to the Moon landing than to the building of the Great Pyramid?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Is the building of the Great Pyramid further in time from Cleopatra than the Moon landing is?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922266-I7dsbbGwNb7JqOISK9ZW",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.03,
+              "yes": 0.97
+            },
+            "confidence": 0.95
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.01,
+              "yes": 0.99
+            },
+            "confidence": 0.98
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.99,
+              "no": 0.01
+            },
+            "confidence": 0.99
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.96,
+              "no": 0.04
+            },
+            "confidence": 0.91
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.96,
+              "no": 0.04
+            },
+            "confidence": 0.91
+          }
+        },
+        "usage": {
+          "input_tokens": 572,
+          "output_tokens": 147,
+          "cost": 0.000024024
+        }
+      }
+    },
+    {
+      "id": "sharks",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:49.301Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Are sharks older than trees?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think sharks are older than trees?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that sharks are older than trees?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Did sharks exist before trees did?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Are trees younger than sharks?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922269-qUDOLozZxRlRquTleO9d",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.92,
+              "no": 0.08
+            },
+            "confidence": 0.83
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.93,
+              "no": 0.07
+            },
+            "confidence": 0.85
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.94,
+              "no": 0.06
+            },
+            "confidence": 0.88
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.98,
+              "no": 0.02
+            },
+            "confidence": 0.96
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.56,
+              "no": 0.44
+            },
+            "confidence": 0.11
+          }
+        },
+        "usage": {
+          "input_tokens": 502,
+          "output_tokens": 147,
+          "cost": 0.000021084
+        }
+      }
+    },
+    {
+      "id": "childtax",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:37:52.882Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Did the expanded US child tax credit in 2021 reduce child poverty?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think the expanded US child tax credit in 2021 reduced child poverty?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that the expanded US child tax credit in 2021 reduced child poverty?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Was child poverty reduced by the expanded US child tax credit in 2021?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "In 2021, did the expanded US child tax credit reduce child poverty?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922273-wWEhzssuVbICT1UkrcEO",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 0.99
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 0.99
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 0.99
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 0.99
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.99,
+              "no": 0.01
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 556,
+          "output_tokens": 147,
+          "cost": 0.000023352
+        }
+      }
+    }
+  ]
+}

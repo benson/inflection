@@ -118,7 +118,7 @@ test("proxy adds the server secret only upstream and sanitizes provider failures
     assert.equal(response.status, 200);
     assert.equal(response.headers.get("Access-Control-Allow-Origin"), origin);
     const data = await response.json();
-    assert.equal(data.answers.original.choice, "yes");
+    assert.equal(data.answers.original.choice, "no");
     assert.equal(data.internal, undefined);
     for (const status of [401, 402, 403, 429, 500]) {
       errorStatus = status;

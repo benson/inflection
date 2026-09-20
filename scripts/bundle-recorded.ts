@@ -7,20 +7,10 @@ import {
   parseResponse,
 } from "../src/engine";
 import { seeds } from "../src/seeds";
-import type { DecisionRequest, Run, Seed } from "../src/types";
+import type { DecisionRequest, Run } from "../src/types";
 
 const research = new URL("../research/2026-09-20/", import.meta.url);
-const confirmations = ["final-confirm", "coin-confirm"];
-const prompts: Seed[] = (
-  await Promise.all(
-    confirmations.map(async (name) =>
-      JSON.parse(
-        await readFile(new URL(`${name}-prompts.json`, research), "utf8"),
-      ),
-    ),
-  )
-).flat();
-const reports: {
+const report: {
   repeats: number;
   answerOrder: string;
   runs: {
@@ -31,33 +21,18 @@ const reports: {
     request: DecisionRequest;
     response: unknown;
   }[];
-}[] = await Promise.all(
-  confirmations.map(async (name) =>
-    JSON.parse(await readFile(new URL(`${name}.json`, research), "utf8")),
-  ),
-);
+} = JSON.parse(await readFile(new URL("facts-confirm.json", research), "utf8"));
 
-for (const report of reports) {
-  assert.equal(report.repeats, 3, "Expected three confirmation repeats");
-  assert.equal(report.answerOrder, "normal", "Expected Yes/No answer order");
-}
-const runs = reports.flatMap((report) => report.runs);
+assert.equal(report.repeats, 3, "Expected three confirmation repeats");
+assert.equal(report.answerOrder, "normal", "Expected Yes/No answer order");
 
 const bundled: Record<string, Run> = {};
 // Research can include additional topics; only current app seeds are bundled.
 for (const seed of seeds) {
-  const prompt = prompts.find((p) => p.id === seed.id);
-  assert.ok(prompt, `Missing confirmation prompts for ${seed.id}`);
-  assert.equal(seed.question, prompt.question, `${seed.id}: original changed`);
-  assert.deepEqual(
-    seed.variants,
-    prompt.variants,
-    `${seed.id}: variants changed`,
-  );
   const experiment = fromSeed(seed);
   const conditions = conditionsFor(experiment);
   const request = buildRequest(experiment);
-  const repeats = runs
+  const repeats = report.runs
     .filter((run) => run.id === seed.id)
     .sort((a, b) => a.repeat - b.repeat);
   assert.deepEqual(

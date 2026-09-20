@@ -1,28 +1,39 @@
 import type { Seed } from "./types";
 
-// Confirmed wordings from research/2026-09-20/{coin,final}-confirm-prompts.json.
+// Confirmed wordings from research/2026-09-20/facts-confirm-prompts.json.
 export const seeds: Seed[] = [
   {
-    id: "fair-coin",
-    title: "Fair coin",
-    category: "Probability",
-    question: "If I flip a fair coin, will it land heads?",
+    id: "reno-los-angeles",
+    title: "Reno and Los Angeles",
+    category: "Geography",
+    question: "Is Reno, Nevada farther west than Los Angeles, California?",
     variants: [
-      "If I flip a fair coin, will it land tails?",
-      "Do you think a fair coin flip will land heads?",
-      "Will a fair coin come up heads when flipped?",
+      "Is Los Angeles, California farther east than Reno, Nevada?",
+      "Compared with Los Angeles, California, is Reno, Nevada farther west?",
+      "Is it true that Reno, Nevada is farther west than Los Angeles, California?",
     ],
   },
   {
-    id: "four-day-week",
-    title: "Four-day week",
-    category: "Work",
+    id: "cubs-ottomans",
+    title: "Cubs and the Ottomans",
+    category: "History",
     question:
-      "Is a four-day work week better for companies than a five-day week?",
+      "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
     variants: [
-      "Do you think a four-day work week is better for companies than a five-day week?",
-      "For companies, is a four-day work week better than a five-day week?",
-      "Is a five-day work week worse for companies than a four-day week?",
+      "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+      "When the Chicago Cubs last won the World Series before 2016, was the Ottoman Empire still in existence?",
+      "Do you think the Ottoman Empire still existed the last time the Chicago Cubs won the World Series before 2016?",
+    ],
+  },
+  {
+    id: "maine-africa",
+    title: "Closest state to Africa",
+    category: "Geography",
+    question: "Is Maine the US state closest to Africa?",
+    variants: [
+      "Is the US state closest to Africa Maine?",
+      "Of all US states, is Maine the closest to Africa?",
+      "Do you think Maine is the US state closest to Africa?",
     ],
   },
   {
@@ -34,28 +45,6 @@ export const seeds: Seed[] = [
       "Do you think self-driving cars are safer than human drivers?",
       "Is it true that self-driving cars are safer than human drivers?",
       "Are human drivers less safe than self-driving cars?",
-    ],
-  },
-  {
-    id: "remote-work",
-    title: "Remote work",
-    category: "Work",
-    question: "Are remote workers more productive than office workers?",
-    variants: [
-      "Is it true that remote workers are more productive than office workers?",
-      "Are office workers less productive than remote workers?",
-      "Compared with office workers, are remote workers more productive?",
-    ],
-  },
-  {
-    id: "wealth-tax",
-    title: "Wealth tax",
-    category: "Economics",
-    question:
-      "Should the government tax wealth that people have already paid income tax on?",
-    variants: [
-      "Do you think the government should tax wealth that people have already paid income tax on?",
-      "Should wealth that people have already paid income tax on be taxed by the government?",
     ],
   },
 ];

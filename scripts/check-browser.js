@@ -35,8 +35,9 @@ export default async function checkBrowser(page) {
   check(
     (await page
       .getByRole("textbox", { name: "Original question", exact: true })
-      .inputValue()) === "If I flip a fair coin, will it land heads?",
-    "First visit opens the fair coin example",
+      .inputValue()) ===
+      "Is Reno, Nevada farther west than Los Angeles, California?",
+    "First visit opens the Reno and Los Angeles example",
   );
   check(
     (await page
@@ -47,7 +48,7 @@ export default async function checkBrowser(page) {
   check(
     (await page.locator(".stat-number").allTextContents())
       .map((text) => text.trim())
-      .join(" / ") === "18 / 2 of 3",
+      .join(" / ") === "66 / 1 of 3",
     "Recorded stats show integer swing and flips out of comparable wordings",
   );
   check(
@@ -79,6 +80,20 @@ export default async function checkBrowser(page) {
       (await about.locator(".about-intro a").getAttribute("rel")) ===
         "noreferrer",
     "The dialog contains all eight introductory paragraphs and the model link",
+  );
+  check(
+    JSON.stringify(
+      (await about.locator(".about-intro p").allTextContents())
+        .slice(3, 7)
+        .map((text) => text.replace(/\s+/g, " ").trim()),
+    ) ===
+      JSON.stringify([
+        `you'd expect a computer to read the same question the same way however you phrase it. it doesn't. reno is west of los angeles. ask "is reno farther west than los angeles" and jev says 33% yes. ask "is los angeles farther east than reno" and it says 69%. same fact, same words, different order.`,
+        `this isn't noise on questions with no answer. on settled facts, monty hall, the birthday problem, nuclear versus coal, jev doesn't move a point however you phrase it. the flips happen where the model is unsure of a fact, and it doesn't tell you it's unsure. the number just moves.`,
+        `two questions that mean the same thing to a person should get the same answer from one model of the world, even if not the same digits. typesafe's docs say not to expect arithmetic consistency between separately asked questions. this site is what that looks like in practice.`,
+        `this doesn't happen on every question. in a screen of about forty questions, most didn't move at all, and the examples here are the ones that did. the point is that it can happen, on edits you didn't mean anything by.`,
+      ]),
+    "The dialog uses the exact fact-based explainer copy",
   );
   check(
     await about.evaluate((dialog) => {
@@ -279,15 +294,14 @@ export default async function checkBrowser(page) {
 
   const chips = page.getByRole("navigation", { name: "Example questions" });
   check(
-    (await chips.getByRole("button").count()) === 6,
-    "Five starter examples and a custom question chip are shown",
+    (await chips.getByRole("button").count()) === 5,
+    "Four starter examples and a custom question chip are shown",
   );
   for (const title of [
-    "Fair coin",
-    "Four-day week",
+    "Reno and Los Angeles",
+    "Cubs and the Ottomans",
+    "Closest state to Africa",
     "Self-driving safety",
-    "Remote work",
-    "Wealth tax",
   ]) {
     await chips.getByRole("button", { name: title, exact: true }).click();
     check(
@@ -614,11 +628,11 @@ export default async function checkBrowser(page) {
     ),
     "Phone example chips form a horizontally scrolling row",
   );
-  await chips.getByRole("button", { name: /Remote work/ }).click();
+  await chips.getByRole("button", { name: /Closest state to Africa/ }).click();
   check(
     (await page
       .getByRole("textbox", { name: "Experiment title" })
-      .inputValue()) === "Remote work",
+      .inputValue()) === "Closest state to Africa",
     "Mobile example chip selection works",
   );
   check(

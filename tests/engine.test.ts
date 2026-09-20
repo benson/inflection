@@ -16,14 +16,11 @@ import {
 } from "../src/engine";
 import { seeds } from "../src/seeds";
 import { findRecordedRun, recordedRun } from "../src/recorded";
-import finalPrompts from "../research/2026-09-20/final-confirm-prompts.json";
-import coinPrompts from "../research/2026-09-20/coin-confirm-prompts.json";
+import factPrompts from "../research/2026-09-20/facts-confirm-prompts.json";
+import factConfirm from "../research/2026-09-20/facts-confirm.json";
 import { isDraft, isExperiment } from "../src/storage";
 
-const prompts = [
-  coinPrompts.find((prompt) => prompt.id === "fair-coin")!,
-  ...finalPrompts,
-];
+const prompts = factPrompts.filter((prompt) => prompt.id !== "sharks-trees");
 const firstRecording = () => recordedRun(seeds[0].id)!;
 
 test("every seed bundles three validated responses to its exact confirmed request", () => {
@@ -38,6 +35,20 @@ test("every seed bundles three validated responses to its exact confirmed reques
     assert.deepEqual(run.conditions, conditionsFor(fromSeed(seed)));
     assert.equal(run.responses.length, 3);
     assert.equal(run.sample, true);
+    const repeats = factConfirm.runs
+      .filter((repeat) => repeat.id === seed.id)
+      .sort((a, b) => a.repeat - b.repeat);
+    assert.deepEqual(
+      repeats.map((repeat) => repeat.repeat),
+      [1, 2, 3],
+    );
+    for (const repeat of repeats) {
+      assert.deepEqual(repeat.request, buildRequest(fromSeed(seed)));
+      assert.deepEqual(
+        parseResponse(repeat.response, run.conditions),
+        run.responses[repeat.repeat - 1],
+      );
+    }
     for (const response of run.responses) {
       assert.deepEqual(
         parseResponse({ ...response, id: response.requestId }, run.conditions),
@@ -129,7 +140,7 @@ test("changed experiment inputs cannot borrow results from an earlier version", 
   assert.equal(findMatchingRun(run.experiment, [run]), run);
 });
 
-test("five unique, valid examples, each with two or three different paraphrases", () => {
+test("four unique, valid examples, each with two or three different paraphrases", () => {
   assert.ok(seeds.length >= 2 && seeds.length <= 5);
   assert.equal(new Set(seeds.map((s) => s.id)).size, seeds.length);
   assert.equal(new Set(seeds.map((s) => s.question)).size, seeds.length);
@@ -146,11 +157,10 @@ test("five unique, valid examples, each with two or three different paraphrases"
   assert.deepEqual(
     seeds.map((s) => s.id),
     [
-      "fair-coin",
-      "four-day-week",
+      "reno-los-angeles",
+      "cubs-ottomans",
+      "maine-africa",
       "self-driving-safety",
-      "remote-work",
-      "wealth-tax",
     ],
   );
 });
@@ -200,7 +210,7 @@ test("model responses reject missing, NaN, malformed, non-normalized and contrad
     conditions = run.conditions;
   assert.equal(
     parseResponse(run.responses[0], conditions).answers.original.choice,
-    "yes",
+    "no",
   );
   for (const mutate of [
     (r: any) => delete r.answers.v1,
@@ -208,7 +218,7 @@ test("model responses reject missing, NaN, malformed, non-normalized and contrad
     (r: any) => (r.answers.v1.probabilities.yes = 2),
     (r: any) => (r.answers.v1.probabilities.yes = 0.9),
     (r: any) => (r.answers.v1.probabilities.third = 0),
-    (r: any) => (r.answers.v1.choice = "yes"),
+    (r: any) => (r.answers.v1.choice = "no"),
   ]) {
     const bad = structuredClone(run.responses[0]);
     mutate(bad);
@@ -217,9 +227,9 @@ test("model responses reject missing, NaN, malformed, non-normalized and contrad
 });
 test("percentage-point swing excludes controls and changed framing, and ties stay ties", () => {
   const run = firstRecording();
-  assert.ok(Math.abs(maxWordingSwing(run) - 0.18) < 1e-9);
+  assert.ok(Math.abs(maxWordingSwing(run) - 0.6566666666666666) < 1e-9);
   run.conditions[2].kind = "framing";
-  assert.ok(Math.abs(maxWordingSwing(run) - 0.1333333333333333) < 1e-9);
+  assert.ok(Math.abs(maxWordingSwing(run) - 0.3533333333333333) < 1e-9);
   for (const response of run.responses)
     response.answers.original.probabilities = { yes: 0.5, no: 0.5 };
   assert.deepEqual(winners(run, "original"), ["yes", "no"]);
@@ -227,7 +237,7 @@ test("percentage-point swing excludes controls and changed framing, and ties sta
 test("means average probabilities across repetitions, not just winning labels", () => {
   const run = firstRecording();
   assert.ok(
-    Math.abs(meanProb(run, "original", "yes") - (0.6 + 0.58 + 0.59) / 3) <
+    Math.abs(meanProb(run, "original", "yes") - (0.37 + 0.32 + 0.31) / 3) <
       1e-9,
   );
 });

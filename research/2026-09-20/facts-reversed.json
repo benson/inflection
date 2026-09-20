@@ -1,0 +1,464 @@
+{
+  "startedAt": "2026-09-20T16:39:17.389Z",
+  "endpoint": "https://inflection-api.bensonperry.workers.dev/decisions",
+  "origin": "https://bensonperry.com",
+  "answerOrder": "reversed",
+  "repeats": 1,
+  "runs": [
+    {
+      "id": "reno-los-angeles",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:39:17.390Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Compared with Los Angeles, California, is Reno, Nevada farther west?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is it true that Reno, Nevada is farther west than Los Angeles, California?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922357-GxBBMh0cLpIr61SJxQCP",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.33,
+              "no": 0.67
+            },
+            "confidence": 0.34
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.66,
+              "no": 0.34
+            },
+            "confidence": 0.33
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.05,
+              "no": 0.95
+            },
+            "confidence": 0.91
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.46,
+              "no": 0.54
+            },
+            "confidence": 0.09
+          }
+        },
+        "usage": {
+          "input_tokens": 478,
+          "output_tokens": 118,
+          "cost": 0.000020076
+        }
+      }
+    },
+    {
+      "id": "cubs-ottomans",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:39:20.985Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "When the Chicago Cubs last won the World Series before 2016, was the Ottoman Empire still in existence?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Do you think the Ottoman Empire still existed the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922361-lP5oUO9jUs5cEYtMGJZX",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.88,
+              "yes": 0.12
+            },
+            "confidence": 0.76
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.41,
+              "yes": 0.59
+            },
+            "confidence": 0.19
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.28,
+              "yes": 0.72
+            },
+            "confidence": 0.43
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.9,
+              "yes": 0.1
+            },
+            "confidence": 0.79
+          }
+        },
+        "usage": {
+          "input_tokens": 519,
+          "output_tokens": 118,
+          "cost": 0.000021798
+        }
+      }
+    },
+    {
+      "id": "maine-africa",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:39:24.488Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is Maine the US state closest to Africa?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Is the US state closest to Africa Maine?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Of all US states, is Maine the closest to Africa?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Do you think Maine is the US state closest to Africa?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922364-JdwmxLPDV38BpefmlAuq",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.68,
+              "no": 0.32
+            },
+            "confidence": 0.35
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.4,
+              "no": 0.6
+            },
+            "confidence": 0.21
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.68,
+              "no": 0.32
+            },
+            "confidence": 0.36
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.64,
+              "no": 0.36
+            },
+            "confidence": 0.27
+          }
+        },
+        "usage": {
+          "input_tokens": 465,
+          "output_tokens": 118,
+          "cost": 0.00001953
+        }
+      }
+    },
+    {
+      "id": "sharks-trees",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:39:28.054Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Are sharks older than trees?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Are trees younger than sharks?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Did sharks exist before trees did?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is it true that sharks are older than trees?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922368-GlQGuGIrtStXA6U0XVel",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.04,
+              "yes": 0.96
+            },
+            "confidence": 0.92
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.35,
+              "yes": 0.65
+            },
+            "confidence": 0.3
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.98,
+              "no": 0.02
+            },
+            "confidence": 0.96
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.05,
+              "yes": 0.95
+            },
+            "confidence": 0.9
+          }
+        },
+        "usage": {
+          "input_tokens": 452,
+          "output_tokens": 118,
+          "cost": 0.000018984
+        }
+      }
+    },
+    {
+      "id": "self-driving-safety",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:39:31.635Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Are self-driving cars safer than human drivers?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think self-driving cars are safer than human drivers?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that self-driving cars are safer than human drivers?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Are human drivers less safe than self-driving cars?",
+            "criteria": {
+              "no": "No",
+              "yes": "Yes"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922371-ilZJ0xolgUd0cezBeGcv",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.29,
+              "no": 0.71
+            },
+            "confidence": 0.41
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.6,
+              "no": 0.4
+            },
+            "confidence": 0.2
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.13,
+              "no": 0.87
+            },
+            "confidence": 0.75
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.21,
+              "no": 0.79
+            },
+            "confidence": 0.57
+          }
+        },
+        "usage": {
+          "input_tokens": 467,
+          "output_tokens": 118,
+          "cost": 0.000019614
+        }
+      }
+    }
+  ]
+}

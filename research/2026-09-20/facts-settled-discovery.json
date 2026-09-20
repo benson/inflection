@@ -1,0 +1,1737 @@
+{
+  "startedAt": "2026-09-20T16:35:20.094Z",
+  "endpoint": "https://inflection-api.bensonperry.workers.dev/decisions",
+  "origin": "https://bensonperry.com",
+  "answerOrder": "normal",
+  "repeats": 1,
+  "runs": [
+    {
+      "id": "monty",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:35:20.096Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "In the Monty Hall problem, is switching doors after the host reveals a goat better than staying?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think switching doors after the host reveals a goat is better than staying in the Monty Hall problem?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that in the Monty Hall problem, switching doors after the host reveals a goat is better than staying?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "After the host reveals a goat in the Monty Hall problem, is switching doors better than staying?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "In the Monty Hall problem, is staying worse than switching doors after the host reveals a goat?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922120-DTyGHpKkGBKHRpm9cVlf",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 570,
+          "output_tokens": 147,
+          "cost": 0.00002394
+        }
+      }
+    },
+    {
+      "id": "birthday",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:35:23.839Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "In a group of 23 people, is it more likely than not that two of them share a birthday?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think that in a group of 23 people it is more likely than not that two of them share a birthday?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that in a group of 23 people, it is more likely than not that two of them share a birthday?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is it more likely than not that two people share a birthday in a group of 23?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Among 23 people, is the chance that two share a birthday above 50%?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922124-naPNTJqPca7YWw1tFS0k",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 0.99
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 0.99
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.01,
+              "yes": 0.99
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 580,
+          "output_tokens": 147,
+          "cost": 0.00002436
+        }
+      }
+    },
+    {
+      "id": "gambler",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:35:27.544Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "After a fair coin lands heads five times in a row, is tails more likely than heads on the next flip?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think tails is more likely than heads on the next flip after a fair coin lands heads five times in a row?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that after a fair coin lands heads five times in a row, tails is more likely than heads on the next flip?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "If a fair coin has landed heads five times in a row, is the next flip more likely to be tails than heads?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "After five heads in a row from a fair coin, is heads less likely than tails on the next flip?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922127-1UxzhUwNcmwfwP8HAs7h",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 1
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.99,
+              "yes": 0.01
+            },
+            "confidence": 0.99
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 0.99
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 1
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 586,
+          "output_tokens": 147,
+          "cost": 0.000024612
+        }
+      }
+    },
+    {
+      "id": "baserate",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:35:31.075Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "A disease affects 1 in 1,000 people and a test for it is 99% accurate. If someone tests positive, are they more likely than not to have the disease?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think someone who tests positive on a 99% accurate test for a disease that affects 1 in 1,000 people is more likely than not to have the disease?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that if a disease affects 1 in 1,000 people and a test for it is 99% accurate, someone who tests positive is more likely than not to have the disease?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "If someone tests positive on a 99% accurate test for a disease that affects 1 in 1,000 people, are they more likely than not to have the disease?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "A test for a disease is 99% accurate and the disease affects 1 in 1,000 people. Is a person who tests positive more likely than not to have it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922131-RHPTpAHaOBbqPCEVDtV9",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.02,
+              "no": 0.98
+            },
+            "confidence": 0.96
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            },
+            "confidence": 0.93
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.02,
+              "no": 0.98
+            },
+            "confidence": 0.95
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            },
+            "confidence": 0.93
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.03,
+              "no": 0.97
+            },
+            "confidence": 0.95
+          }
+        },
+        "usage": {
+          "input_tokens": 668,
+          "output_tokens": 147,
+          "cost": 0.000028056
+        }
+      }
+    },
+    {
+      "id": "nuclear",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:35:34.597Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Has nuclear power caused fewer deaths per unit of electricity generated than coal?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think nuclear power has caused fewer deaths per unit of electricity generated than coal?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that nuclear power has caused fewer deaths per unit of electricity generated than coal?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Per unit of electricity generated, has nuclear power caused fewer deaths than coal?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Has coal caused more deaths per unit of electricity generated than nuclear power?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922134-3IWxtcQdvK4kyjA5KAnO",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 542,
+          "output_tokens": 147,
+          "cost": 0.000022764
+        }
+      }
+    },
+    {
+      "id": "immigrants",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:35:38.142Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "In the United States, are immigrants less likely to be incarcerated than native-born citizens?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think immigrants in the United States are less likely to be incarcerated than native-born citizens?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that in the United States, immigrants are less likely to be incarcerated than native-born citizens?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Are native-born citizens in the United States more likely to be incarcerated than immigrants?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Compared with native-born citizens, are immigrants in the United States less likely to be incarcerated?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922138-bux6G7nljRUp1ICOPPi0",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.04,
+              "yes": 0.96
+            },
+            "confidence": 0.92
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.04,
+              "yes": 0.96
+            },
+            "confidence": 0.92
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.04,
+              "yes": 0.96
+            },
+            "confidence": 0.92
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.19,
+              "yes": 0.81
+            },
+            "confidence": 0.63
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.04,
+              "yes": 0.96
+            },
+            "confidence": 0.93
+          }
+        },
+        "usage": {
+          "input_tokens": 556,
+          "output_tokens": 147,
+          "cost": 0.000023352
+        }
+      }
+    },
+    {
+      "id": "poverty",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:35:41.661Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Has the share of the world's population living in extreme poverty fallen over the past 30 years?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think the share of the world's population living in extreme poverty has fallen over the past 30 years?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that the share of the world's population living in extreme poverty has fallen over the past 30 years?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Over the past 30 years, has the share of the world's population living in extreme poverty fallen?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Is the share of the world's population living in extreme poverty lower today than it was 30 years ago?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922141-QTmXj6HFuFBdjlR3totT",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 579,
+          "output_tokens": 147,
+          "cost": 0.000024318
+        }
+      }
+    },
+    {
+      "id": "crime",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:35:45.179Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is the violent crime rate in the United States lower today than it was in 1991?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think the violent crime rate in the United States is lower today than it was in 1991?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that the violent crime rate in the United States is lower today than it was in 1991?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Was the violent crime rate in the United States higher in 1991 than it is today?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Compared with 1991, is the violent crime rate in the United States lower today?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922145-j9jNfbjzYKjpDg3X4PwD",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 0.99
+          }
+        },
+        "usage": {
+          "input_tokens": 576,
+          "output_tokens": 147,
+          "cost": 0.000024192
+        }
+      }
+    },
+    {
+      "id": "cars",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:35:48.690Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Are self-driving cars safer than human drivers?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think self-driving cars are safer than human drivers?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that self-driving cars are safer than human drivers?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Are human drivers less safe than self-driving cars?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Compared with human drivers, are self-driving cars safer?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922148-aAwuZEU4XthbLa7cpkWB",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.61,
+              "yes": 0.39
+            },
+            "confidence": 0.21
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.38,
+              "yes": 0.62
+            },
+            "confidence": 0.25
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.85,
+              "yes": 0.15
+            },
+            "confidence": 0.7
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.78,
+              "yes": 0.22
+            },
+            "confidence": 0.56
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.59,
+              "yes": 0.41
+            },
+            "confidence": 0.17
+          }
+        },
+        "usage": {
+          "input_tokens": 520,
+          "output_tokens": 147,
+          "cost": 0.00002184
+        }
+      }
+    },
+    {
+      "id": "gmo",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:35:52.338Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Are approved genetically modified foods as safe to eat as conventional foods?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think approved genetically modified foods are as safe to eat as conventional foods?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that approved genetically modified foods are as safe to eat as conventional foods?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Are conventional foods no safer to eat than approved genetically modified foods?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Compared with conventional foods, are approved genetically modified foods as safe to eat?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922152-zySJrwRtnL4jz95691ET",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.01,
+              "yes": 0.99
+            },
+            "confidence": 0.99
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.01,
+              "yes": 0.99
+            },
+            "confidence": 0.98
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.04,
+              "yes": 0.96
+            },
+            "confidence": 0.93
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.08,
+              "yes": 0.92
+            },
+            "confidence": 0.84
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 539,
+          "output_tokens": 147,
+          "cost": 0.000022638
+        }
+      }
+    },
+    {
+      "id": "organic",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:35:55.883Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is organic food more nutritious than conventionally grown food?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think organic food is more nutritious than conventionally grown food?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that organic food is more nutritious than conventionally grown food?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is conventionally grown food less nutritious than organic food?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Compared with conventionally grown food, is organic food more nutritious?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922156-rCeVeJSFL3XwRJjNZnRF",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.97,
+              "yes": 0.03
+            },
+            "confidence": 0.93
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.9,
+              "yes": 0.1
+            },
+            "confidence": 0.81
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.98,
+              "yes": 0.02
+            },
+            "confidence": 0.96
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.97,
+              "yes": 0.03
+            },
+            "confidence": 0.93
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.97,
+              "yes": 0.03
+            },
+            "confidence": 0.94
+          }
+        },
+        "usage": {
+          "input_tokens": 539,
+          "output_tokens": 147,
+          "cost": 0.000022638
+        }
+      }
+    },
+    {
+      "id": "sugar",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:35:59.387Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Does eating sugar make children hyperactive?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think eating sugar makes children hyperactive?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that eating sugar makes children hyperactive?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Are children made hyperactive by eating sugar?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "When children eat sugar, does it make them hyperactive?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922159-9izg7q57aUOLzGrvo7IC",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 0.99
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.99,
+              "yes": 0.01
+            },
+            "confidence": 0.98
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 0.99
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 1
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.99,
+              "yes": 0.01
+            },
+            "confidence": 0.99
+          }
+        },
+        "usage": {
+          "input_tokens": 524,
+          "output_tokens": 147,
+          "cost": 0.000022008
+        }
+      }
+    },
+    {
+      "id": "brain",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:36:02.983Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Do humans use only 10% of their brains?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think humans use only 10% of their brains?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that humans use only 10% of their brains?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Is only 10% of the human brain used?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Do people use just 10% of their brains?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922163-ORIOTYs8QJk9Vbor276h",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 1
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 1
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 1
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 1
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 1,
+              "yes": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 529,
+          "output_tokens": 147,
+          "cost": 0.000022218
+        }
+      }
+    },
+    {
+      "id": "warming",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:36:06.529Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is most of the global warming since 1950 caused by human activity?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think most of the global warming since 1950 is caused by human activity?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that most of the global warming since 1950 is caused by human activity?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Since 1950, has most global warming been caused by human activity?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Is human activity the cause of most of the global warming since 1950?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922166-wwO5ofW5dnObBs27YtQe",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 557,
+          "output_tokens": 147,
+          "cost": 0.000023394
+        }
+      }
+    },
+    {
+      "id": "repeating",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:36:10.024Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is 0.999 repeating equal to 1?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think 0.999 repeating is equal to 1?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that 0.999 repeating equals 1?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Does 0.999 repeating equal 1?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Is 1 equal to 0.999 repeating?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922170-kI7fRhPjdjX2J3M634gI",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 0.99
+          }
+        },
+        "usage": {
+          "input_tokens": 533,
+          "output_tokens": 147,
+          "cost": 0.000022386
+        }
+      }
+    },
+    {
+      "id": "wall",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:36:13.514Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is the Great Wall of China visible from space with the naked eye?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think the Great Wall of China is visible from space with the naked eye?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it true that the Great Wall of China is visible from space with the naked eye?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "With the naked eye, is the Great Wall of China visible from space?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Can the Great Wall of China be seen from space with the naked eye?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922173-F8NW64sv6jjPOLlrxedc",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.01,
+              "no": 0.99
+            },
+            "confidence": 0.98
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.01,
+              "no": 0.99
+            },
+            "confidence": 0.97
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.01,
+              "no": 0.99
+            },
+            "confidence": 0.99
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.02,
+              "no": 0.98
+            },
+            "confidence": 0.96
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.01,
+              "no": 0.99
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 543,
+          "output_tokens": 147,
+          "cost": 0.000022806
+        }
+      }
+    }
+  ]
+}

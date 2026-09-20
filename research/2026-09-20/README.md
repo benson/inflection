@@ -282,3 +282,210 @@ A fair coin and a fair six-sided die were probed as questions with a known answe
 | Will a fair six-sided die show a six when rolled? | 10.7% | 10–12% | 10% |
 
 Heads and tails sum to about 105%, and "do you think" moves heads below 50%; the die is consistent across wordings (six about 8 to 11%, not-six 96%), so the coin is the shipped example and the die is kept as a control.
+
+## Fact search · September 20, 2026
+
+The criterion was questions with a correct answer: settled empirical claims and probability or logic puzzles first, then counterintuitive facts. Variants were limited to wrappers or syntactic edits with polarity preserved, so a flip on a settled fact means at least one wording has a wrong leading answer rather than merely a mirrored one. The search selected examples for wording sensitivity; it was not a representative accuracy benchmark.
+
+The two screening tables contain every exact question and Yes probability from the single discovery pass, separate from the confirmation measurements. Each request used the native Choice primitive, empty shared context, Yes/No answer order, and model `typesafe/jev-1.13-20260917`.
+
+Settled-set screening ([prompts](facts-settled-candidates.json), [responses](facts-settled-discovery.json)):
+
+| Topic | Exact question | Yes |
+| --- | --- | ---: |
+| Monty Hall | In the Monty Hall problem, is switching doors after the host reveals a goat better than staying? | 100% |
+| Monty Hall | Do you think switching doors after the host reveals a goat is better than staying in the Monty Hall problem? | 100% |
+| Monty Hall | Is it true that in the Monty Hall problem, switching doors after the host reveals a goat is better than staying? | 100% |
+| Monty Hall | After the host reveals a goat in the Monty Hall problem, is switching doors better than staying? | 100% |
+| Monty Hall | In the Monty Hall problem, is staying worse than switching doors after the host reveals a goat? | 100% |
+| Birthday problem | In a group of 23 people, is it more likely than not that two of them share a birthday? | 100% |
+| Birthday problem | Do you think that in a group of 23 people it is more likely than not that two of them share a birthday? | 100% |
+| Birthday problem | Is it true that in a group of 23 people, it is more likely than not that two of them share a birthday? | 100% |
+| Birthday problem | Is it more likely than not that two people share a birthday in a group of 23? | 100% |
+| Birthday problem | Among 23 people, is the chance that two share a birthday above 50%? | 99% |
+| Gambler's fallacy | After a fair coin lands heads five times in a row, is tails more likely than heads on the next flip? | 0% |
+| Gambler's fallacy | Do you think tails is more likely than heads on the next flip after a fair coin lands heads five times in a row? | 1% |
+| Gambler's fallacy | Is it true that after a fair coin lands heads five times in a row, tails is more likely than heads on the next flip? | 0% |
+| Gambler's fallacy | If a fair coin has landed heads five times in a row, is the next flip more likely to be tails than heads? | 0% |
+| Gambler's fallacy | After five heads in a row from a fair coin, is heads less likely than tails on the next flip? | 0% |
+| Base rate | A disease affects 1 in 1,000 people and a test for it is 99% accurate. If someone tests positive, are they more likely than not to have the disease? | 2% |
+| Base rate | Do you think someone who tests positive on a 99% accurate test for a disease that affects 1 in 1,000 people is more likely than not to have the disease? | 4% |
+| Base rate | Is it true that if a disease affects 1 in 1,000 people and a test for it is 99% accurate, someone who tests positive is more likely than not to have the disease? | 2% |
+| Base rate | If someone tests positive on a 99% accurate test for a disease that affects 1 in 1,000 people, are they more likely than not to have the disease? | 4% |
+| Base rate | A test for a disease is 99% accurate and the disease affects 1 in 1,000 people. Is a person who tests positive more likely than not to have it? | 3% |
+| Nuclear vs coal | Has nuclear power caused fewer deaths per unit of electricity generated than coal? | 100% |
+| Nuclear vs coal | Do you think nuclear power has caused fewer deaths per unit of electricity generated than coal? | 100% |
+| Nuclear vs coal | Is it true that nuclear power has caused fewer deaths per unit of electricity generated than coal? | 100% |
+| Nuclear vs coal | Per unit of electricity generated, has nuclear power caused fewer deaths than coal? | 100% |
+| Nuclear vs coal | Has coal caused more deaths per unit of electricity generated than nuclear power? | 100% |
+| Immigration & crime | In the United States, are immigrants less likely to be incarcerated than native-born citizens? | 96% |
+| Immigration & crime | Do you think immigrants in the United States are less likely to be incarcerated than native-born citizens? | 96% |
+| Immigration & crime | Is it true that in the United States, immigrants are less likely to be incarcerated than native-born citizens? | 96% |
+| Immigration & crime | Are native-born citizens in the United States more likely to be incarcerated than immigrants? | 81% |
+| Immigration & crime | Compared with native-born citizens, are immigrants in the United States less likely to be incarcerated? | 96% |
+| Global poverty | Has the share of the world's population living in extreme poverty fallen over the past 30 years? | 100% |
+| Global poverty | Do you think the share of the world's population living in extreme poverty has fallen over the past 30 years? | 100% |
+| Global poverty | Is it true that the share of the world's population living in extreme poverty has fallen over the past 30 years? | 100% |
+| Global poverty | Over the past 30 years, has the share of the world's population living in extreme poverty fallen? | 100% |
+| Global poverty | Is the share of the world's population living in extreme poverty lower today than it was 30 years ago? | 100% |
+| US violent crime | Is the violent crime rate in the United States lower today than it was in 1991? | 100% |
+| US violent crime | Do you think the violent crime rate in the United States is lower today than it was in 1991? | 100% |
+| US violent crime | Is it true that the violent crime rate in the United States is lower today than it was in 1991? | 100% |
+| US violent crime | Was the violent crime rate in the United States higher in 1991 than it is today? | 100% |
+| US violent crime | Compared with 1991, is the violent crime rate in the United States lower today? | 100% |
+| Self-driving safety | Are self-driving cars safer than human drivers? | 39% |
+| Self-driving safety | Do you think self-driving cars are safer than human drivers? | 62% |
+| Self-driving safety | Is it true that self-driving cars are safer than human drivers? | 15% |
+| Self-driving safety | Are human drivers less safe than self-driving cars? | 22% |
+| Self-driving safety | Compared with human drivers, are self-driving cars safer? | 41% |
+| GMO safety | Are approved genetically modified foods as safe to eat as conventional foods? | 99% |
+| GMO safety | Do you think approved genetically modified foods are as safe to eat as conventional foods? | 99% |
+| GMO safety | Is it true that approved genetically modified foods are as safe to eat as conventional foods? | 96% |
+| GMO safety | Are conventional foods no safer to eat than approved genetically modified foods? | 92% |
+| GMO safety | Compared with conventional foods, are approved genetically modified foods as safe to eat? | 100% |
+| Organic nutrition | Is organic food more nutritious than conventionally grown food? | 3% |
+| Organic nutrition | Do you think organic food is more nutritious than conventionally grown food? | 10% |
+| Organic nutrition | Is it true that organic food is more nutritious than conventionally grown food? | 2% |
+| Organic nutrition | Is conventionally grown food less nutritious than organic food? | 3% |
+| Organic nutrition | Compared with conventionally grown food, is organic food more nutritious? | 3% |
+| Sugar & hyperactivity | Does eating sugar make children hyperactive? | 0% |
+| Sugar & hyperactivity | Do you think eating sugar makes children hyperactive? | 1% |
+| Sugar & hyperactivity | Is it true that eating sugar makes children hyperactive? | 0% |
+| Sugar & hyperactivity | Are children made hyperactive by eating sugar? | 0% |
+| Sugar & hyperactivity | When children eat sugar, does it make them hyperactive? | 1% |
+| Ten percent of the brain | Do humans use only 10% of their brains? | 0% |
+| Ten percent of the brain | Do you think humans use only 10% of their brains? | 0% |
+| Ten percent of the brain | Is it true that humans use only 10% of their brains? | 0% |
+| Ten percent of the brain | Is only 10% of the human brain used? | 0% |
+| Ten percent of the brain | Do people use just 10% of their brains? | 0% |
+| Climate attribution | Is most of the global warming since 1950 caused by human activity? | 100% |
+| Climate attribution | Do you think most of the global warming since 1950 is caused by human activity? | 100% |
+| Climate attribution | Is it true that most of the global warming since 1950 is caused by human activity? | 100% |
+| Climate attribution | Since 1950, has most global warming been caused by human activity? | 100% |
+| Climate attribution | Is human activity the cause of most of the global warming since 1950? | 100% |
+| 0.999 repeating | Is 0.999 repeating equal to 1? | 100% |
+| 0.999 repeating | Do you think 0.999 repeating is equal to 1? | 100% |
+| 0.999 repeating | Is it true that 0.999 repeating equals 1? | 100% |
+| 0.999 repeating | Does 0.999 repeating equal 1? | 100% |
+| 0.999 repeating | Is 1 equal to 0.999 repeating? | 100% |
+| Great Wall from space | Is the Great Wall of China visible from space with the naked eye? | 1% |
+| Great Wall from space | Do you think the Great Wall of China is visible from space with the naked eye? | 1% |
+| Great Wall from space | Is it true that the Great Wall of China is visible from space with the naked eye? | 1% |
+| Great Wall from space | With the naked eye, is the Great Wall of China visible from space? | 2% |
+| Great Wall from space | Can the Great Wall of China be seen from space with the naked eye? | 1% |
+
+In the settled set, 15 of 16 topics kept the same leading answer across every wording and self-driving safety was the only one to cross 50%; 12 topics stayed within 2 points, while immigration and crime spanned 15 points, GMO safety and organic nutrition each spanned 8, and self-driving safety spanned 47.
+
+Counterintuitive-set screening ([prompts](facts-counterintuitive-candidates.json), [responses](facts-counterintuitive-discovery.json)):
+
+| Topic | Exact question | Yes |
+| --- | --- | ---: |
+| Reno and Los Angeles | Is Reno, Nevada farther west than Los Angeles, California? | 36% |
+| Reno and Los Angeles | Do you think Reno, Nevada is farther west than Los Angeles, California? | 35% |
+| Reno and Los Angeles | Is it true that Reno, Nevada is farther west than Los Angeles, California? | 50% |
+| Reno and Los Angeles | Is Los Angeles, California farther east than Reno, Nevada? | 69% |
+| Reno and Los Angeles | Compared with Los Angeles, California, is Reno, Nevada farther west? | 3% |
+| Closest state to Africa | Is Maine the US state closest to Africa? | 65% |
+| Closest state to Africa | Do you think Maine is the US state closest to Africa? | 56% |
+| Closest state to Africa | Is it true that Maine is the US state closest to Africa? | 69% |
+| Closest state to Africa | Of all US states, is Maine the closest to Africa? | 66% |
+| Closest state to Africa | Is the US state closest to Africa Maine? | 33% |
+| Trees and stars | Are there more trees on Earth than stars in the Milky Way? | 16% |
+| Trees and stars | Do you think there are more trees on Earth than stars in the Milky Way? | 11% |
+| Trees and stars | Is it true that there are more trees on Earth than stars in the Milky Way? | 16% |
+| Trees and stars | Are there fewer stars in the Milky Way than trees on Earth? | 9% |
+| Trees and stars | Does the number of trees on Earth exceed the number of stars in the Milky Way? | 15% |
+| Hippos and sharks | Do hippos kill more people each year than sharks do? | 100% |
+| Hippos and sharks | Do you think hippos kill more people each year than sharks do? | 99% |
+| Hippos and sharks | Is it true that hippos kill more people each year than sharks do? | 99% |
+| Hippos and sharks | Do sharks kill fewer people each year than hippos do? | 93% |
+| Hippos and sharks | Each year, do hippos kill more people than sharks? | 99% |
+| Cubs and the Ottomans | Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016? | 7% |
+| Cubs and the Ottomans | Do you think the Ottoman Empire still existed the last time the Chicago Cubs won the World Series before 2016? | 8% |
+| Cubs and the Ottomans | Is it true that the Ottoman Empire still existed the last time the Chicago Cubs won the World Series before 2016? | 11% |
+| Cubs and the Ottomans | The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist? | 59% |
+| Cubs and the Ottomans | When the Chicago Cubs last won the World Series before 2016, was the Ottoman Empire still in existence? | 63% |
+| Moderate drinking | Is moderate alcohol consumption better for heart health than not drinking at all? | 8% |
+| Moderate drinking | Do you think moderate alcohol consumption is better for heart health than not drinking at all? | 5% |
+| Moderate drinking | Is it true that moderate alcohol consumption is better for heart health than not drinking at all? | 6% |
+| Moderate drinking | Is not drinking at all worse for heart health than moderate alcohol consumption? | 14% |
+| Moderate drinking | For heart health, is moderate alcohol consumption better than not drinking at all? | 3% |
+| EV lifetime emissions | Over their full lifetime, do electric cars produce less greenhouse gas than gasoline cars? | 99% |
+| EV lifetime emissions | Do you think electric cars produce less greenhouse gas than gasoline cars over their full lifetime? | 100% |
+| EV lifetime emissions | Is it true that over their full lifetime, electric cars produce less greenhouse gas than gasoline cars? | 99% |
+| EV lifetime emissions | Do gasoline cars produce more greenhouse gas than electric cars over their full lifetime? | 99% |
+| EV lifetime emissions | Compared with gasoline cars, do electric cars produce less greenhouse gas over their full lifetime? | 100% |
+| Minimum wage employment | Do moderate increases in the minimum wage reduce employment? | 32% |
+| Minimum wage employment | Do you think moderate increases in the minimum wage reduce employment? | 12% |
+| Minimum wage employment | Is it true that moderate increases in the minimum wage reduce employment? | 42% |
+| Minimum wage employment | Is employment reduced by moderate increases in the minimum wage? | 23% |
+| Minimum wage employment | When the minimum wage is moderately increased, does employment fall? | 53% |
+| US homicide 1960 | Is the US homicide rate higher today than it was in 1960? | 69% |
+| US homicide 1960 | Do you think the US homicide rate is higher today than it was in 1960? | 67% |
+| US homicide 1960 | Is it true that the US homicide rate is higher today than it was in 1960? | 68% |
+| US homicide 1960 | Was the US homicide rate lower in 1960 than it is today? | 54% |
+| US homicide 1960 | Compared with 1960, is the US homicide rate higher today? | 34% |
+| Life expectancy Cuba | Is life expectancy in Cuba higher than in the United States? | 61% |
+| Life expectancy Cuba | Do you think life expectancy in Cuba is higher than in the United States? | 54% |
+| Life expectancy Cuba | Is it true that life expectancy in Cuba is higher than in the United States? | 50% |
+| Life expectancy Cuba | Is life expectancy in the United States lower than in Cuba? | 49% |
+| Life expectancy Cuba | Compared with the United States, is life expectancy in Cuba higher? | 49% |
+| Solar vs nuclear cost | Is new utility-scale solar power cheaper per megawatt-hour than new nuclear power? | 100% |
+| Solar vs nuclear cost | Do you think new utility-scale solar power is cheaper per megawatt-hour than new nuclear power? | 100% |
+| Solar vs nuclear cost | Is it true that new utility-scale solar power is cheaper per megawatt-hour than new nuclear power? | 100% |
+| Solar vs nuclear cost | Is new nuclear power more expensive per megawatt-hour than new utility-scale solar power? | 96% |
+| Solar vs nuclear cost | Per megawatt-hour, is new utility-scale solar power cheaper than new nuclear power? | 99% |
+| Cleopatra and the pyramids | Did Cleopatra live closer in time to the Moon landing than to the building of the Great Pyramid? | 97% |
+| Cleopatra and the pyramids | Do you think Cleopatra lived closer in time to the Moon landing than to the building of the Great Pyramid? | 99% |
+| Cleopatra and the pyramids | Is it true that Cleopatra lived closer in time to the Moon landing than to the building of the Great Pyramid? | 99% |
+| Cleopatra and the pyramids | Was Cleopatra's lifetime closer to the Moon landing than to the building of the Great Pyramid? | 96% |
+| Cleopatra and the pyramids | Is the building of the Great Pyramid further in time from Cleopatra than the Moon landing is? | 96% |
+| Sharks and trees | Are sharks older than trees? | 92% |
+| Sharks and trees | Do you think sharks are older than trees? | 93% |
+| Sharks and trees | Is it true that sharks are older than trees? | 94% |
+| Sharks and trees | Did sharks exist before trees did? | 98% |
+| Sharks and trees | Are trees younger than sharks? | 56% |
+| Child tax credit | Did the expanded US child tax credit in 2021 reduce child poverty? | 100% |
+| Child tax credit | Do you think the expanded US child tax credit in 2021 reduced child poverty? | 100% |
+| Child tax credit | Is it true that the expanded US child tax credit in 2021 reduced child poverty? | 100% |
+| Child tax credit | Was child poverty reduced by the expanded US child tax credit in 2021? | 100% |
+| Child tax credit | In 2021, did the expanded US child tax credit reduce child poverty? | 99% |
+
+Confirmation uses the three Yes/No repeats in [facts-confirm.json](facts-confirm.json); the last column is the single No/Yes repeat in [facts-reversed.json](facts-reversed.json). A dash marks the original question, and edit types describe changes relative to it. Means and observed min–max ranges are calculated per exact wording; ranges are observations, not confidence intervals. The four shipped sets use these exact [confirmation prompts](facts-confirm-prompts.json), all tagged as rewordings.
+
+| Topic | Exact question | Edit type | Mean Yes | Observed range | Reversed-order Yes |
+| --- | --- | --- | ---: | ---: | ---: |
+| Reno and Los Angeles | Is Reno, Nevada farther west than Los Angeles, California? | — | 33.3% | 31–37% | 33% |
+| Reno and Los Angeles | Is Los Angeles, California farther east than Reno, Nevada? | comparative inversion | 68.7% | 68–69% | 66% |
+| Reno and Los Angeles | Compared with Los Angeles, California, is Reno, Nevada farther west? | clause order | 3.0% | 3–3% | 5% |
+| Reno and Los Angeles | Is it true that Reno, Nevada is farther west than Los Angeles, California? | wrapper | 47.0% | 41–51% | 46% |
+| Cubs and the Ottomans | Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016? | — | 10.0% | 8–12% | 12% |
+| Cubs and the Ottomans | The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist? | clause order | 60.0% | 57–62% | 59% |
+| Cubs and the Ottomans | When the Chicago Cubs last won the World Series before 2016, was the Ottoman Empire still in existence? | clause order | 65.3% | 53–75% | 72% |
+| Cubs and the Ottomans | Do you think the Ottoman Empire still existed the last time the Chicago Cubs won the World Series before 2016? | wrapper | 8.7% | 8–9% | 10% |
+| Closest state to Africa | Is Maine the US state closest to Africa? | — | 61.3% | 57–64% | 68% |
+| Closest state to Africa | Is the US state closest to Africa Maine? | clause order | 29.7% | 24–40% | 40% |
+| Closest state to Africa | Of all US states, is Maine the closest to Africa? | clause order | 61.0% | 60–62% | 68% |
+| Closest state to Africa | Do you think Maine is the US state closest to Africa? | wrapper | 57.7% | 57–58% | 64% |
+| Sharks and trees | Are sharks older than trees? | — | 92.3% | 91–94% | 96% |
+| Sharks and trees | Are trees younger than sharks? | comparative inversion | 59.7% | 57–63% | 65% |
+| Sharks and trees | Did sharks exist before trees did? | comparative restatement | 97.7% | 97–98% | 98% |
+| Sharks and trees | Is it true that sharks are older than trees? | wrapper | 95.0% | 95–95% | 95% |
+| Self-driving safety | Are self-driving cars safer than human drivers? | — | 35.7% | 35–36% | 29% |
+| Self-driving safety | Do you think self-driving cars are safer than human drivers? | wrapper | 61.7% | 61–63% | 60% |
+| Self-driving safety | Is it true that self-driving cars are safer than human drivers? | wrapper | 14.0% | 14–14% | 13% |
+| Self-driving safety | Are human drivers less safe than self-driving cars? | comparative inversion | 30.0% | 24–35% | 21% |
+
+Sharks and trees was not shipped because nothing crossed 50%: all wordings stayed above it in every confirmation repeat and in the reversed-order control, despite a large movement on the comparative inversion.
+
+Reno is west of Los Angeles; the Cubs' previous title was 1908 and the Ottoman Empire ended in 1922; Maine's Quoddy Head is the closest US point to Africa; self-driving safety is not settled.
+
+The seven fact-search files:
+
+- [Settled candidates](facts-settled-candidates.json)
+- [Settled discovery responses](facts-settled-discovery.json)
+- [Counterintuitive candidates](facts-counterintuitive-candidates.json)
+- [Counterintuitive discovery responses](facts-counterintuitive-discovery.json)
+- [Confirmation prompts](facts-confirm-prompts.json)
+- [Confirmation responses](facts-confirm.json)
+- [Reversed-order responses](facts-reversed.json)

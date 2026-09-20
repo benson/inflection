@@ -1091,30 +1091,30 @@ export default function App() {
             </p>
             <p>
               you'd expect a computer to read the same question the same way
-              however you phrase it. it doesn't. putting "do you think" in
-              front of a question moves the answer 20 points. "is it true
-              that" moves it 30 the other way. asking whether office workers
-              are less productive instead of whether remote workers are more
-              productive moves it 40.
+              however you phrase it. it doesn't. reno is west of los angeles.
+              ask "is reno farther west than los angeles" and jev says 33% yes.
+              ask "is los angeles farther east than reno" and it says 69%.
+              same fact, same words, different order.
             </p>
             <p>
-              it even happens on a fair coin. asked if it will land heads,
-              jev says 59%. asked if it will land tails, 46%. asked "do you
-              think it will land heads", 41%.
+              this isn't noise on questions with no answer. on settled facts,
+              monty hall, the birthday problem, nuclear versus coal, jev
+              doesn't move a point however you phrase it. the flips happen
+              where the model is unsure of a fact, and it doesn't tell you
+              it's unsure. the number just moves.
             </p>
             <p>
-              some of that is human. people are swayed by wording too. but two
-              questions that mean the same thing to a person should get the
-              same answer from one model of the world, even if not the same
-              digits. typesafe's docs say not to expect arithmetic consistency
-              between separately asked questions. this site is what that looks
-              like in practice.
+              two questions that mean the same thing to a person should get
+              the same answer from one model of the world, even if not the
+              same digits. typesafe's docs say not to expect arithmetic
+              consistency between separately asked questions. this site is
+              what that looks like in practice.
             </p>
             <p>
-              this doesn't happen on every question. in a first screen of
-              fourteen topics most barely moved, and the examples here are the
-              ones that did. the point is that it can happen, on edits you
-              didn't mean anything by.
+              this doesn't happen on every question. in a screen of about
+              forty questions, most didn't move at all, and the examples here
+              are the ones that did. the point is that it can happen, on edits
+              you didn't mean anything by.
             </p>
             <p>
               none of this is a knock on jev. it's a genuinely useful tool, and
