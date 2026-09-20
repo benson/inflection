@@ -1158,5 +1158,239 @@
         }
       }
     ]
+  },
+  "religion-terrorism": {
+    "id": "recorded-religion-terrorism",
+    "createdAt": "2026-09-20T16:44:49.575Z",
+    "sample": true,
+    "experiment": {
+      "id": "religion-terrorism",
+      "title": "Religion & terrorism",
+      "category": "Religion",
+      "mode": "binary",
+      "original": "Does Islam inspire more terrorism than other monotheistic religions?",
+      "variants": [
+        {
+          "id": "v1",
+          "text": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+          "kind": "paraphrase"
+        },
+        {
+          "id": "v2",
+          "text": "Compared with other monotheistic religions, does Islam inspire more terrorism?",
+          "kind": "paraphrase"
+        }
+      ],
+      "options": [
+        {
+          "id": "yes",
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "label": "No"
+        }
+      ],
+      "context": "",
+      "expanded": false,
+      "reversed": false
+    },
+    "conditions": [
+      {
+        "id": "original",
+        "text": "Does Islam inspire more terrorism than other monotheistic religions?",
+        "label": "Original",
+        "kind": "original",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes"
+          },
+          {
+            "id": "no",
+            "label": "No"
+          }
+        ]
+      },
+      {
+        "id": "v1",
+        "text": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+        "label": "Wording 1",
+        "kind": "paraphrase",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes"
+          },
+          {
+            "id": "no",
+            "label": "No"
+          }
+        ]
+      },
+      {
+        "id": "v2",
+        "text": "Compared with other monotheistic religions, does Islam inspire more terrorism?",
+        "label": "Wording 2",
+        "kind": "paraphrase",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes"
+          },
+          {
+            "id": "no",
+            "label": "No"
+          }
+        ]
+      }
+    ],
+    "request": {
+      "model": "typesafe/jev-1.13",
+      "state": "",
+      "questions": {
+        "original": {
+          "type": "choice",
+          "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+          "criteria": {
+            "yes": "Yes",
+            "no": "No"
+          }
+        },
+        "v1": {
+          "type": "choice",
+          "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+          "criteria": {
+            "yes": "Yes",
+            "no": "No"
+          }
+        },
+        "v2": {
+          "type": "choice",
+          "instructions": "Compared with other monotheistic religions, does Islam inspire more terrorism?",
+          "criteria": {
+            "yes": "Yes",
+            "no": "No"
+          }
+        }
+      }
+    },
+    "durationMs": 0,
+    "responses": [
+      {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.93,
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.61,
+            "probabilities": {
+              "yes": 0.81,
+              "no": 0.19
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.91,
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            }
+          }
+        },
+        "requestId": "gen-dec-1789922690-B70NalvtgawapQqCuEE3",
+        "usage": {
+          "input_tokens": 423,
+          "output_tokens": 89,
+          "cost": 0.000017766
+        }
+      },
+      {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.91,
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.69,
+            "probabilities": {
+              "yes": 0.84,
+              "no": 0.16
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.91,
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            }
+          }
+        },
+        "requestId": "gen-dec-1789922693-8hIaMdbgUS4fjvrdRlm5",
+        "usage": {
+          "input_tokens": 423,
+          "output_tokens": 89,
+          "cost": 0.000017766
+        }
+      },
+      {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.92,
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "confidence": 0.65,
+            "probabilities": {
+              "yes": 0.83,
+              "no": 0.17
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "confidence": 0.91,
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            }
+          }
+        },
+        "requestId": "gen-dec-1789922697-vGYUlO1CFnF8wkcuRbES",
+        "usage": {
+          "input_tokens": 423,
+          "output_tokens": 89,
+          "cost": 0.000017766
+        }
+      }
+    ]
   }
 }

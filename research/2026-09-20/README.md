@@ -489,3 +489,17 @@ The seven fact-search files:
 - [Confirmation prompts](facts-confirm-prompts.json)
 - [Confirmation responses](facts-confirm.json)
 - [Reversed-order responses](facts-reversed.json)
+
+## Religion example, reinstated · September 20, 2026
+
+The active/passive religion pair was removed from the app earlier in the day for being a charged topic. It is reinstated as the last example because it is the largest confirmed swing on a syntactic edit.
+
+| Exact question | Mean Yes | Observed range | Reversed-order Yes |
+| --- | ---: | ---: | ---: |
+| Does Islam inspire more terrorism than other monotheistic religions? | 4.0% | 4–4% | 2% |
+| Is more terrorism inspired by Islam than by other monotheistic religions? | 82.7% | 81–84% | 71% |
+| Compared with other monotheistic religions, does Islam inspire more terrorism? | 4.0% | 4–4% | 3% |
+
+The "compared with" front-load is included as a control that barely moves.
+
+Means and observed ranges come from the [three Yes/No confirmation repeats](religion-confirm.json) of the exact [confirmation prompts](religion-confirm-prompts.json), with empty shared context and resolved model `typesafe/jev-1.13-20260917`; reversed-order Yes comes from the [single No/Yes repeat](religion-reversed.json).

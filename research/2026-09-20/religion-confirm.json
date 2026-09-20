@@ -1,0 +1,231 @@
+{
+  "startedAt": "2026-09-20T16:44:49.573Z",
+  "endpoint": "https://inflection-api.bensonperry.workers.dev/decisions",
+  "origin": "https://bensonperry.com",
+  "answerOrder": "normal",
+  "repeats": 3,
+  "runs": [
+    {
+      "id": "religion-terrorism",
+      "repeat": 1,
+      "startedAt": "2026-09-20T16:44:49.575Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Compared with other monotheistic religions, does Islam inspire more terrorism?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922690-B70NalvtgawapQqCuEE3",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.96,
+              "yes": 0.04
+            },
+            "confidence": 0.93
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.19,
+              "yes": 0.81
+            },
+            "confidence": 0.61
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.96,
+              "yes": 0.04
+            },
+            "confidence": 0.91
+          }
+        },
+        "usage": {
+          "input_tokens": 423,
+          "output_tokens": 89,
+          "cost": 0.000017766
+        }
+      }
+    },
+    {
+      "id": "religion-terrorism",
+      "repeat": 2,
+      "startedAt": "2026-09-20T16:44:53.276Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Compared with other monotheistic religions, does Islam inspire more terrorism?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922693-8hIaMdbgUS4fjvrdRlm5",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.96,
+              "yes": 0.04
+            },
+            "confidence": 0.91
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.16,
+              "yes": 0.84
+            },
+            "confidence": 0.69
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.96,
+              "yes": 0.04
+            },
+            "confidence": 0.91
+          }
+        },
+        "usage": {
+          "input_tokens": 423,
+          "output_tokens": 89,
+          "cost": 0.000017766
+        }
+      }
+    },
+    {
+      "id": "religion-terrorism",
+      "repeat": 3,
+      "startedAt": "2026-09-20T16:44:56.842Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Compared with other monotheistic religions, does Islam inspire more terrorism?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789922697-vGYUlO1CFnF8wkcuRbES",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            },
+            "confidence": 0.92
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.83,
+              "no": 0.17
+            },
+            "confidence": 0.65
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            },
+            "confidence": 0.91
+          }
+        },
+        "usage": {
+          "input_tokens": 423,
+          "output_tokens": 89,
+          "cost": 0.000017766
+        }
+      }
+    }
+  ]
+}

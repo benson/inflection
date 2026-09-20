@@ -1104,6 +1104,13 @@ export default function App() {
               it's unsure. the number just moves.
             </p>
             <p>
+              and it isn't only trivia. "does islam inspire more terrorism than
+              other monotheistic religions" gets 4% yes. "is more terrorism
+              inspired by islam than by other monotheistic religions" gets 83%.
+              active voice, passive voice, same words. you can argue those are
+              different questions. most people don't read them that way.
+            </p>
+            <p>
               two questions that mean the same thing to a person should get
               the same answer from one model of the world, even if not the
               same digits. typesafe's docs say not to expect arithmetic

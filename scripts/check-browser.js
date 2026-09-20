@@ -76,24 +76,25 @@ export default async function checkBrowser(page) {
     "How this works opens a dialog containing none of this is a knock on jev",
   );
   check(
-    (await about.locator(".about-intro p").count()) === 8 &&
+    (await about.locator(".about-intro p").count()) === 9 &&
       (await about.locator(".about-intro a").getAttribute("rel")) ===
         "noreferrer",
-    "The dialog contains all eight introductory paragraphs and the model link",
+    "The dialog contains all nine introductory paragraphs and the model link",
   );
   check(
     JSON.stringify(
       (await about.locator(".about-intro p").allTextContents())
-        .slice(3, 7)
+        .slice(3, 8)
         .map((text) => text.replace(/\s+/g, " ").trim()),
     ) ===
       JSON.stringify([
         `you'd expect a computer to read the same question the same way however you phrase it. it doesn't. reno is west of los angeles. ask "is reno farther west than los angeles" and jev says 33% yes. ask "is los angeles farther east than reno" and it says 69%. same fact, same words, different order.`,
         `this isn't noise on questions with no answer. on settled facts, monty hall, the birthday problem, nuclear versus coal, jev doesn't move a point however you phrase it. the flips happen where the model is unsure of a fact, and it doesn't tell you it's unsure. the number just moves.`,
+        `and it isn't only trivia. "does islam inspire more terrorism than other monotheistic religions" gets 4% yes. "is more terrorism inspired by islam than by other monotheistic religions" gets 83%. active voice, passive voice, same words. you can argue those are different questions. most people don't read them that way.`,
         `two questions that mean the same thing to a person should get the same answer from one model of the world, even if not the same digits. typesafe's docs say not to expect arithmetic consistency between separately asked questions. this site is what that looks like in practice.`,
         `this doesn't happen on every question. in a screen of about forty questions, most didn't move at all, and the examples here are the ones that did. the point is that it can happen, on edits you didn't mean anything by.`,
       ]),
-    "The dialog uses the exact fact-based explainer copy",
+    "The dialog uses the exact fact-based and religion explainer copy",
   );
   check(
     await about.evaluate((dialog) => {
@@ -294,14 +295,15 @@ export default async function checkBrowser(page) {
 
   const chips = page.getByRole("navigation", { name: "Example questions" });
   check(
-    (await chips.getByRole("button").count()) === 5,
-    "Four starter examples and a custom question chip are shown",
+    (await chips.getByRole("button").count()) === 6,
+    "Five starter examples and a custom question chip are shown",
   );
   for (const title of [
     "Reno and Los Angeles",
     "Cubs and the Ottomans",
     "Closest state to Africa",
     "Self-driving safety",
+    "Religion & terrorism",
   ]) {
     await chips.getByRole("button", { name: title, exact: true }).click();
     check(

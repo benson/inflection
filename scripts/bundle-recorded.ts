@@ -10,7 +10,7 @@ import { seeds } from "../src/seeds";
 import type { DecisionRequest, Run } from "../src/types";
 
 const research = new URL("../research/2026-09-20/", import.meta.url);
-const report: {
+type ConfirmationReport = {
   repeats: number;
   answerOrder: string;
   runs: {
@@ -21,10 +21,18 @@ const report: {
     request: DecisionRequest;
     response: unknown;
   }[];
-} = JSON.parse(await readFile(new URL("facts-confirm.json", research), "utf8"));
+};
 
-assert.equal(report.repeats, 3, "Expected three confirmation repeats");
-assert.equal(report.answerOrder, "normal", "Expected Yes/No answer order");
+const reports: ConfirmationReport[] = await Promise.all(
+  ["facts-confirm.json", "religion-confirm.json"].map(async (filename) =>
+    JSON.parse(await readFile(new URL(filename, research), "utf8")),
+  ),
+);
+for (const report of reports) {
+  assert.equal(report.repeats, 3, "Expected three confirmation repeats");
+  assert.equal(report.answerOrder, "normal", "Expected Yes/No answer order");
+}
+const runs = reports.flatMap((report) => report.runs);
 
 const bundled: Record<string, Run> = {};
 // Research can include additional topics; only current app seeds are bundled.
@@ -32,7 +40,7 @@ for (const seed of seeds) {
   const experiment = fromSeed(seed);
   const conditions = conditionsFor(experiment);
   const request = buildRequest(experiment);
-  const repeats = report.runs
+  const repeats = runs
     .filter((run) => run.id === seed.id)
     .sort((a, b) => a.repeat - b.repeat);
   assert.deepEqual(

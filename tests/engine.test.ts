@@ -18,9 +18,15 @@ import { seeds } from "../src/seeds";
 import { findRecordedRun, recordedRun } from "../src/recorded";
 import factPrompts from "../research/2026-09-20/facts-confirm-prompts.json";
 import factConfirm from "../research/2026-09-20/facts-confirm.json";
+import religionPrompts from "../research/2026-09-20/religion-confirm-prompts.json";
+import religionConfirm from "../research/2026-09-20/religion-confirm.json";
 import { isDraft, isExperiment } from "../src/storage";
 
-const prompts = factPrompts.filter((prompt) => prompt.id !== "sharks-trees");
+const prompts = [
+  ...factPrompts.filter((prompt) => prompt.id !== "sharks-trees"),
+  ...religionPrompts,
+];
+const confirmedRuns = [...factConfirm.runs, ...religionConfirm.runs];
 const firstRecording = () => recordedRun(seeds[0].id)!;
 
 test("every seed bundles three validated responses to its exact confirmed request", () => {
@@ -35,7 +41,7 @@ test("every seed bundles three validated responses to its exact confirmed reques
     assert.deepEqual(run.conditions, conditionsFor(fromSeed(seed)));
     assert.equal(run.responses.length, 3);
     assert.equal(run.sample, true);
-    const repeats = factConfirm.runs
+    const repeats = confirmedRuns
       .filter((repeat) => repeat.id === seed.id)
       .sort((a, b) => a.repeat - b.repeat);
     assert.deepEqual(
@@ -140,7 +146,7 @@ test("changed experiment inputs cannot borrow results from an earlier version", 
   assert.equal(findMatchingRun(run.experiment, [run]), run);
 });
 
-test("four unique, valid examples, each with two or three different paraphrases", () => {
+test("five unique, valid examples, each with two or three different paraphrases", () => {
   assert.ok(seeds.length >= 2 && seeds.length <= 5);
   assert.equal(new Set(seeds.map((s) => s.id)).size, seeds.length);
   assert.equal(new Set(seeds.map((s) => s.question)).size, seeds.length);
@@ -161,6 +167,7 @@ test("four unique, valid examples, each with two or three different paraphrases"
       "cubs-ottomans",
       "maine-africa",
       "self-driving-safety",
+      "religion-terrorism",
     ],
   );
 });

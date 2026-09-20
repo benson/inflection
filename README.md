@@ -29,7 +29,7 @@ The setup script checks the key’s cap and sends it to Wrangler over stdin. It 
 
 ## Explore
 
-- Four starting questions: Reno and Los Angeles, Cubs and the Ottomans, Closest state to Africa, and Self-driving safety. Each has three editable variants.
+- Five starting questions: Reno and Los Angeles, Cubs and the Ottomans, Closest state to Africa, Self-driving safety, and Religion & terrorism. Each has two or three editable variants.
 - Create your own question, use two to eight shared answers, and compare up to eight wordings.
 - Word-level insertions and deletions, complete probability distributions, a common-scale dot plot, percentage-point deltas, and answer flips.
 - Repeat the entire batch 1, 3, or 5 times; show mean probabilities and observed min–max ranges.
@@ -51,7 +51,7 @@ Repeated runs estimate observed variability only; min–max lines are not confid
 
 ## Question provenance
 
-The four examples come from the [fact search on 20 September 2026](research/2026-09-20/README.md#fact-search--september-20-2026), which selected questions with a correct answer and wrapper or syntactic variants only; each shipped variant set was confirmed with three repeats and a reversed-order control. All prompts and framing labels are editable. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
+The first four examples come from the [fact search on 20 September 2026](research/2026-09-20/README.md#fact-search--september-20-2026), which selected questions with a correct answer and wrapper or syntactic variants only; each shipped variant set was confirmed with three repeats and a reversed-order control. The [religion example](research/2026-09-20/README.md#religion-example-reinstated--september-20-2026) is the largest confirmed swing on a syntactic edit and is included last. All prompts and framing labels are editable. The app does not fetch current evidence for these questions. Custom yes/no and multiple-choice questions remain available.
 
 - [TypeSafe’s documented limitations](https://docs.typesafe.ai/model-jaggedness/jev-1.13)
 - [Choice documentation](https://docs.typesafe.ai/primitives/choice)
