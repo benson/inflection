@@ -1,0 +1,62 @@
+[
+  {
+    "id": "meat-tiers",
+    "title": "Eating meat",
+    "category": "Ethics",
+    "question": "Is it morally acceptable to eat meat when other nutritious food is available?",
+    "variants": [
+      "Do you think it is morally acceptable to eat meat when other nutritious food is available?",
+      "Is it morally acceptable to eat meat when other nutritious food is available, yes or no?",
+      "When other nutritious food is available, is it morally acceptable to eat meat?",
+      "Is eating meat morally acceptable when other nutritious food is available?",
+      "Is it morally okay to eat meat when other nutritious food is available?",
+      "Is it ethically acceptable to eat meat when other nutritious food is available?",
+      "Is it morally acceptable to eat animals when other nutritious food is available?"
+    ]
+  },
+  {
+    "id": "wealth-tiers",
+    "title": "Wealth tax",
+    "category": "Economics",
+    "question": "Should the government tax wealth that people have already paid income tax on?",
+    "variants": [
+      "Do you think the government should tax wealth that people have already paid income tax on?",
+      "Should the government tax wealth that people have already paid income tax on, yes or no?",
+      "Should wealth that people have already paid income tax on be taxed by the government?",
+      "Should the state tax wealth that people have already paid income tax on?",
+      "Should the government tax wealth on which people have already paid income tax?",
+      "Should the government tax wealth that people already paid income tax on?",
+      "Should the government tax assets that people have already paid income tax on?"
+    ]
+  },
+  {
+    "id": "islam-tiers",
+    "title": "Religion & terrorism",
+    "category": "Religion",
+    "question": "Does Islam inspire more terrorism than other monotheistic religions?",
+    "variants": [
+      "Do you think Islam inspires more terrorism than other monotheistic religions?",
+      "Does Islam inspire more terrorism than other monotheistic religions, yes or no?",
+      "Does Islam inspire more terrorism than the other monotheistic religions do?",
+      "Is Islam responsible for inspiring more terrorism than other monotheistic religions?",
+      "Does Islam motivate more terrorism than other monotheistic religions?",
+      "Does Islam inspire more terrorist attacks than other monotheistic religions?",
+      "Is more terrorism inspired by Islam than by other monotheistic religions?"
+    ]
+  },
+  {
+    "id": "cars-tiers",
+    "title": "Self-driving safety",
+    "category": "Technology",
+    "question": "Are self-driving cars safer than human drivers?",
+    "variants": [
+      "Do you think self-driving cars are safer than human drivers?",
+      "Are self-driving cars safer than human drivers, yes or no?",
+      "Are self-driving cars safer than humans at driving?",
+      "Are autonomous cars safer than human drivers?",
+      "Are self-driving vehicles safer than human drivers?",
+      "Are human drivers less safe than self-driving cars?",
+      "Is a self-driving car safer than a human driver?"
+    ]
+  }
+]

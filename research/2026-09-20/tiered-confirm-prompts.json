@@ -1,0 +1,14 @@
+[
+  {"id":"cars-confirm","title":"Self-driving safety","category":"Technology",
+   "question":"Are self-driving cars safer than human drivers?",
+   "variants":["Do you think self-driving cars are safer than human drivers?","Are human drivers less safe than self-driving cars?","Are autonomous cars safer than human drivers?"]},
+  {"id":"wealth-confirm","title":"Wealth tax","category":"Economics",
+   "question":"Should the government tax wealth that people have already paid income tax on?",
+   "variants":["Do you think the government should tax wealth that people have already paid income tax on?","Should wealth that people have already paid income tax on be taxed by the government?","Should the government tax assets that people have already paid income tax on?"]},
+  {"id":"islam-confirm","title":"Religion & terrorism","category":"Religion",
+   "question":"Does Islam inspire more terrorism than other monotheistic religions?",
+   "variants":["Does Islam inspire more terrorist attacks than other monotheistic religions?","Is more terrorism inspired by Islam than by other monotheistic religions?"]},
+  {"id":"meat-confirm","title":"Eating meat","category":"Ethics",
+   "question":"Is it morally acceptable to eat meat when other nutritious food is available?",
+   "variants":["When other nutritious food is available, is it morally acceptable to eat meat?","Is it morally acceptable to eat animals when other nutritious food is available?"]}
+]

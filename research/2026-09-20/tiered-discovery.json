@@ -1,0 +1,645 @@
+{
+  "startedAt": "2026-09-20T15:25:39.463Z",
+  "endpoint": "https://inflection-api.bensonperry.workers.dev/decisions",
+  "origin": "https://bensonperry.com",
+  "answerOrder": "normal",
+  "repeats": 1,
+  "runs": [
+    {
+      "id": "meat-tiers",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:25:39.464Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think it is morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "When other nutritious food is available, is it morally acceptable to eat meat?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Is eating meat morally acceptable when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Is it morally okay to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v6": {
+            "type": "choice",
+            "instructions": "Is it ethically acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v7": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789917939-9aQuibui2bQldp8NIm99",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.21,
+              "yes": 0.79
+            },
+            "confidence": 0.58
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.27,
+              "yes": 0.73
+            },
+            "confidence": 0.47
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.27,
+              "yes": 0.73
+            },
+            "confidence": 0.47
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.37,
+              "yes": 0.63
+            },
+            "confidence": 0.25
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.22,
+              "yes": 0.78
+            },
+            "confidence": 0.57
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.31,
+              "yes": 0.69
+            },
+            "confidence": 0.38
+          },
+          "v6": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.18,
+              "yes": 0.82
+            },
+            "confidence": 0.64
+          },
+          "v7": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.59,
+              "yes": 0.41
+            },
+            "confidence": 0.18
+          }
+        },
+        "usage": {
+          "input_tokens": 707,
+          "output_tokens": 234,
+          "cost": 0.000029694
+        }
+      }
+    },
+    {
+      "id": "wealth-tiers",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:25:43.150Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Should the government tax wealth that people have already paid income tax on?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think the government should tax wealth that people have already paid income tax on?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Should the government tax wealth that people have already paid income tax on, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Should wealth that people have already paid income tax on be taxed by the government?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Should the state tax wealth that people have already paid income tax on?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Should the government tax wealth on which people have already paid income tax?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v6": {
+            "type": "choice",
+            "instructions": "Should the government tax wealth that people already paid income tax on?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v7": {
+            "type": "choice",
+            "instructions": "Should the government tax assets that people have already paid income tax on?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789917943-aKOWi10yeLR6S8oOGyOL",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.43,
+              "yes": 0.57
+            },
+            "confidence": 0.14
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.57,
+              "yes": 0.43
+            },
+            "confidence": 0.13
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.48,
+              "yes": 0.52
+            },
+            "confidence": 0.04
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.56,
+              "yes": 0.44
+            },
+            "confidence": 0.11
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.51,
+              "yes": 0.49
+            },
+            "confidence": 0.03
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.42,
+              "yes": 0.58
+            },
+            "confidence": 0.16
+          },
+          "v6": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.39,
+              "yes": 0.61
+            },
+            "confidence": 0.21
+          },
+          "v7": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.64,
+              "yes": 0.36
+            },
+            "confidence": 0.28
+          }
+        },
+        "usage": {
+          "input_tokens": 707,
+          "output_tokens": 234,
+          "cost": 0.000029694
+        }
+      }
+    },
+    {
+      "id": "islam-tiers",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:25:46.735Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think Islam inspires more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than the other monotheistic religions do?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Is Islam responsible for inspiring more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Does Islam motivate more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v6": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorist attacks than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v7": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789917946-6nip5MatdQCvcr6lduAW",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            },
+            "confidence": 0.93
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.02,
+              "no": 0.98
+            },
+            "confidence": 0.96
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.03,
+              "no": 0.97
+            },
+            "confidence": 0.94
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.08,
+              "no": 0.92
+            },
+            "confidence": 0.84
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.05,
+              "no": 0.95
+            },
+            "confidence": 0.9
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.04,
+              "no": 0.96
+            },
+            "confidence": 0.92
+          },
+          "v6": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.33,
+              "no": 0.67
+            },
+            "confidence": 0.34
+          },
+          "v7": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.8,
+              "no": 0.2
+            },
+            "confidence": 0.61
+          }
+        },
+        "usage": {
+          "input_tokens": 696,
+          "output_tokens": 234,
+          "cost": 0.000029232
+        }
+      }
+    },
+    {
+      "id": "cars-tiers",
+      "repeat": 1,
+      "startedAt": "2026-09-20T15:25:50.390Z",
+      "status": 200,
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "original": {
+            "type": "choice",
+            "instructions": "Are self-driving cars safer than human drivers?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v1": {
+            "type": "choice",
+            "instructions": "Do you think self-driving cars are safer than human drivers?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v2": {
+            "type": "choice",
+            "instructions": "Are self-driving cars safer than human drivers, yes or no?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v3": {
+            "type": "choice",
+            "instructions": "Are self-driving cars safer than humans at driving?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v4": {
+            "type": "choice",
+            "instructions": "Are autonomous cars safer than human drivers?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v5": {
+            "type": "choice",
+            "instructions": "Are self-driving vehicles safer than human drivers?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v6": {
+            "type": "choice",
+            "instructions": "Are human drivers less safe than self-driving cars?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "v7": {
+            "type": "choice",
+            "instructions": "Is a self-driving car safer than a human driver?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "response": {
+        "id": "gen-dec-1789917950-qDKPTqwVsWo6Hfzdg6hh",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "original": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.38,
+              "no": 0.62
+            },
+            "confidence": 0.24
+          },
+          "v1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.64,
+              "no": 0.36
+            },
+            "confidence": 0.28
+          },
+          "v2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.45,
+              "no": 0.55
+            },
+            "confidence": 0.11
+          },
+          "v3": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.34,
+              "no": 0.66
+            },
+            "confidence": 0.33
+          },
+          "v4": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.51,
+              "no": 0.49
+            },
+            "confidence": 0.02
+          },
+          "v5": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.39,
+              "no": 0.61
+            },
+            "confidence": 0.23
+          },
+          "v6": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.19,
+              "no": 0.81
+            },
+            "confidence": 0.62
+          },
+          "v7": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.44,
+              "no": 0.56
+            },
+            "confidence": 0.13
+          }
+        },
+        "usage": {
+          "input_tokens": 669,
+          "output_tokens": 234,
+          "cost": 0.000028098
+        }
+      }
+    }
+  ]
+}
