@@ -4,6 +4,10 @@
 
 Useful context reduced the probability gap in all five selected pairs. It removed the winning-answer flip in three pairs, while the animals/meat and wealth-tax pairs still flipped in every repeat. All five pairs still flipped in every repeat with the nonempty control. Having text in `state` was not sufficient to remove the flips in this test.
 
+**Scope correction after Benson's review:** The relevant-state arm changes the information or task, not merely the API field being populated. Coordinates and dates supply the essential missing facts, leaving a narrower comparison; definitions and scenarios narrow the original questions. The resulting improvement cannot establish that an empty `state` caused the original failures, that the original questions were invalid, or that Jev answers those original questions reliably without help. Inflection's original question-answering probe includes the ability to supply the needed knowledge. This follow-up measures sensitivity to added information and assumptions. It does not isolate a parameter-placement effect.
+
+The nonempty control is the closest arm here to a test of merely populating `state`; it removed none of the five flips. A separate, cleaner placement experiment would move the same question from `instructions` into `state`, with a fixed instruction to answer it and no new facts. That experiment has not been run in this study.
+
 All 45 planned requests completed successfully (90 decisions), using the same resolved model, `typesafe/jev-1.13-20260917`, beginning at 2026-09-21 20:20:27 UTC. Provider-reported total cost was $0.00075852. A post-run audit verified the complete planned schedule, three observations per case/arm, unchanged question/option payloads across states, one model version, and the case-file hash. No inference was rerun after inspecting results.
 
 The following are mean **Yes probabilities**, wording 1 / wording 2. Three repeats per cell; these probabilities are not a factual truth rating.
@@ -28,7 +32,7 @@ The absolute gap between the mean Yes probabilities, in percentage points:
 
 **Interpretation:** The coordinates and dates brought both wordings onto the correct winning answer for the two factual cases, although Cubs/Ottomans still had a 20.7-point gap. Jev therefore successfully answered the east/west comparison with the coordinates provided in this test; that observation does not reveal its internal reasoning mechanism. The religion context supplied scope and definitions, not measured attack counts, so its greater consistency does not validate its substantive answer. The meat and wealth scenarios narrowed the question but did not eliminate wording sensitivity. The control also moved probabilities, sometimes worsening the gap, so adding text itself can influence the model.
 
-This supports giving Jev concise, relevant information for a decision, not assuming either that empty state invalidates every response or that nonempty state guarantees reliable judgments. TypeSafe separately documents poor numerical precision, difficulty with indirection, and degraded accuracy from irrelevant detail.
+The observed improvement is conditional on the added facts and assumptions. It does not show that the original empty-state evaluation was a misuse of Jev, or that nonempty state guarantees reliable judgments. TypeSafe separately recommends relevant context and documents poor numerical precision, difficulty with indirection, and degraded accuracy from irrelevant detail; that guidance should not be confused with an experimental proof from these five cases.
 
 - [Complete plan, exact state passages, requests, and raw responses](state-results.json)
 - [Computed means, observed ranges, gaps, and flip counts](state-summary.json)
