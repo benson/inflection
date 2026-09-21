@@ -1,0 +1,351 @@
+{
+  "requests": 60,
+  "primaryDecisions": 60,
+  "diagnosticDecisions": 60,
+  "model": "typesafe/jev-1.13-20260917",
+  "cost": 0.000942102,
+  "duplicateMaxAbsoluteDifference": 0.20999999999999996,
+  "duplicateMeanAbsoluteDifference": 0.023,
+  "cases": [
+    {
+      "id": "religion-terrorism",
+      "title": "Religion and terrorism",
+      "wordings": [
+        "Does Islam inspire more terrorism than other monotheistic religions?",
+        "Is more terrorism inspired by Islam than by other monotheistic religions?"
+      ],
+      "arms": {
+        "instructions": {
+          "wordings": [
+            {
+              "wording": 1,
+              "values": [
+                0.05,
+                0.05,
+                0.05
+              ],
+              "mean": 0.05000000000000001,
+              "min": 0.05,
+              "max": 0.05
+            },
+            {
+              "wording": 2,
+              "values": [
+                0.82,
+                0.77,
+                0.77
+              ],
+              "mean": 0.7866666666666666,
+              "min": 0.77,
+              "max": 0.82
+            }
+          ],
+          "gapPercentagePoints": 73.66666666666666,
+          "flipCount": 3,
+          "repeats": 3
+        },
+        "state": {
+          "wordings": [
+            {
+              "wording": 1,
+              "values": [
+                0.02,
+                0.02,
+                0.02
+              ],
+              "mean": 0.02,
+              "min": 0.02,
+              "max": 0.02
+            },
+            {
+              "wording": 2,
+              "values": [
+                0.59,
+                0.58,
+                0.6
+              ],
+              "mean": 0.59,
+              "min": 0.58,
+              "max": 0.6
+            }
+          ],
+          "gapPercentagePoints": 56.99999999999999,
+          "flipCount": 3,
+          "repeats": 3
+        }
+      }
+    },
+    {
+      "id": "eating-meat",
+      "title": "Eating animals versus meat",
+      "wordings": [
+        "Is it morally acceptable to eat animals when other nutritious food is available?",
+        "Is it morally acceptable to eat meat when other nutritious food is available?"
+      ],
+      "arms": {
+        "instructions": {
+          "wordings": [
+            {
+              "wording": 1,
+              "values": [
+                0.28,
+                0.3,
+                0.23
+              ],
+              "mean": 0.27,
+              "min": 0.23,
+              "max": 0.3
+            },
+            {
+              "wording": 2,
+              "values": [
+                0.76,
+                0.78,
+                0.74
+              ],
+              "mean": 0.7600000000000001,
+              "min": 0.74,
+              "max": 0.78
+            }
+          ],
+          "gapPercentagePoints": 49.00000000000001,
+          "flipCount": 3,
+          "repeats": 3
+        },
+        "state": {
+          "wordings": [
+            {
+              "wording": 1,
+              "values": [
+                0.33,
+                0.3,
+                0.32
+              ],
+              "mean": 0.31666666666666665,
+              "min": 0.3,
+              "max": 0.33
+            },
+            {
+              "wording": 2,
+              "values": [
+                0.73,
+                0.68,
+                0.75
+              ],
+              "mean": 0.7200000000000001,
+              "min": 0.68,
+              "max": 0.75
+            }
+          ],
+          "gapPercentagePoints": 40.33333333333334,
+          "flipCount": 3,
+          "repeats": 3
+        }
+      }
+    },
+    {
+      "id": "wealth-tax",
+      "title": "Wealth tax",
+      "wordings": [
+        "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+        "Should the government levy a wealth tax on assets acquired with after-tax income?"
+      ],
+      "arms": {
+        "instructions": {
+          "wordings": [
+            {
+              "wording": 1,
+              "values": [
+                0.86,
+                0.88,
+                0.84
+              ],
+              "mean": 0.86,
+              "min": 0.84,
+              "max": 0.88
+            },
+            {
+              "wording": 2,
+              "values": [
+                0.1,
+                0.11,
+                0.14
+              ],
+              "mean": 0.11666666666666668,
+              "min": 0.1,
+              "max": 0.14
+            }
+          ],
+          "gapPercentagePoints": 74.33333333333333,
+          "flipCount": 3,
+          "repeats": 3
+        },
+        "state": {
+          "wordings": [
+            {
+              "wording": 1,
+              "values": [
+                0.8,
+                0.8,
+                0.78
+              ],
+              "mean": 0.7933333333333333,
+              "min": 0.78,
+              "max": 0.8
+            },
+            {
+              "wording": 2,
+              "values": [
+                0.2,
+                0.19,
+                0.19
+              ],
+              "mean": 0.19333333333333336,
+              "min": 0.19,
+              "max": 0.2
+            }
+          ],
+          "gapPercentagePoints": 60,
+          "flipCount": 3,
+          "repeats": 3
+        }
+      }
+    },
+    {
+      "id": "reno-los-angeles",
+      "title": "Reno and Los Angeles",
+      "wordings": [
+        "Is Reno, Nevada farther west than Los Angeles, California?",
+        "Is Los Angeles, California farther east than Reno, Nevada?"
+      ],
+      "arms": {
+        "instructions": {
+          "wordings": [
+            {
+              "wording": 1,
+              "values": [
+                0.28,
+                0.35,
+                0.32
+              ],
+              "mean": 0.31666666666666665,
+              "min": 0.28,
+              "max": 0.35
+            },
+            {
+              "wording": 2,
+              "values": [
+                0.7,
+                0.67,
+                0.67
+              ],
+              "mean": 0.68,
+              "min": 0.67,
+              "max": 0.7
+            }
+          ],
+          "gapPercentagePoints": 36.33333333333334,
+          "flipCount": 3,
+          "repeats": 3
+        },
+        "state": {
+          "wordings": [
+            {
+              "wording": 1,
+              "values": [
+                0.23,
+                0.21,
+                0.2
+              ],
+              "mean": 0.21333333333333335,
+              "min": 0.2,
+              "max": 0.23
+            },
+            {
+              "wording": 2,
+              "values": [
+                0.63,
+                0.62,
+                0.69
+              ],
+              "mean": 0.6466666666666666,
+              "min": 0.62,
+              "max": 0.69
+            }
+          ],
+          "gapPercentagePoints": 43.33333333333332,
+          "flipCount": 3,
+          "repeats": 3
+        }
+      }
+    },
+    {
+      "id": "cubs-ottomans",
+      "title": "Cubs and the Ottomans",
+      "wordings": [
+        "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+        "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?"
+      ],
+      "arms": {
+        "instructions": {
+          "wordings": [
+            {
+              "wording": 1,
+              "values": [
+                0.15,
+                0.14,
+                0.13
+              ],
+              "mean": 0.14,
+              "min": 0.13,
+              "max": 0.15
+            },
+            {
+              "wording": 2,
+              "values": [
+                0.62,
+                0.57,
+                0.5
+              ],
+              "mean": 0.5633333333333334,
+              "min": 0.5,
+              "max": 0.62
+            }
+          ],
+          "gapPercentagePoints": 42.333333333333336,
+          "flipCount": 2,
+          "repeats": 3
+        },
+        "state": {
+          "wordings": [
+            {
+              "wording": 1,
+              "values": [
+                0.23,
+                0.22,
+                0.25
+              ],
+              "mean": 0.2333333333333333,
+              "min": 0.22,
+              "max": 0.25
+            },
+            {
+              "wording": 2,
+              "values": [
+                0.57,
+                0.48,
+                0.54
+              ],
+              "mean": 0.5299999999999999,
+              "min": 0.48,
+              "max": 0.57
+            }
+          ],
+          "gapPercentagePoints": 29.666666666666664,
+          "flipCount": 2,
+          "repeats": 3
+        }
+      }
+    }
+  ]
+}
