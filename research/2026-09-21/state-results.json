@@ -1,0 +1,3899 @@
+{
+  "startedAt": "2026-09-21T20:20:27.892Z",
+  "inputSha256": "de0f0a20d5ac0973c0525990d2abc2db2c16f3ab71e44d8c01ee5c51a9d12486",
+  "endpoint": "https://inflection-api.bensonperry.workers.dev/decisions",
+  "controlState": "Study identifier: context-check-2026-09-21.",
+  "repeats": 3,
+  "cases": [
+    {
+      "id": "religion-terrorism",
+      "title": "Religion and terrorism",
+      "contextKind": "scope and definitions; no evidence counts",
+      "wordings": [
+        "Does Islam inspire more terrorism than other monotheistic religions?",
+        "Is more terrorism inspired by Islam than by other monotheistic religions?"
+      ],
+      "state": "Scope for this comparison: worldwide, 2001–2025. The outcome is the number of terrorist attacks whose perpetrators explicitly cited a religious motive. The groups compared are Islam versus Christianity and Judaism combined. The comparison concerns attributed motives, not the behavior of all followers of any religion. No attack counts are supplied.",
+      "sources": []
+    },
+    {
+      "id": "eating-meat",
+      "title": "Eating animals versus meat",
+      "contextKind": "hypothetical scenario; no prescribed ethical answer",
+      "wordings": [
+        "Is it morally acceptable to eat animals when other nutritious food is available?",
+        "Is it morally acceptable to eat meat when other nutritious food is available?"
+      ],
+      "state": "An adult is choosing what to eat for a meal. They can obtain nutritionally adequate food without animal flesh at the same price and convenience as the animal option. The animal option is flesh from a slaughtered cow or pig. There is no food scarcity, medical need, religious obligation, or survival emergency. No ethical framework or preferred answer is specified.",
+      "sources": []
+    },
+    {
+      "id": "wealth-tax",
+      "title": "Wealth tax",
+      "contextKind": "hypothetical policy; resolves the tax instrument",
+      "wordings": [
+        "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+        "Should the government levy a wealth tax on assets acquired with after-tax income?"
+      ],
+      "state": "Policy scenario: a government is considering a recurring annual tax on households' net assets. The assets were purchased using income on which income tax has already been paid. The proposal taxes the stock of wealth, not another year's earnings or realized capital gains. No tax rate, exemption threshold, revenue use, or normative rule is supplied.",
+      "sources": []
+    },
+    {
+      "id": "reno-los-angeles",
+      "title": "Reno and Los Angeles",
+      "contextKind": "sourced coordinates; relation not supplied",
+      "wordings": [
+        "Is Reno, Nevada farther west than Los Angeles, California?",
+        "Is Los Angeles, California farther east than Reno, Nevada?"
+      ],
+      "state": "US Census Bureau 2026 Gazetteer representative city points, in decimal degrees (negative longitude is west of Greenwich): Reno, Nevada: latitude 39.549097, longitude -119.849907. Los Angeles, California: latitude 34.019394, longitude -118.410825. The city comparison uses these representative points.",
+      "sources": [
+        "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2026_Gazetteer/2026_gaz_place_32.txt",
+        "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2026_Gazetteer/2026_gaz_place_06.txt"
+      ]
+    },
+    {
+      "id": "cubs-ottomans",
+      "title": "Cubs and the Ottomans",
+      "contextKind": "sourced dates; overlap not supplied",
+      "wordings": [
+        "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+        "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?"
+      ],
+      "state": "The Chicago Cubs won the World Series in 1908 and next won it in 2016. The Ottoman Empire ended in 1922, when the sultanate was abolished.",
+      "sources": [
+        "https://www.mlb.com/cubs/history/timeline",
+        "https://guides.loc.gov/ottoman-turkish/reference"
+      ]
+    }
+  ],
+  "schedule": [
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 1,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 1,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 1,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Scope for this comparison: worldwide, 2001–2025. The outcome is the number of terrorist attacks whose perpetrators explicitly cited a religious motive. The groups compared are Islam versus Christianity and Judaism combined. The comparison concerns attributed motives, not the behavior of all followers of any religion. No attack counts are supplied.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 1,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 1,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 1,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "An adult is choosing what to eat for a meal. They can obtain nutritionally adequate food without animal flesh at the same price and convenience as the animal option. The animal option is flesh from a slaughtered cow or pig. There is no food scarcity, medical need, religious obligation, or survival emergency. No ethical framework or preferred answer is specified.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 1,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 1,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 1,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Policy scenario: a government is considering a recurring annual tax on households' net assets. The assets were purchased using income on which income tax has already been paid. The proposal taxes the stock of wealth, not another year's earnings or realized capital gains. No tax rate, exemption threshold, revenue use, or normative rule is supplied.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 1,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 1,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 1,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "US Census Bureau 2026 Gazetteer representative city points, in decimal degrees (negative longitude is west of Greenwich): Reno, Nevada: latitude 39.549097, longitude -119.849907. Los Angeles, California: latitude 34.019394, longitude -118.410825. The city comparison uses these representative points.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 1,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 1,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 1,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "The Chicago Cubs won the World Series in 1908 and next won it in 2016. The Ottoman Empire ended in 1922, when the sultanate was abolished.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 2,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 2,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "An adult is choosing what to eat for a meal. They can obtain nutritionally adequate food without animal flesh at the same price and convenience as the animal option. The animal option is flesh from a slaughtered cow or pig. There is no food scarcity, medical need, religious obligation, or survival emergency. No ethical framework or preferred answer is specified.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 2,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 2,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 2,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Policy scenario: a government is considering a recurring annual tax on households' net assets. The assets were purchased using income on which income tax has already been paid. The proposal taxes the stock of wealth, not another year's earnings or realized capital gains. No tax rate, exemption threshold, revenue use, or normative rule is supplied.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 2,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 2,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 2,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "US Census Bureau 2026 Gazetteer representative city points, in decimal degrees (negative longitude is west of Greenwich): Reno, Nevada: latitude 39.549097, longitude -119.849907. Los Angeles, California: latitude 34.019394, longitude -118.410825. The city comparison uses these representative points.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 2,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 2,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 2,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "The Chicago Cubs won the World Series in 1908 and next won it in 2016. The Ottoman Empire ended in 1922, when the sultanate was abolished.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 2,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 2,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 2,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Scope for this comparison: worldwide, 2001–2025. The outcome is the number of terrorist attacks whose perpetrators explicitly cited a religious motive. The groups compared are Islam versus Christianity and Judaism combined. The comparison concerns attributed motives, not the behavior of all followers of any religion. No attack counts are supplied.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 2,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 3,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Policy scenario: a government is considering a recurring annual tax on households' net assets. The assets were purchased using income on which income tax has already been paid. The proposal taxes the stock of wealth, not another year's earnings or realized capital gains. No tax rate, exemption threshold, revenue use, or normative rule is supplied.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 3,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 3,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 3,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "US Census Bureau 2026 Gazetteer representative city points, in decimal degrees (negative longitude is west of Greenwich): Reno, Nevada: latitude 39.549097, longitude -119.849907. Los Angeles, California: latitude 34.019394, longitude -118.410825. The city comparison uses these representative points.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 3,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 3,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 3,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "The Chicago Cubs won the World Series in 1908 and next won it in 2016. The Ottoman Empire ended in 1922, when the sultanate was abolished.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 3,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 3,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 3,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Scope for this comparison: worldwide, 2001–2025. The outcome is the number of terrorist attacks whose perpetrators explicitly cited a religious motive. The groups compared are Islam versus Christianity and Judaism combined. The comparison concerns attributed motives, not the behavior of all followers of any religion. No attack counts are supplied.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 3,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 3,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 3,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "An adult is choosing what to eat for a meal. They can obtain nutritionally adequate food without animal flesh at the same price and convenience as the animal option. The animal option is flesh from a slaughtered cow or pig. There is no food scarcity, medical need, religious obligation, or survival emergency. No ethical framework or preferred answer is specified.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 3,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 3,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "runs": [
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 1,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:20:27.894Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022029-O7RIRmYfIRBLvLCBGa7g",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.03,
+              "no": 0.97
+            },
+            "confidence": 0.93
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.81,
+              "no": 0.19
+            },
+            "confidence": 0.61
+          }
+        },
+        "usage": {
+          "input_tokens": 367,
+          "output_tokens": 61,
+          "cost": 0.000015414
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 1,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:20:31.785Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022032-6G3dCrylK5XCGGF9lAD3",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.06,
+              "no": 0.94
+            },
+            "confidence": 0.88
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.63,
+              "no": 0.37
+            },
+            "confidence": 0.26
+          }
+        },
+        "usage": {
+          "input_tokens": 384,
+          "output_tokens": 61,
+          "cost": 0.000016128
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 1,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Scope for this comparison: worldwide, 2001–2025. The outcome is the number of terrorist attacks whose perpetrators explicitly cited a religious motive. The groups compared are Islam versus Christianity and Judaism combined. The comparison concerns attributed motives, not the behavior of all followers of any religion. No attack counts are supplied.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:20:35.361Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022036-dTBgIUCrJ50r9hhRJO03",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.91,
+              "no": 0.09
+            },
+            "confidence": 0.82
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.97,
+              "no": 0.03
+            },
+            "confidence": 0.94
+          }
+        },
+        "usage": {
+          "input_tokens": 434,
+          "output_tokens": 61,
+          "cost": 0.000018228
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 1,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:20:38.903Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022039-u0WI4QpZLedOU9oe6JNP",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.32,
+              "no": 0.68
+            },
+            "confidence": 0.36
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.22,
+              "yes": 0.78
+            },
+            "confidence": 0.56
+          }
+        },
+        "usage": {
+          "input_tokens": 369,
+          "output_tokens": 61,
+          "cost": 0.000015498
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 1,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:20:42.443Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022043-i7gbieyiPKuR3RbSW6ot",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.52,
+              "yes": 0.48
+            },
+            "confidence": 0.04
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.15,
+              "yes": 0.85
+            },
+            "confidence": 0.7
+          }
+        },
+        "usage": {
+          "input_tokens": 386,
+          "output_tokens": 61,
+          "cost": 0.000016212
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 1,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "An adult is choosing what to eat for a meal. They can obtain nutritionally adequate food without animal flesh at the same price and convenience as the animal option. The animal option is flesh from a slaughtered cow or pig. There is no food scarcity, medical need, religious obligation, or survival emergency. No ethical framework or preferred answer is specified.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:20:45.973Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022046-GPXdkA1ZS0JiJmj7f4es",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.48,
+              "no": 0.52
+            },
+            "confidence": 0.04
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.63,
+              "no": 0.37
+            },
+            "confidence": 0.27
+          }
+        },
+        "usage": {
+          "input_tokens": 442,
+          "output_tokens": 61,
+          "cost": 0.000018564
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 1,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:20:49.507Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022050-xr5WjgDvk1yIQN6qCktK",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.17,
+              "yes": 0.83
+            },
+            "confidence": 0.66
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.92,
+              "yes": 0.08
+            },
+            "confidence": 0.84
+          }
+        },
+        "usage": {
+          "input_tokens": 375,
+          "output_tokens": 61,
+          "cost": 0.00001575
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 1,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:20:53.032Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022054-mpaI3HibIkjZqtDKduyR",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.22,
+              "yes": 0.78
+            },
+            "confidence": 0.57
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.92,
+              "yes": 0.08
+            },
+            "confidence": 0.83
+          }
+        },
+        "usage": {
+          "input_tokens": 392,
+          "output_tokens": 61,
+          "cost": 0.000016464
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 1,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Policy scenario: a government is considering a recurring annual tax on households' net assets. The assets were purchased using income on which income tax has already been paid. The proposal taxes the stock of wealth, not another year's earnings or realized capital gains. No tax rate, exemption threshold, revenue use, or normative rule is supplied.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:20:56.565Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022057-KkSxfQwHtz4qNft0XJHP",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.63,
+              "no": 0.37
+            },
+            "confidence": 0.26
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.15,
+              "no": 0.85
+            },
+            "confidence": 0.69
+          }
+        },
+        "usage": {
+          "input_tokens": 441,
+          "output_tokens": 61,
+          "cost": 0.000018522
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 1,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:00.126Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022061-R2MtY5520ndZPkwx4DDU",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.3,
+              "no": 0.7
+            },
+            "confidence": 0.39
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.71,
+              "no": 0.29
+            },
+            "confidence": 0.42
+          }
+        },
+        "usage": {
+          "input_tokens": 365,
+          "output_tokens": 61,
+          "cost": 0.00001533
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 1,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:03.686Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022064-uhVOAUOtGbLd8OPfAYLt",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.43,
+              "no": 0.57
+            },
+            "confidence": 0.14
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.74,
+              "no": 0.26
+            },
+            "confidence": 0.48
+          }
+        },
+        "usage": {
+          "input_tokens": 382,
+          "output_tokens": 61,
+          "cost": 0.000016044
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 1,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "US Census Bureau 2026 Gazetteer representative city points, in decimal degrees (negative longitude is west of Greenwich): Reno, Nevada: latitude 39.549097, longitude -119.849907. Los Angeles, California: latitude 34.019394, longitude -118.410825. The city comparison uses these representative points.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:07.257Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022068-BONsne4Dx4RIZVf7GcRo",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 0.99
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.02,
+              "yes": 0.98
+            },
+            "confidence": 0.95
+          }
+        },
+        "usage": {
+          "input_tokens": 458,
+          "output_tokens": 61,
+          "cost": 0.000019236
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 1,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:10.794Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022071-lQzcCfkBlka94jopr9Ko",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.1,
+              "no": 0.9
+            },
+            "confidence": 0.8
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.56,
+              "no": 0.44
+            },
+            "confidence": 0.13
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 61,
+          "cost": 0.000016296
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 1,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:14.315Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022075-PLXGT0XRFjWw2OHke6Ua",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.82,
+              "yes": 0.18
+            },
+            "confidence": 0.63
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.28,
+              "yes": 0.72
+            },
+            "confidence": 0.44
+          }
+        },
+        "usage": {
+          "input_tokens": 405,
+          "output_tokens": 61,
+          "cost": 0.00001701
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 1,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "The Chicago Cubs won the World Series in 1908 and next won it in 2016. The Ottoman Empire ended in 1922, when the sultanate was abolished.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:17.841Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022078-BD9ZyVbWEmDoE2A8Q9wn",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.21,
+              "yes": 0.79
+            },
+            "confidence": 0.58
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0,
+              "yes": 1
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 432,
+          "output_tokens": 61,
+          "cost": 0.000018144
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 2,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:21.381Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022082-4kZTmU6dGy7mwP5QywiW",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.56,
+              "yes": 0.44
+            },
+            "confidence": 0.13
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.15,
+              "yes": 0.85
+            },
+            "confidence": 0.69
+          }
+        },
+        "usage": {
+          "input_tokens": 386,
+          "output_tokens": 61,
+          "cost": 0.000016212
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 2,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "An adult is choosing what to eat for a meal. They can obtain nutritionally adequate food without animal flesh at the same price and convenience as the animal option. The animal option is flesh from a slaughtered cow or pig. There is no food scarcity, medical need, religious obligation, or survival emergency. No ethical framework or preferred answer is specified.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:24.929Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022085-T9ObCg5Jgspqmg7dairv",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.44,
+              "no": 0.56
+            },
+            "confidence": 0.12
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.62,
+              "no": 0.38
+            },
+            "confidence": 0.24
+          }
+        },
+        "usage": {
+          "input_tokens": 442,
+          "output_tokens": 61,
+          "cost": 0.000018564
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 2,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:28.473Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022089-GevqEZG9lIf5Gj1mnGWM",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.66,
+              "yes": 0.34
+            },
+            "confidence": 0.33
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.2,
+              "yes": 0.8
+            },
+            "confidence": 0.6
+          }
+        },
+        "usage": {
+          "input_tokens": 369,
+          "output_tokens": 61,
+          "cost": 0.000015498
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 2,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:32.012Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022092-uW498Z0ls5he2YI7WEDe",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.21,
+              "yes": 0.79
+            },
+            "confidence": 0.58
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.91,
+              "yes": 0.09
+            },
+            "confidence": 0.82
+          }
+        },
+        "usage": {
+          "input_tokens": 392,
+          "output_tokens": 61,
+          "cost": 0.000016464
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 2,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Policy scenario: a government is considering a recurring annual tax on households' net assets. The assets were purchased using income on which income tax has already been paid. The proposal taxes the stock of wealth, not another year's earnings or realized capital gains. No tax rate, exemption threshold, revenue use, or normative rule is supplied.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:35.573Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022096-gGKltFtdpVWkammuXHNW",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.62,
+              "no": 0.38
+            },
+            "confidence": 0.25
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.15,
+              "no": 0.85
+            },
+            "confidence": 0.71
+          }
+        },
+        "usage": {
+          "input_tokens": 441,
+          "output_tokens": 61,
+          "cost": 0.000018522
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 2,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:39.209Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022100-KuHTYmj3Xcp41yto9iuD",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.15,
+              "yes": 0.85
+            },
+            "confidence": 0.7
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.93,
+              "yes": 0.07
+            },
+            "confidence": 0.87
+          }
+        },
+        "usage": {
+          "input_tokens": 375,
+          "output_tokens": 61,
+          "cost": 0.00001575
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 2,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:42.763Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022103-2EQPvVqYrOeoUxgVCxfJ",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.62,
+              "yes": 0.38
+            },
+            "confidence": 0.23
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.29,
+              "yes": 0.71
+            },
+            "confidence": 0.42
+          }
+        },
+        "usage": {
+          "input_tokens": 382,
+          "output_tokens": 61,
+          "cost": 0.000016044
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 2,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "US Census Bureau 2026 Gazetteer representative city points, in decimal degrees (negative longitude is west of Greenwich): Reno, Nevada: latitude 39.549097, longitude -119.849907. Los Angeles, California: latitude 34.019394, longitude -118.410825. The city comparison uses these representative points.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:46.311Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022107-v4q9WK3a8KX2SkLoWm9F",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.01,
+              "yes": 0.99
+            },
+            "confidence": 0.98
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.98,
+              "no": 0.02
+            },
+            "confidence": 0.97
+          }
+        },
+        "usage": {
+          "input_tokens": 458,
+          "output_tokens": 61,
+          "cost": 0.000019236
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 2,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:49.892Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022110-7oNmQLaBG8ScKLgGGVrc",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.68,
+              "yes": 0.32
+            },
+            "confidence": 0.37
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.3,
+              "yes": 0.7
+            },
+            "confidence": 0.4
+          }
+        },
+        "usage": {
+          "input_tokens": 365,
+          "output_tokens": 61,
+          "cost": 0.00001533
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 2,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:53.426Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022114-w4XebwSLfwGyBY64vyHi",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.83,
+              "yes": 0.17
+            },
+            "confidence": 0.65
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.26,
+              "yes": 0.74
+            },
+            "confidence": 0.47
+          }
+        },
+        "usage": {
+          "input_tokens": 405,
+          "output_tokens": 61,
+          "cost": 0.00001701
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 2,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "The Chicago Cubs won the World Series in 1908 and next won it in 2016. The Ottoman Empire ended in 1922, when the sultanate was abolished.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:21:56.980Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022117-dGbuDWfI0rnJYnleqZ3m",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.78,
+              "no": 0.22
+            },
+            "confidence": 0.57
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.99,
+              "no": 0.01
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 432,
+          "output_tokens": 61,
+          "cost": 0.000018144
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 2,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:00.684Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022121-SMRmDfZ5Et90IsIdWp3v",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.14,
+              "no": 0.86
+            },
+            "confidence": 0.73
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.62,
+              "no": 0.38
+            },
+            "confidence": 0.24
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 61,
+          "cost": 0.000016296
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 2,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:04.184Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022125-qbvQl5ScdhHWqufZq9lj",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.95,
+              "yes": 0.05
+            },
+            "confidence": 0.9
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.39,
+              "yes": 0.61
+            },
+            "confidence": 0.22
+          }
+        },
+        "usage": {
+          "input_tokens": 384,
+          "output_tokens": 61,
+          "cost": 0.000016128
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 2,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Scope for this comparison: worldwide, 2001–2025. The outcome is the number of terrorist attacks whose perpetrators explicitly cited a religious motive. The groups compared are Islam versus Christianity and Judaism combined. The comparison concerns attributed motives, not the behavior of all followers of any religion. No attack counts are supplied.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:08.311Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022129-FiqP9Zd8dpfIxl1GhOaa",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.12,
+              "yes": 0.88
+            },
+            "confidence": 0.76
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.04,
+              "yes": 0.96
+            },
+            "confidence": 0.92
+          }
+        },
+        "usage": {
+          "input_tokens": 434,
+          "output_tokens": 61,
+          "cost": 0.000018228
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 2,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:11.813Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022132-8WvmIhbibNEqv6XrHuYz",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.95,
+              "yes": 0.05
+            },
+            "confidence": 0.9
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.2,
+              "yes": 0.8
+            },
+            "confidence": 0.61
+          }
+        },
+        "usage": {
+          "input_tokens": 367,
+          "output_tokens": 61,
+          "cost": 0.000015414
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 3,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Policy scenario: a government is considering a recurring annual tax on households' net assets. The assets were purchased using income on which income tax has already been paid. The proposal taxes the stock of wealth, not another year's earnings or realized capital gains. No tax rate, exemption threshold, revenue use, or normative rule is supplied.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:15.329Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022136-XPmcEoQYJub39h8jfwlO",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.4,
+              "yes": 0.6
+            },
+            "confidence": 0.21
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.87,
+              "yes": 0.13
+            },
+            "confidence": 0.73
+          }
+        },
+        "usage": {
+          "input_tokens": 441,
+          "output_tokens": 61,
+          "cost": 0.000018522
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 3,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:18.859Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022139-ab3u2WErGIg9KrVYQt6f",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.84,
+              "no": 0.16
+            },
+            "confidence": 0.68
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.08,
+              "no": 0.92
+            },
+            "confidence": 0.84
+          }
+        },
+        "usage": {
+          "input_tokens": 375,
+          "output_tokens": 61,
+          "cost": 0.00001575
+        }
+      }
+    },
+    {
+      "caseId": "wealth-tax",
+      "repeat": 3,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Should the government levy a wealth tax on assets acquired with after-tax income?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:22.413Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022143-jAfnCBvk8SUzFN9MG3sH",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.78,
+              "no": 0.22
+            },
+            "confidence": 0.55
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.09,
+              "no": 0.91
+            },
+            "confidence": 0.82
+          }
+        },
+        "usage": {
+          "input_tokens": 392,
+          "output_tokens": 61,
+          "cost": 0.000016464
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 3,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "US Census Bureau 2026 Gazetteer representative city points, in decimal degrees (negative longitude is west of Greenwich): Reno, Nevada: latitude 39.549097, longitude -119.849907. Los Angeles, California: latitude 34.019394, longitude -118.410825. The city comparison uses these representative points.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:25.920Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022146-Ta2wEtsKFSabeG9CCwr8",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.99,
+              "no": 0.01
+            },
+            "confidence": 0.99
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.98,
+              "no": 0.02
+            },
+            "confidence": 0.95
+          }
+        },
+        "usage": {
+          "input_tokens": 458,
+          "output_tokens": 61,
+          "cost": 0.000019236
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 3,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:29.482Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022150-9DZOo0n94ISD4hk2xX4N",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.29,
+              "no": 0.71
+            },
+            "confidence": 0.42
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.71,
+              "no": 0.29
+            },
+            "confidence": 0.41
+          }
+        },
+        "usage": {
+          "input_tokens": 365,
+          "output_tokens": 61,
+          "cost": 0.00001533
+        }
+      }
+    },
+    {
+      "caseId": "reno-los-angeles",
+      "repeat": 3,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is Reno, Nevada farther west than Los Angeles, California?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is Los Angeles, California farther east than Reno, Nevada?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:33.058Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022154-pUM0jDAEe8QSJRr4DXok",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.68,
+              "yes": 0.32
+            },
+            "confidence": 0.35
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.26,
+              "yes": 0.74
+            },
+            "confidence": 0.48
+          }
+        },
+        "usage": {
+          "input_tokens": 382,
+          "output_tokens": 61,
+          "cost": 0.000016044
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 3,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "The Chicago Cubs won the World Series in 1908 and next won it in 2016. The Ottoman Empire ended in 1922, when the sultanate was abolished.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:36.661Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022157-SM3AQKgsNTYDLbEp72Ge",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.8,
+              "no": 0.2
+            },
+            "confidence": 0.59
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 1,
+              "no": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 432,
+          "output_tokens": 61,
+          "cost": 0.000018144
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 3,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:40.176Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022161-KqxlliOatpOKpeyZomLG",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.91,
+              "yes": 0.09
+            },
+            "confidence": 0.81
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.44,
+              "yes": 0.56
+            },
+            "confidence": 0.13
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 61,
+          "cost": 0.000016296
+        }
+      }
+    },
+    {
+      "caseId": "cubs-ottomans",
+      "repeat": 3,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:43.742Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022164-daHD2RuH25TQHjXStMib",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.16,
+              "no": 0.84
+            },
+            "confidence": 0.69
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.77,
+              "no": 0.23
+            },
+            "confidence": 0.54
+          }
+        },
+        "usage": {
+          "input_tokens": 405,
+          "output_tokens": 61,
+          "cost": 0.00001701
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 3,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Scope for this comparison: worldwide, 2001–2025. The outcome is the number of terrorist attacks whose perpetrators explicitly cited a religious motive. The groups compared are Islam versus Christianity and Judaism combined. The comparison concerns attributed motives, not the behavior of all followers of any religion. No attack counts are supplied.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:47.298Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022168-7Mazpt4JlQNL8EIWJZS1",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.1,
+              "yes": 0.9
+            },
+            "confidence": 0.8
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.04,
+              "yes": 0.96
+            },
+            "confidence": 0.93
+          }
+        },
+        "usage": {
+          "input_tokens": 434,
+          "output_tokens": 61,
+          "cost": 0.000018228
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 3,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:50.870Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022171-ok7mU56Itif04CmwQkHQ",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.96,
+              "yes": 0.04
+            },
+            "confidence": 0.92
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.21,
+              "yes": 0.79
+            },
+            "confidence": 0.59
+          }
+        },
+        "usage": {
+          "input_tokens": 367,
+          "output_tokens": 61,
+          "cost": 0.000015414
+        }
+      }
+    },
+    {
+      "caseId": "religion-terrorism",
+      "repeat": 3,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Does Islam inspire more terrorism than other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is more terrorism inspired by Islam than by other monotheistic religions?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:54.445Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022175-ECpKnwYBBPPwLWPyQMur",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "no": 0.95,
+              "yes": 0.05
+            },
+            "confidence": 0.9
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "no": 0.39,
+              "yes": 0.61
+            },
+            "confidence": 0.22
+          }
+        },
+        "usage": {
+          "input_tokens": 384,
+          "output_tokens": 61,
+          "cost": 0.000016128
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 3,
+      "arm": "relevant",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "An adult is choosing what to eat for a meal. They can obtain nutritionally adequate food without animal flesh at the same price and convenience as the animal option. The animal option is flesh from a slaughtered cow or pig. There is no food scarcity, medical need, religious obligation, or survival emergency. No ethical framework or preferred answer is specified.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:22:57.931Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022178-1tiXuY1ohAsITWAawtQk",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.45,
+              "no": 0.55
+            },
+            "confidence": 0.11
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.62,
+              "no": 0.38
+            },
+            "confidence": 0.23
+          }
+        },
+        "usage": {
+          "input_tokens": 442,
+          "output_tokens": 61,
+          "cost": 0.000018564
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 3,
+      "arm": "empty",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:23:01.463Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022182-Gieifyiib31MUtxt26f5",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.28,
+              "no": 0.72
+            },
+            "confidence": 0.44
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.8,
+              "no": 0.2
+            },
+            "confidence": 0.6
+          }
+        },
+        "usage": {
+          "input_tokens": 369,
+          "output_tokens": 61,
+          "cost": 0.000015498
+        }
+      }
+    },
+    {
+      "caseId": "eating-meat",
+      "repeat": 3,
+      "arm": "nonempty-control",
+      "request": {
+        "model": "typesafe/jev-1.13",
+        "state": "Study identifier: context-check-2026-09-21.",
+        "questions": {
+          "w1": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat animals when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "w2": {
+            "type": "choice",
+            "instructions": "Is it morally acceptable to eat meat when other nutritious food is available?",
+            "criteria": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          }
+        }
+      },
+      "startedAt": "2026-09-21T20:23:05.051Z",
+      "status": 200,
+      "response": {
+        "id": "gen-dec-1790022186-IwaZtdrS3V0qKHzA3Bjy",
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "w1": {
+            "type": "choice",
+            "choice": "no",
+            "probabilities": {
+              "yes": 0.45,
+              "no": 0.55
+            },
+            "confidence": 0.09
+          },
+          "w2": {
+            "type": "choice",
+            "choice": "yes",
+            "probabilities": {
+              "yes": 0.85,
+              "no": 0.15
+            },
+            "confidence": 0.71
+          }
+        },
+        "usage": {
+          "input_tokens": 386,
+          "output_tokens": 61,
+          "cost": 0.000016212
+        }
+      }
+    }
+  ]
+}

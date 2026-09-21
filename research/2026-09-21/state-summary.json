@@ -1,0 +1,334 @@
+{
+  "model": "typesafe/jev-1.13-20260917",
+  "startedAt": "2026-09-21T20:20:27.892Z",
+  "requests": 45,
+  "decisions": 90,
+  "cost": 0.0007585199999999998,
+  "cases": [
+    {
+      "id": "religion-terrorism",
+      "title": "Religion and terrorism",
+      "contextKind": "scope and definitions; no evidence counts",
+      "wordings": [
+        "Does Islam inspire more terrorism than other monotheistic religions?",
+        "Is more terrorism inspired by Islam than by other monotheistic religions?"
+      ],
+      "stats": {
+        "empty": {
+          "meanYes": [
+            4,
+            80
+          ],
+          "ranges": [
+            [
+              3,
+              5
+            ],
+            [
+              79,
+              81
+            ]
+          ],
+          "gapPP": 76,
+          "flipCount": 3
+        },
+        "nonempty-control": {
+          "meanYes": [
+            5.3,
+            61.7
+          ],
+          "ranges": [
+            [
+              5,
+              6
+            ],
+            [
+              61,
+              63
+            ]
+          ],
+          "gapPP": 56.3,
+          "flipCount": 3
+        },
+        "relevant": {
+          "meanYes": [
+            89.7,
+            96.3
+          ],
+          "ranges": [
+            [
+              88,
+              91
+            ],
+            [
+              96,
+              97
+            ]
+          ],
+          "gapPP": 6.7,
+          "flipCount": 0
+        }
+      }
+    },
+    {
+      "id": "eating-meat",
+      "title": "Eating animals versus meat",
+      "contextKind": "hypothetical scenario; no prescribed ethical answer",
+      "wordings": [
+        "Is it morally acceptable to eat animals when other nutritious food is available?",
+        "Is it morally acceptable to eat meat when other nutritious food is available?"
+      ],
+      "stats": {
+        "empty": {
+          "meanYes": [
+            31.3,
+            79.3
+          ],
+          "ranges": [
+            [
+              28,
+              34
+            ],
+            [
+              78,
+              80
+            ]
+          ],
+          "gapPP": 48,
+          "flipCount": 3
+        },
+        "nonempty-control": {
+          "meanYes": [
+            45.7,
+            85
+          ],
+          "ranges": [
+            [
+              44,
+              48
+            ],
+            [
+              85,
+              85
+            ]
+          ],
+          "gapPP": 39.3,
+          "flipCount": 3
+        },
+        "relevant": {
+          "meanYes": [
+            45.7,
+            62.3
+          ],
+          "ranges": [
+            [
+              44,
+              48
+            ],
+            [
+              62,
+              63
+            ]
+          ],
+          "gapPP": 16.7,
+          "flipCount": 3
+        }
+      }
+    },
+    {
+      "id": "wealth-tax",
+      "title": "Wealth tax",
+      "contextKind": "hypothetical policy; resolves the tax instrument",
+      "wordings": [
+        "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+        "Should the government levy a wealth tax on assets acquired with after-tax income?"
+      ],
+      "stats": {
+        "empty": {
+          "meanYes": [
+            84,
+            7.7
+          ],
+          "ranges": [
+            [
+              83,
+              85
+            ],
+            [
+              7,
+              8
+            ]
+          ],
+          "gapPP": 76.3,
+          "flipCount": 3
+        },
+        "nonempty-control": {
+          "meanYes": [
+            78.3,
+            8.7
+          ],
+          "ranges": [
+            [
+              78,
+              79
+            ],
+            [
+              8,
+              9
+            ]
+          ],
+          "gapPP": 69.7,
+          "flipCount": 3
+        },
+        "relevant": {
+          "meanYes": [
+            61.7,
+            14.3
+          ],
+          "ranges": [
+            [
+              60,
+              63
+            ],
+            [
+              13,
+              15
+            ]
+          ],
+          "gapPP": 47.3,
+          "flipCount": 3
+        }
+      }
+    },
+    {
+      "id": "reno-los-angeles",
+      "title": "Reno and Los Angeles",
+      "contextKind": "sourced coordinates; relation not supplied",
+      "wordings": [
+        "Is Reno, Nevada farther west than Los Angeles, California?",
+        "Is Los Angeles, California farther east than Reno, Nevada?"
+      ],
+      "stats": {
+        "empty": {
+          "meanYes": [
+            30.3,
+            70.7
+          ],
+          "ranges": [
+            [
+              29,
+              32
+            ],
+            [
+              70,
+              71
+            ]
+          ],
+          "gapPP": 40.3,
+          "flipCount": 3
+        },
+        "nonempty-control": {
+          "meanYes": [
+            37.7,
+            73
+          ],
+          "ranges": [
+            [
+              32,
+              43
+            ],
+            [
+              71,
+              74
+            ]
+          ],
+          "gapPP": 35.3,
+          "flipCount": 3
+        },
+        "relevant": {
+          "meanYes": [
+            99.3,
+            98
+          ],
+          "ranges": [
+            [
+              99,
+              100
+            ],
+            [
+              98,
+              98
+            ]
+          ],
+          "gapPP": 1.3,
+          "flipCount": 0
+        }
+      }
+    },
+    {
+      "id": "cubs-ottomans",
+      "title": "Cubs and the Ottomans",
+      "contextKind": "sourced dates; overlap not supplied",
+      "wordings": [
+        "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+        "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?"
+      ],
+      "stats": {
+        "empty": {
+          "meanYes": [
+            11,
+            58
+          ],
+          "ranges": [
+            [
+              9,
+              14
+            ],
+            [
+              56,
+              62
+            ]
+          ],
+          "gapPP": 47,
+          "flipCount": 3
+        },
+        "nonempty-control": {
+          "meanYes": [
+            17,
+            74.3
+          ],
+          "ranges": [
+            [
+              16,
+              18
+            ],
+            [
+              72,
+              77
+            ]
+          ],
+          "gapPP": 57.3,
+          "flipCount": 3
+        },
+        "relevant": {
+          "meanYes": [
+            79,
+            99.7
+          ],
+          "ranges": [
+            [
+              78,
+              80
+            ],
+            [
+              99,
+              100
+            ]
+          ],
+          "gapPP": 20.7,
+          "flipCount": 0
+        }
+      }
+    }
+  ]
+}

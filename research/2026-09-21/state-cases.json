@@ -1,0 +1,63 @@
+[
+  {
+    "id": "religion-terrorism",
+    "title": "Religion and terrorism",
+    "contextKind": "scope and definitions; no evidence counts",
+    "wordings": [
+      "Does Islam inspire more terrorism than other monotheistic religions?",
+      "Is more terrorism inspired by Islam than by other monotheistic religions?"
+    ],
+    "state": "Scope for this comparison: worldwide, 2001–2025. The outcome is the number of terrorist attacks whose perpetrators explicitly cited a religious motive. The groups compared are Islam versus Christianity and Judaism combined. The comparison concerns attributed motives, not the behavior of all followers of any religion. No attack counts are supplied.",
+    "sources": []
+  },
+  {
+    "id": "eating-meat",
+    "title": "Eating animals versus meat",
+    "contextKind": "hypothetical scenario; no prescribed ethical answer",
+    "wordings": [
+      "Is it morally acceptable to eat animals when other nutritious food is available?",
+      "Is it morally acceptable to eat meat when other nutritious food is available?"
+    ],
+    "state": "An adult is choosing what to eat for a meal. They can obtain nutritionally adequate food without animal flesh at the same price and convenience as the animal option. The animal option is flesh from a slaughtered cow or pig. There is no food scarcity, medical need, religious obligation, or survival emergency. No ethical framework or preferred answer is specified.",
+    "sources": []
+  },
+  {
+    "id": "wealth-tax",
+    "title": "Wealth tax",
+    "contextKind": "hypothetical policy; resolves the tax instrument",
+    "wordings": [
+      "Should wealth still be taxed if income tax was already paid on the money used to acquire it?",
+      "Should the government levy a wealth tax on assets acquired with after-tax income?"
+    ],
+    "state": "Policy scenario: a government is considering a recurring annual tax on households' net assets. The assets were purchased using income on which income tax has already been paid. The proposal taxes the stock of wealth, not another year's earnings or realized capital gains. No tax rate, exemption threshold, revenue use, or normative rule is supplied.",
+    "sources": []
+  },
+  {
+    "id": "reno-los-angeles",
+    "title": "Reno and Los Angeles",
+    "contextKind": "sourced coordinates; relation not supplied",
+    "wordings": [
+      "Is Reno, Nevada farther west than Los Angeles, California?",
+      "Is Los Angeles, California farther east than Reno, Nevada?"
+    ],
+    "state": "US Census Bureau 2026 Gazetteer representative city points, in decimal degrees (negative longitude is west of Greenwich): Reno, Nevada: latitude 39.549097, longitude -119.849907. Los Angeles, California: latitude 34.019394, longitude -118.410825. The city comparison uses these representative points.",
+    "sources": [
+      "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2026_Gazetteer/2026_gaz_place_32.txt",
+      "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2026_Gazetteer/2026_gaz_place_06.txt"
+    ]
+  },
+  {
+    "id": "cubs-ottomans",
+    "title": "Cubs and the Ottomans",
+    "contextKind": "sourced dates; overlap not supplied",
+    "wordings": [
+      "Did the Ottoman Empire still exist the last time the Chicago Cubs won the World Series before 2016?",
+      "The last time the Chicago Cubs won the World Series before 2016, did the Ottoman Empire still exist?"
+    ],
+    "state": "The Chicago Cubs won the World Series in 1908 and next won it in 2016. The Ottoman Empire ended in 1922, when the sultanate was abolished.",
+    "sources": [
+      "https://www.mlb.com/cubs/history/timeline",
+      "https://guides.loc.gov/ottoman-turkish/reference"
+    ]
+  }
+]
